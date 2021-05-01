@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Buscaminas</string>
+    <string name="main_title">Buscaminas</string>
+    <string name="welcome_text">Welcome User Text</string>
+    <string name="title_major">WELCOME</string>
+    <string name="ajustes_image">ajustes image</string>
+    <string name="salir_text">Salir</string>
+    <string name="button_iniciar">INICIAR PARTIDA</string>
+    <string name="button_ayuda">AYUDA</string>
+</resources>
