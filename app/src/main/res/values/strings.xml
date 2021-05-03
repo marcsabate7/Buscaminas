@@ -21,4 +21,5 @@
     <string name="title_section">AYUDA</string>
     <string name="description_ayuda">description</string>
     <string name="back_pantalla_inicio">VOLVER</string>
+    <string name="mida_graella">Mida Graella</string>
 </resources>
