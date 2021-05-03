@@ -78,8 +78,6 @@
                     app:srcCompat="@drawable/ic_usericon" />
 
 
-
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -103,15 +101,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="101dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="40dp">
+                android:paddingTop="20dp">
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -134,7 +131,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="78dp"
+                android:layout_height="65dp"
                 android:orientation="horizontal">
 
                 <RadioGroup
@@ -192,7 +189,7 @@
 
                     <ImageView
                         android:id="@+id/imageView5"
-                        android:layout_width="41dp"
+                        android:layout_width="44dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_clockicon" />
@@ -240,41 +237,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:checkedButton="@+id/radioButton6">
 
                         <RadioButton
                             android:id="@+id/radioButton4"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="15%" />
+                            android:text="15" />
 
                         <RadioButton
                             android:id="@+id/radioButton6"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="25%" />
+                            android:text="25" />
 
                         <RadioButton
                             android:id="@+id/radioButton5"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="35%" />
+                            android:text="35" />
                     </RadioGroup>
                 </LinearLayout>
             </LinearLayout>
 
             <Button
                 android:id="@+id/EmpezarDesdeConfig"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="139dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center"
                 android:background="#FFFFFF"
                 android:backgroundTint="#FFFFFF"
                 android:text="EMPEZAR"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
 
         </LinearLayout>

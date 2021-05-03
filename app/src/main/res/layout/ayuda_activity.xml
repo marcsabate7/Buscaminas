@@ -41,7 +41,7 @@
         android:layout_width="190dp"
         android:layout_height="78dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="?attr/colorButtonNormal"
         android:drawableLeft="@drawable/ic_backarrow"
         android:padding="16dp"
