@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="20dp"
     android:paddingStart="20dp"
     android:paddingRight="20dp">
 
@@ -24,7 +25,7 @@
                 <ImageButton
                     android:id="@+id/imageButton"
                     android:layout_width="5dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:paddingTop="10dp"
@@ -45,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="86dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <TextView
@@ -87,13 +88,23 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="291dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:drawablePadding="15dp"
                         android:focusable="auto"
                         android:focusableInTouchMode="true"
                         android:hint="UserName"
                         android:inputType="text"
                         android:shadowRadius="20" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="hint" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -260,11 +271,11 @@
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="125dp"
-                android:layout_height="71dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="EMPEZAR"
                 android:background="@color/purple_200"
+                android:text="EMPEZAR"
                 android:textColor="@color/white" />
 
         </LinearLayout>
