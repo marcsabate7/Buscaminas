@@ -42,6 +42,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
 
         startGame.setOnClickListener(this);
+        backToMain.setOnClickListener(this);
+
 
     }
 
