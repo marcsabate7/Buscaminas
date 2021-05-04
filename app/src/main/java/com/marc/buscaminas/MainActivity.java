@@ -1,5 +1,6 @@
 package com.marc.buscaminas;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent toAyuda, toConfiguration;
+    public final static int CLOSE_ALL = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toAyuda);
                 break;
             case R.id.buttonIniciar:
-                startActivity(toConfiguration);
+                startActivityForResult(toConfiguration,1);
                 break;
             case R.id.buttonsalir:
                 exitAppCLICK(v);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode==CLOSE_ALL) {
+            finish();
+            System.exit(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void exitAppCLICK (View view) {

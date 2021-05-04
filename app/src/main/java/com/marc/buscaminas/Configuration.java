@@ -1,7 +1,9 @@
 package com.marc.buscaminas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,18 +13,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Configuration extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private ImageButton backToMain;
     private CheckBox checkBoxTimer;
     private Button startGame;
     private EditText userName;
     private RadioGroup radioGropuNumeroParrilla, radioGroupBombsPercentage;
     private RadioButton btnParrilla, btnBombs;
-    private Integer num_graella;
-    private float percentatge_de_bombes;
     private Intent intentToGame;
 
     @Override
@@ -30,7 +31,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
-        backToMain = (ImageButton) findViewById(R.id.ConfigBackToMain);
         startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
         userName = findViewById(R.id.EditText_username);
         checkBoxTimer = findViewById(R.id.checkBox);
@@ -42,45 +42,64 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
 
         startGame.setOnClickListener(this);
-        backToMain.setOnClickListener(this);
-
-
     }
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.quitMessageConfirmation)
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        setResult(MainActivity.CLOSE_ALL);
+                        finish();
+                    }
+                }).create().show();
+    }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.EmpezarDesdeConfig:
 
-                DadesDePartida dataReady = new DadesDePartida();
-                int idButtonParrilla = radioGropuNumeroParrilla.getCheckedRadioButtonId();
-                int idButtonBombs = radioGroupBombsPercentage.getCheckedRadioButtonId();
+                if (userName.getText().toString().trim().equalsIgnoreCase("")) {
+                    userName.setError("This field can not be blank");
+                } else {
+                    intentToGame.putExtra("userName", userName.getText().toString());
 
-                btnParrilla = (RadioButton) findViewById(idButtonParrilla);
-                dataReady.setNumero_graella(Integer.parseInt(btnParrilla.getText().toString()));
+                    DadesDePartida dataReady = new DadesDePartida();
+                    int idButtonParrilla = radioGropuNumeroParrilla.getCheckedRadioButtonId();
+                    int idButtonBombs = radioGroupBombsPercentage.getCheckedRadioButtonId();
 
-                btnBombs = (RadioButton) findViewById(idButtonBombs);
-                float percentage = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
-                dataReady.setPercentatge(percentage);
+                    btnParrilla = (RadioButton) findViewById(idButtonParrilla);
+                    dataReady.setNumero_graella(Integer.parseInt(btnParrilla.getText().toString()));
+
+                    btnBombs = (RadioButton) findViewById(idButtonBombs);
+                    float percentage = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
+                    dataReady.setPercentatge(percentage);
+
+                    if (checkBoxTimer.isChecked())
+                        dataReady.setHave_timer(true);
 
 
-                if (checkBoxTimer.isChecked())
-                    dataReady.setHave_timer(true);
-
-                intentToGame.putExtra("userName",userName.getText().toString());
-                intentToGame.putExtra("DadesDePartida", dataReady);
-                startActivity(intentToGame);
+                    intentToGame.putExtra("DadesDePartida", dataReady);
+                    startActivity(intentToGame);
+                }
                 break;
-            case R.id.ConfigBackToMain:
-                this.finish();
-                break;
+
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
     }
-
 
 }
 

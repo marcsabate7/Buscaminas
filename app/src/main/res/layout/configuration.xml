@@ -22,14 +22,6 @@
                 android:layout_height="89dp"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/ConfigBackToMain"
-                    android:layout_width="65dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    app:srcCompat="@drawable/ic_backarrow" />
-
                 <TextView
                     android:id="@+id/configuración"
                     android:layout_width="278dp"
@@ -108,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="20dp">
+                android:paddingTop="10dp">
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -131,7 +123,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioGroup
@@ -170,7 +162,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="141dp"
+                android:layout_height="117dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -185,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="88dp"
                     android:orientation="horizontal"
-                    android:paddingTop="20dp">
+                    android:paddingTop="10dp">
 
                     <ImageView
                         android:id="@+id/imageView5"
