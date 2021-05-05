@@ -2,7 +2,9 @@ package com.marc.buscaminas;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +24,10 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private CheckBox checkBoxTimer;
     private Button startGame;
     private EditText userName;
-    private RadioGroup radioGropuNumeroParrilla, radioGroupBombsPercentage;
+    private RadioGroup radioGroupNumeroParrilla, radioGroupBombsPercentage;
     private RadioButton btnParrilla, btnBombs;
     private Intent intentToGame;
+    private MediaPlayer boomSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +39,12 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         checkBoxTimer = findViewById(R.id.checkBox);
         intentToGame = new Intent(this, Partida.class);
 
-        radioGropuNumeroParrilla = findViewById(R.id.RadioGroupGraella);
-        radioGropuNumeroParrilla.setOnCheckedChangeListener(this);
+        radioGroupNumeroParrilla = findViewById(R.id.RadioGroupGraella);
+        radioGroupNumeroParrilla.setOnCheckedChangeListener(this);
         radioGroupBombsPercentage = findViewById(R.id.RadioGroupBombs);
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
+
+        boomSound = MediaPlayer.create(this, R.raw.boomsound);
 
         startGame.setOnClickListener(this);
     }
@@ -66,17 +71,20 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Integer idButtonBombs = radioGroupBombsPercentage.getCheckedRadioButtonId();
+        Integer idButtonParrilla = radioGroupNumeroParrilla.getCheckedRadioButtonId();
         switch (view.getId()) {
             case R.id.EmpezarDesdeConfig:
 
                 if (userName.getText().toString().trim().equalsIgnoreCase("")) {
                     userName.setError("This field can not be blank");
+                } else if (idButtonParrilla == -1) {
+                    RadioButton radioButton = (RadioButton) findViewById(R.id.lastRadioButton);
+                    radioButton.setError("An option must be selected");
                 } else {
                     intentToGame.putExtra("userName", userName.getText().toString());
 
                     DadesDePartida dataReady = new DadesDePartida();
-                    int idButtonParrilla = radioGropuNumeroParrilla.getCheckedRadioButtonId();
-                    int idButtonBombs = radioGroupBombsPercentage.getCheckedRadioButtonId();
 
                     btnParrilla = (RadioButton) findViewById(idButtonParrilla);
                     dataReady.setNumero_graella(Integer.parseInt(btnParrilla.getText().toString()));
@@ -88,8 +96,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                     if (checkBoxTimer.isChecked())
                         dataReady.setHave_timer(true);
 
-
                     intentToGame.putExtra("DadesDePartida", dataReady);
+                    boomSound.start();
                     startActivity(intentToGame);
                 }
                 break;
