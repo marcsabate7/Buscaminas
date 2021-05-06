@@ -42,8 +42,6 @@ public class Partida extends AppCompatActivity {
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(receivedData.getNumero_graella());
 
-        TextView user = (TextView) findViewById(R.id.userNameEnLaPartida);
-        user.setText(receivedIntent.getExtras().getString("userName"));
 
 
     }
