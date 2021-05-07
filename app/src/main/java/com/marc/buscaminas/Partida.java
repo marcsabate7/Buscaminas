@@ -18,14 +18,18 @@ import android.widget.ToggleButton;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
-public class Partida extends AppCompatActivity {
-
+public class Partida extends AppCompatActivity implements View.OnClickListener {
+    public static Button [] cells;
     private Intent receivedIntent;
     private DadesDePartida receivedData;
+    private List<Integer> listOfBombsIndexes;
     private GridView graella;
-    private List<Button> cells;
 
 
     @Override
@@ -35,17 +39,50 @@ public class Partida extends AppCompatActivity {
 
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
+        int numberOfcolumns = receivedData.getNumero_graella();
+        listOfBombsIndexes = bombs_index_list(numberOfcolumns, receivedData.getPercentatge());
+        cells = makeButtonArray(listOfBombsIndexes,numberOfcolumns*numberOfcolumns);
 
-        ////////VIDEO
         graella = (GridView) findViewById(R.id.gridviewID);
         CustomAdapter gridAdapter = new CustomAdapter();
         graella.setAdapter(gridAdapter);
-        graella.setNumColumns(receivedData.getNumero_graella());
-
+        graella.setNumColumns(numberOfcolumns);
 
 
     }
 
+
+
+    public List<Integer> bombs_index_list(int numColumns, float percentage) {
+        Random random = new Random();
+        List<Integer> listOfIndexBomb = new ArrayList<>();
+
+        int max_length = (int) ((numColumns*numColumns) *percentage);
+
+        Toast.makeText(this,"Aixo hauria de ser 6 numeros i es "+percentage,Toast.LENGTH_SHORT).show();
+        while (listOfIndexBomb.size() < max_length) {
+            int thisOne = (int) (Math.random() * (0 - (numColumns * numColumns)) + (numColumns * numColumns));
+            if(listOfIndexBomb.isEmpty() || !listOfIndexBomb.contains(thisOne))
+                listOfIndexBomb.add(thisOne);
+        }
+        return listOfIndexBomb;
+    }
+
+    public Button [] makeButtonArray(List<Integer> bombs, int lengthofArray){
+        Button [] buttonArray = new Button[lengthofArray];
+        for(int i=0;i<buttonArray.length;i++){
+            if(bombs.contains(i))
+                buttonArray[i]=(Button)findViewById(R.id.b);
+            else
+                buttonArray[i]=(Button)findViewById(R.id.notabomb);
+        }
+        return buttonArray;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
     private class CustomAdapter extends BaseAdapter {
         private Context context;
         private Button cells;
@@ -67,13 +104,10 @@ public class Partida extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            View view1 = getLayoutInflater().inflate(R.layout.partida,null);
-             = view1.findViewById(R.id.cellButton);
+            View view1 = getLayoutInflater().inflate(R.layout.row_data,null);
+            Button button = view1.findViewById(R.id.buttoninGrid);
 
-
+            return view1;
         }
     }
-
-
-
 }
