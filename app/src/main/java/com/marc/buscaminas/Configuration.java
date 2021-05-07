@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -98,11 +99,21 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
                     intentToGame.putExtra("DadesDePartida", dataReady);
                     boomSound.start();
-                    startActivity(intentToGame);
+                    startActivityForResult(intentToGame,2);
                 }
                 break;
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode==MainActivity.CLOSE_ALL) {
+            setResult(MainActivity.CLOSE_ALL);
+            finish();
+            System.exit(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
