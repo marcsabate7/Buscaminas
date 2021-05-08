@@ -1,5 +1,6 @@
 package com.marc.buscaminas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -35,6 +36,7 @@ public class Partida extends AppCompatActivity{
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
     private GridView graella;
+    long timepo_restante = 25000;
     Intent activity_final;
     int num_cells;
     TextView num_casillas;
@@ -56,15 +58,12 @@ public class Partida extends AppCompatActivity{
         numberOfcolumns = receivedData.getNumero_graella();
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, receivedData.getPercentatge());
         matrix = initialize_matrix(numberOfcolumns,listOfBombsIndexes);
-        //boolean num = receivedData.isHave_timer();
 
         if (receivedData.isHave_timer()){
             Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(getApplicationContext(),"EL TIMER ESTA DESACTIVAT", Toast.LENGTH_LONG).show();
         }
-
-
 
         graella = (GridView) findViewById(R.id.gridview);
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
@@ -73,23 +72,32 @@ public class Partida extends AppCompatActivity{
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: "+num_cells);
 
+        // RESTORE SAVEINSTANCE STATE
+        if (savedInstanceState!= null){
+            num_cells = savedInstanceState.getInt("casillas_restantes");
+            timepo_restante = savedInstanceState.getInt("tiempo_restante");
+            System.out.println(timepo_restante);
+        }
+
+
         if (receivedData.isHave_timer()){
             num_casillas.setText("Casillas por descubrir: "+num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         }else{
             num_casillas.setText("Casillas por descubrir: "+num_cells);
-            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
-        new CountDownTimer(25000,1000) {
+        new CountDownTimer(timepo_restante,1000) {
             @Override
             public void onTick(long l) {
+                timepo_restante = l;
                 if (receivedData.isHave_timer()){
                     timer.setText("Segundos restantes: " + l / 1000);
                     timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 }else{
                     timer.setText("Segundos restantes: " + l / 1000);
-                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
 
                 }
             }
@@ -97,32 +105,21 @@ public class Partida extends AppCompatActivity{
             @Override
             public void onFinish() {
                 if (receivedData.isHave_timer()){
+                    // PARTIDA PERDUDA PER TEMPS, JA QUE S'HA ACABAT EL TEMPS
                     timer.setText("GAME OVER");
                     timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     activity_final = new Intent(getApplicationContext(),FinalActivity.class);
                     startActivityForResult(activity_final,10);
+                }else{
+                    timer.setText("-");
+                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                 }
             }
         }.start();
 
-
-
-        //A PARTIR D'AQUESTA PART DEL ONCREATE HE MIRAT DE IMPLEMENTAR UN LISTENER A LA GRAELLA PERO NOSE PQ POLLES NO VA, NO REACCIONA, SEMBLA QUE NO HI ENTRI
-        // ELS TOASTS SON PER COMPROVAR PERO NO FA NI UN NI L'ALTRE NI PUTA IDEA BRO
-        /*
-        graella.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getApplicationContext(),"I HAVE BEEN CLICKED with pos:"+position,Toast.LENGTH_SHORT).show();
-                if(listOfBombsIndexes.contains(position)){
-                    Toast.makeText(getApplicationContext(),"I GOT A BOMB",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-         */
-
     }
+
+
 
     //CREEM LLISTA RANDOM DE 0 FINS A LLARGADA MAXIMA SENSE REPETIR PER PODER SITUAR LES BOMBES ENTRE LES POSICIONS DELS BOTONS EN LA GRAELLA
     public List<Integer> bombs_index_list(int numColumns, float percentage) {
@@ -167,6 +164,7 @@ public class Partida extends AppCompatActivity{
                     if (listOfBombsIndexes.contains(position)) {
                         Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                         view.setBackgroundResource(R.drawable.ic_bomb2);
+                        // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
 
                         timer.setText("GAME OVER");
                         activity_final = new Intent(getApplicationContext(),FinalActivity.class);
@@ -178,7 +176,12 @@ public class Partida extends AppCompatActivity{
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                         }else{
                             num_casillas.setText("Casillas por descubrir: "+num_cells);
-                            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+                        }
+                        if (num_cells == 0){
+                            // PARTIDA GUANYADA - AGAFAR DADES I PASARLES AL SEGUENT INTENT
+                            activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+                            startActivityForResult(activity_final,10);
                         }
                         int counter = numberSurroundingBombs(matrix,position);
                         view.setBackgroundResource(drawableOfNumbers[counter]);
@@ -282,4 +285,12 @@ public class Partida extends AppCompatActivity{
         R.drawable.five,R.drawable.six,R.drawable.seven,R.drawable.eight};
     }
 
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putLong("tiempo_restante",timepo_restante);
+        outState.putInt("casillas_restantes",num_cells);
+    }
 }
