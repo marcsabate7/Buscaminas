@@ -63,20 +63,29 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enviar E-mail" />
+        android:layout_width="165dp"
+        android:layout_height="63dp"
+        android:backgroundTint="@color/teal_700"
+        android:drawableLeft="@drawable/ic_mail"
+        android:text="Enviar E-mail"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nueva Partida" />
+        android:layout_width="164dp"
+        android:layout_height="66dp"
+        android:backgroundTint="@color/teal_700"
+        android:drawableLeft="@drawable/ic_backarrowgreen"
+        android:text="Nueva Partida"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="163dp"
         android:layout_height="wrap_content"
-        android:text="Salir" />
+        android:backgroundTint="?attr/colorButtonNormal"
+        android:text="Salir"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/ic_poweroff"/>
 
 </LinearLayout>

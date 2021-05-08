@@ -2,6 +2,7 @@ package com.marc.buscaminas;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,8 +28,10 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private EditText userName;
     private RadioGroup radioGroupNumeroParrilla, radioGroupBombsPercentage;
     private RadioButton btnParrilla, btnBombs;
-    private Intent intentToGame;
+    private Intent intentToGame, intentToService;
+    private Bundle bundle;
     private MediaPlayer boomSound;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
 
         boomSound = MediaPlayer.create(this, R.raw.boomsound);
+        intentToService = new Intent(this,SoundTrack.class);
+        bundle = new Bundle();
 
         startGame.setOnClickListener(this);
     }
@@ -98,7 +103,11 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                         dataReady.setHave_timer(true);
 
                     intentToGame.putExtra("DadesDePartida", dataReady);
+
                     boomSound.start();
+                    bundle.putString("start","start");
+                    intentToService.putExtras(bundle);
+                    startService(intentToService);
                     startActivityForResult(intentToGame,2);
                 }
                 break;

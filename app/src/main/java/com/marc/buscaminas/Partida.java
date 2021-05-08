@@ -35,6 +35,7 @@ public class Partida extends AppCompatActivity{
     private DadesDePartida receivedData;
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
+    private Intent toStopService;
     private GridView graella;
     long tiempo_restante = 25000;
     float percentage_bombs;
@@ -53,7 +54,7 @@ public class Partida extends AppCompatActivity{
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
 
-
+        toStopService = new Intent(this,SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
@@ -67,6 +68,47 @@ public class Partida extends AppCompatActivity{
 
         if (receivedData.isHave_timer()){
             Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
+            new CountDownTimer(tiempo_restante,1000) {
+                @Override
+                public void onTick(long l) {
+                    tiempo_restante = l;
+                    if (receivedData.isHave_timer()){
+                        timer.setText("Segundos restantes: " + l / 1000);
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    }else{
+                        timer.setText("Segundos restantes: " + l / 1000);
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    if (receivedData.isHave_timer()){
+                        // PARTIDA PERDUDA PER TEMPS, JA QUE S'HA ACABAT EL TEMPS
+                        timer.setText("GAME OVER");
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+                        activity_final.putExtra("user_name",user_name);
+                        activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
+                        activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
+                        int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
+                        activity_final.putExtra("total_minas",num_minas);
+                        // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
+                        activity_final.putExtra("tiempo_total",25000-tiempo_restante);
+
+                        activity_final.putExtra("partida_status","Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado "+num_cells+" casillas por descubrir");
+
+
+
+
+                        startActivityForResult(activity_final,10);
+                    }else{
+                        timer.setText("-");
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+                    }
+                }
+            }.start();
         }else{
             Toast.makeText(getApplicationContext(),"EL TIMER ESTA DESACTIVAT", Toast.LENGTH_LONG).show();
         }
@@ -93,65 +135,6 @@ public class Partida extends AppCompatActivity{
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
-        new CountDownTimer(tiempo_restante,1000) {
-            @Override
-            public void onTick(long l) {
-                tiempo_restante = l;
-                if (receivedData.isHave_timer()){
-                    timer.setText("Segundos restantes: " + l / 1000);
-                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                }else{
-                    timer.setText("Segundos restantes: " + l / 1000);
-                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (receivedData.isHave_timer()){
-                    // PARTIDA PERDUDA PER TEMPS, JA QUE S'HA ACABAT EL TEMPS
-                    timer.setText("GAME OVER");
-                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    activity_final = new Intent(getApplicationContext(),FinalActivity.class);
-                    activity_final.putExtra("user_name",user_name);
-                    activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
-                    activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
-                    int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
-                    activity_final.putExtra("total_minas",num_minas);
-                    // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-                    activity_final.putExtra("tiempo_total",25000-tiempo_restante);
-
-                    activity_final.putExtra("partida_status","Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado "+num_cells+" casillas por descubrir");
-
-
-
-
-                    startActivityForResult(activity_final,10);
-                }else{
-                    timer.setText("-");
-                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-                }
-            }
-        }.start();
-
-    }
-
-
-
-    //CREEM LLISTA RANDOM DE 0 FINS A LLARGADA MAXIMA SENSE REPETIR PER PODER SITUAR LES BOMBES ENTRE LES POSICIONS DELS BOTONS EN LA GRAELLA
-    public List<Integer> bombs_index_list(int numColumns, float percentage) {
-        Random random = new Random();
-        List<Integer> listOfIndexBomb = new ArrayList<>();
-
-        int max_length = (int) ((numColumns * numColumns) * percentage);
-
-        while (listOfIndexBomb.size() < max_length) {
-            int thisOne = (int) (Math.random() * (0 - (numColumns * numColumns)) + (numColumns * numColumns));
-            if (listOfIndexBomb.isEmpty() || !listOfIndexBomb.contains(thisOne))
-                listOfIndexBomb.add(thisOne);
-        }
-        return listOfIndexBomb;
     }
 
 
@@ -183,7 +166,7 @@ public class Partida extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
-
+                        stopService(toStopService);
                         timer.setText("GAME OVER");
                         activity_final = new Intent(getApplicationContext(),FinalActivity.class);
 
@@ -244,8 +227,6 @@ public class Partida extends AppCompatActivity{
         }
     }
 
-    //HE AFEGIT ESTA FUNCIO COM A L'ACTIVITY CONFIGURATION PER TIRAR ENRERE I MATAR L'APLICACIÓ AMB EL SEU ALERT DIALOG
-    //BASICAMENT AIXO SERIA TOT, HE ESTAT PROVAN VARIES COSES PERO NO HE AVANSAT MOLT
 
     @Override
     public void onBackPressed() {
@@ -265,9 +246,19 @@ public class Partida extends AppCompatActivity{
                 }).create().show();
     }
 
+    public List<Integer> bombs_index_list(int numColumns, float percentage) {
+        Random random = new Random();
+        List<Integer> listOfIndexBomb = new ArrayList<>();
 
+        int max_length = (int) ((numColumns * numColumns) * percentage);
 
-    //A PARTIR D'AQUÍ ÉS UNA PROVA D'IDEA PER PODER CONTAR EL NOMBRE DE BOMBES A LES CASELLES DEL VOLTANT
+        while (listOfIndexBomb.size() < max_length) {
+            int thisOne = (int) (Math.random() * (0 - (numColumns * numColumns)) + (numColumns * numColumns));
+            if (listOfIndexBomb.isEmpty() || !listOfIndexBomb.contains(thisOne))
+                listOfIndexBomb.add(thisOne);
+        }
+        return listOfIndexBomb;
+    }
 
     public int [][] initialize_matrix(int numberOfcolumns,List<Integer> listOfBombs){
         int [][] matrix = new int[numberOfcolumns][numberOfcolumns];
