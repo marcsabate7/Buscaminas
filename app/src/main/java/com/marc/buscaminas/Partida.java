@@ -212,7 +212,7 @@ public class Partida extends AppCompatActivity{
                         }
                         if (num_cells == 0){
                             // PARTIDA GUANYADA - AGAFAR DADES I PASARLES AL SEGUENT INTENT
-                            // IMPLEMENTAR EXTRAS DE HAS GANADO
+                            // IMPLEMENTAR EXTRAS DE HAS GANADO - acabar
                             activity_final = new Intent(getApplicationContext(),FinalActivity.class);
                             startActivityForResult(activity_final,10);
                         }
