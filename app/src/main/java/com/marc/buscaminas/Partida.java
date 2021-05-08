@@ -28,6 +28,7 @@ import java.util.Random;
 public class Partida extends AppCompatActivity{
     private Intent receivedIntent;
     private int[][] matrix;
+    private int [] drawableOfNumbers;
     private DadesDePartida receivedData;
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
@@ -39,6 +40,7 @@ public class Partida extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
 
+        drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
         numberOfcolumns = receivedData.getNumero_graella();
@@ -103,17 +105,17 @@ public class Partida extends AppCompatActivity{
             }
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
             cell.setScaleType(ImageView.ScaleType.FIT_XY);
-            if (listOfBombsIndexes.contains(position))
-                cell.setBackgroundResource(R.drawable.ic_bomb);
+
 
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listOfBombsIndexes.contains(position)) {
                         Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
-                        cell.setBackgroundResource(R.drawable.ic_bomb);
+                       view.setBackgroundResource(R.drawable.ic_bomb2);
                     }else{
                         int counter = numberSurroundingBombs(matrix,position);
+                        view.setBackgroundResource(drawableOfNumbers[counter]);
                         Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -207,6 +209,11 @@ public class Partida extends AppCompatActivity{
         if(x < 0 || y<0 || x>=side_length || y>=side_length)
             return false;
         return true;
+    }
+
+    public int[] initialize_drawableOfNumbers(){
+        return new int[]{R.drawable.zero,R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,
+        R.drawable.five,R.drawable.six,R.drawable.seven,R.drawable.eight};
     }
 
 }
