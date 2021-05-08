@@ -2,6 +2,7 @@ package com.marc.buscaminas;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ public class Partida extends AppCompatActivity{
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
     private GridView graella;
+    Intent activity_final;
     int num_cells;
     TextView num_casillas;
     TextView timer;
@@ -54,6 +56,15 @@ public class Partida extends AppCompatActivity{
         numberOfcolumns = receivedData.getNumero_graella();
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, receivedData.getPercentatge());
         matrix = initialize_matrix(numberOfcolumns,listOfBombsIndexes);
+        //boolean num = receivedData.isHave_timer();
+
+        if (receivedData.isHave_timer()){
+            Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(),"EL TIMER ESTA DESACTIVAT", Toast.LENGTH_LONG).show();
+        }
+
+
 
         graella = (GridView) findViewById(R.id.gridview);
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
@@ -61,15 +72,36 @@ public class Partida extends AppCompatActivity{
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: "+num_cells);
+
+        if (receivedData.isHave_timer()){
+            num_casillas.setText("Casillas por descubrir: "+num_cells);
+            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }else{
+            num_casillas.setText("Casillas por descubrir: "+num_cells);
+            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        }
+
         new CountDownTimer(25000,1000) {
             @Override
             public void onTick(long l) {
-                timer.setText("Segundos restantes: " + l / 1000);
+                if (receivedData.isHave_timer()){
+                    timer.setText("Segundos restantes: " + l / 1000);
+                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                }else{
+                    timer.setText("Segundos restantes: " + l / 1000);
+                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+
+                }
             }
 
             @Override
             public void onFinish() {
-                timer.setText("GAME OVER");
+                if (receivedData.isHave_timer()){
+                    timer.setText("GAME OVER");
+                    timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+                    startActivityForResult(activity_final,10);
+                }
             }
         }.start();
 
@@ -134,10 +166,20 @@ public class Partida extends AppCompatActivity{
                 public void onClick(View view) {
                     if (listOfBombsIndexes.contains(position)) {
                         Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
-                       view.setBackgroundResource(R.drawable.ic_bomb2);
+                        view.setBackgroundResource(R.drawable.ic_bomb2);
+
+                        timer.setText("GAME OVER");
+                        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+                        startActivityForResult(activity_final,10);
                     }else{
                         num_cells--;
-                        num_casillas.setText("Casillas por descubrir: "+num_cells);
+                        if (receivedData.isHave_timer()){
+                            num_casillas.setText("Casillas por descubrir: "+num_cells);
+                            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                        }else{
+                            num_casillas.setText("Casillas por descubrir: "+num_cells);
+                            num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                        }
                         int counter = numberSurroundingBombs(matrix,position);
                         view.setBackgroundResource(drawableOfNumbers[counter]);
                         Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();
