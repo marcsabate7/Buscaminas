@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,19 @@ public class Partida extends AppCompatActivity{
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
     private GridView graella;
+    int num_cells;
+    TextView num_casillas;
+    TextView timer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
+
+        num_casillas = (TextView) findViewById(R.id.casillasid);
+        timer = (TextView) findViewById(R.id.timer);
+
 
         drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
@@ -51,6 +59,20 @@ public class Partida extends AppCompatActivity{
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
+        num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
+        num_casillas.setText("Casillas por descubrir: "+num_cells);
+        new CountDownTimer(25000,1000) {
+            @Override
+            public void onTick(long l) {
+                timer.setText("Segundos restantes: " + l / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                timer.setText("GAME OVER");
+            }
+        }.start();
+
 
 
         //A PARTIR D'AQUESTA PART DEL ONCREATE HE MIRAT DE IMPLEMENTAR UN LISTENER A LA GRAELLA PERO NOSE PQ POLLES NO VA, NO REACCIONA, SEMBLA QUE NO HI ENTRI
@@ -114,6 +136,8 @@ public class Partida extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                        view.setBackgroundResource(R.drawable.ic_bomb2);
                     }else{
+                        num_cells--;
+                        num_casillas.setText("Casillas por descubrir: "+num_cells);
                         int counter = numberSurroundingBombs(matrix,position);
                         view.setBackgroundResource(drawableOfNumbers[counter]);
                         Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();

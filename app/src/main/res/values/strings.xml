@@ -26,5 +26,14 @@
     <string name="quitMessageConfirmation">Está seguro de querer abandonar la aplicación?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="casillas"></string>
+    <string name="partida_en_marxa">PARTIDA EN MARXA!!</string>
+    <string name="seconds">TIMER</string>
+    <string name="title_activity_pantalla_final">PantallaFinal</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 </resources>

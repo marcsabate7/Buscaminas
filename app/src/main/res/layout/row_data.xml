@@ -8,7 +8,9 @@
     <ImageButton
         android:id="@+id/buttoninGrid"
         android:layout_width="60dp"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter">
 
     </ImageButton>
 
