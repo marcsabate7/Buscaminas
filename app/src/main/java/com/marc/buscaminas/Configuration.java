@@ -39,6 +39,14 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
+        bundle = new Bundle();
+        if(getIntent().getStringExtra("Music").equals("ON")) {
+            intentToService = new Intent(this, SoundTrack.class);
+            bundle.putString("start","start");
+            intentToService.putExtras(bundle);
+            startService(intentToService);
+        }
+
         startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
         userName = findViewById(R.id.EditText_username);
         checkBoxTimer = findViewById(R.id.checkBox);
@@ -50,9 +58,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
 
         boomSound = MediaPlayer.create(this, R.raw.boomsound);
-        intentToService = new Intent(this,SoundTrack.class);
-        bundle = new Bundle();
-
         startGame.setOnClickListener(this);
     }
 
@@ -106,9 +111,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                     intentToGame.putExtra("DadesDePartida", dataReady);
 
                     boomSound.start();
-                    bundle.putString("start","start");
-                    intentToService.putExtras(bundle);
-                    startService(intentToService);
                     startActivityForResult(intentToGame,2);
                 }
                 break;
@@ -118,10 +120,10 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         if(resultCode==MainActivity.CLOSE_ALL) {
             setResult(MainActivity.CLOSE_ALL);
             finish();
-            System.exit(0);
         }else if(resultCode == RESTARTGAME){
         }
         super.onActivityResult(requestCode, resultCode, data);

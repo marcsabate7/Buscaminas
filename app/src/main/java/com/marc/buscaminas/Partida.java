@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Random;
 
 
-public class Partida extends AppCompatActivity{
+public class Partida extends AppCompatActivity {
     private Intent receivedIntent;
     private int[][] matrix;
-    private int [] drawableOfNumbers;
+    private int[] drawableOfNumbers;
     private DadesDePartida receivedData;
     private List<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
@@ -41,7 +41,7 @@ public class Partida extends AppCompatActivity{
     long tiempo_restante = 25000;
     float percentage_bombs;
     String user_name;
-    Intent activity_final;
+    private Intent toActivityFinal;
     int num_cells;
     TextView num_casillas;
     TextView timer;
@@ -58,64 +58,65 @@ public class Partida extends AppCompatActivity{
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
 
         // RESTORE SAVEINSTANCE STATE
-        if (savedInstanceState!= null){
+        if (savedInstanceState != null) {
             //num_cells = savedInstanceState.getInt("casillas_restantes");
             //tiempo_restante = savedInstanceState.getLong("tiempo_restante");
         }
 
-        toStopService = new Intent(this,SoundTrack.class);
+        toStopService = new Intent(this, SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
         numberOfcolumns = receivedData.getNumero_graella();
         percentage_bombs = receivedData.getPercentatge();
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
-        matrix = initialize_matrix(numberOfcolumns,listOfBombsIndexes);
+        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
         user_name = receivedIntent.getStringExtra("userName");
-        titol_partida.setText("PARTIDA EN MARXA, "+user_name.toUpperCase()+"!!");
+        titol_partida.setText("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
 
         graella = (GridView) findViewById(R.id.gridview);
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
-        num_casillas.setText("Casillas por descubrir: "+num_cells);
+        num_casillas.setText("Casillas por descubrir: " + num_cells);
 
-        if (receivedData.isHave_timer()){
+        if (receivedData.isHave_timer()) {
             //Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
-            new CountDownTimer(tiempo_restante,1000) {
+            new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
                     tiempo_restante = l;
-                    if (receivedData.isHave_timer()){
+                    if (receivedData.isHave_timer()) {
                         timer.setText("Segundos restantes: " + l / 1000);
                         timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    }else{
+                    } else {
                         timer.setText("Segundos restantes: " + l / 1000);
                         timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
 
                     }
                 }
+
                 @Override
-                public void onFinish(){
+                public void onFinish() {
                     // PARTIDA PERDUDA PER TEMPS
                     timer.setText("GAME OVER");
                     int status_partida = 1;
-                    changeActivityToFinal(status_partida,0);
+                    changeActivityToFinal(status_partida, 0);
 
                 }
             }.start();
-        }else{
+        } else {
             timer.setText("No hay tiempo!");
             timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
-        if (receivedData.isHave_timer()){
-            num_casillas.setText("Casillas por descubrir: "+num_cells);
+        if (receivedData.isHave_timer()) {
+            num_casillas.setText("Casillas por descubrir: " + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-        }else{
-            num_casillas.setText("Casillas por descubrir: "+num_cells);
+        } else {
+            num_casillas.setText("Casillas por descubrir: " + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
@@ -147,40 +148,38 @@ public class Partida extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     if (listOfBombsIndexes.contains(position)) {
-                        //Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
-                        int status_partida = 2;
-                        changeActivityToFinal(status_partida, position);
+                        changeActivityToFinal(2, position);
 
-                    }else{
+                    } else {
                         num_cells--;
-                        if (receivedData.isHave_timer()){
-                            num_casillas.setText("Casillas por descubrir: "+num_cells);
+                        if (receivedData.isHave_timer()) {
+                            num_casillas.setText("Casillas por descubrir: " + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                        }else{
-                            num_casillas.setText("Casillas por descubrir: "+num_cells);
+                        } else {
+                            num_casillas.setText("Casillas por descubrir: " + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                         }
-                        if (num_cells == 0){
+                        if (num_cells == 0) {
                             // PARTIDA GUANYADA
-                            int status_partida = 3;
-                            changeActivityToFinal(status_partida, 0);
+                            changeActivityToFinal(3, 0);
                         }
-                        int counter = numberSurroundingBombs(matrix,position);
+                        int counter = numberSurroundingBombs(matrix, position);
                         view.setBackgroundResource(drawableOfNumbers[counter]);
-                        //Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
             return view;
         }
+
         @Override
         public int getCount() {
             return this.numberOfCells;
         }
+
         @Override
         public Object getItem(int i) {
             return null;
@@ -194,53 +193,51 @@ public class Partida extends AppCompatActivity{
 
 
     // AQUESTA FUNCIÓ S'UTILITZA PER A PASAR LES DADES DE LA PARTIDA AL INTENT I AQUEST CAP A L'ACTIVITY FINAL
-    private void changeActivityToFinal(int status_partida,int position) {
+    public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
-        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
-        activity_final.putExtra("user_name",user_name);
-        activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
-        activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
-        int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
-        activity_final.putExtra("total_minas",num_minas);
+
+        toActivityFinal = new Intent(this, FinalActivity.class);
+        toActivityFinal.putExtra("user_name", user_name);
+        toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
+        toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
+        int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
+        toActivityFinal.putExtra("total_minas", num_minas);
         // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-        activity_final.putExtra("tiempo_total",25000-tiempo_restante);
-        if (status_partida == 1){           // Estatus == 1 per a partides on s'acabe el temps
-            activity_final.putExtra("partida_status","Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado "+num_cells+" casillas por descubrir");
-            activity_final.putExtra("casillas_restantes",num_cells);
+        toActivityFinal.putExtra("tiempo_total", 25000 - tiempo_restante);
+
+
+        if (status_partida == 1) {           // Estatus == 1 per a partides on s'acabe el temps
+            toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
+            toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 2){           // Estatus == 2 per a partides on s'ha clicat a una bomba
+        if (status_partida == 2) {           // Estatus == 2 per a partides on s'ha clicat a una bomba
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
-            activity_final.putExtra("partida_status","Has perdido!! Bomba en casilla "+position_x +", "+ position_y+ ".\n"+"Te han quedado "+num_cells+" casillas por descubrir!!");
-            activity_final.putExtra("casillas_restantes",num_cells);
+            toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
+            toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 3){           // Estatus == 3 per a partides guanyades
-            activity_final.putExtra("casillas_restantes",num_cells);
-            if (receivedData.isHave_timer()){
-                activity_final.putExtra("partida_status","Has ganado!! Sin control de tiempo!!");
+        if (status_partida == 3) {           // Estatus == 3 per a partides guanyades
+            toActivityFinal.putExtra("casillas_restantes", num_cells);
+            if (receivedData.isHave_timer()) {
+                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (25000 - tiempo_restante) + " segundos!");
+            } else {
+                toActivityFinal.putExtra("partida_status", "Has ganado!! Sin control de tiempo!!");
             }
-            else{
-                activity_final.putExtra("partida_status","Has ganado!! Y te han sobrado "+(25000-tiempo_restante)+" segundos!");
-            }
-            activity_final.putExtra("casillas_restantes",num_cells);
+            toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        startActivityForResult(activity_final,3);
+        startActivityForResult(toActivityFinal, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if(resultCode==MainActivity.CLOSE_ALL){
-            setResult(MainActivity.CLOSE_ALL);
-            finish();
-            System.exit(0);
-        }else if(resultCode==Configuration.RESTARTGAME){
-            setResult(Configuration.RESTARTGAME);
-            finish();
-            System.exit(0);
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == MainActivity.CLOSE_ALL) {
+            setResult(MainActivity.CLOSE_ALL);
+        } else if (resultCode == Configuration.RESTARTGAME ) {
+            setResult(Configuration.RESTARTGAME);
+        }
+        finish();
+        System.exit(0);
     }
 
     @Override
@@ -275,53 +272,53 @@ public class Partida extends AppCompatActivity{
         return listOfIndexBomb;
     }
 
-    public int [][] initialize_matrix(int numberOfcolumns,List<Integer> listOfBombs){
-        int [][] matrix = new int[numberOfcolumns][numberOfcolumns];
-        for(int x=0;x<listOfBombs.size();x++){
+    public int[][] initialize_matrix(int numberOfcolumns, List<Integer> listOfBombs) {
+        int[][] matrix = new int[numberOfcolumns][numberOfcolumns];
+        for (int x = 0; x < listOfBombs.size(); x++) {
             Integer current = listOfBombs.get(x);
-            int i = current/numberOfcolumns;
+            int i = current / numberOfcolumns;
             int j = current % numberOfcolumns;
-            matrix[i][j]=1;
+            matrix[i][j] = 1;
         }
-        for(int i=0;i<numberOfcolumns;i++){
-            for(int j=0;j<numberOfcolumns;j++){
-                if(matrix[i][j]!=1)
-                    matrix[i][j]=0;
+        for (int i = 0; i < numberOfcolumns; i++) {
+            for (int j = 0; j < numberOfcolumns; j++) {
+                if (matrix[i][j] != 1)
+                    matrix[i][j] = 0;
             }
         }
         return matrix;
     }
 
-    public int numberSurroundingBombs(int [][] matrix, int position){
-        int counter=0, position_i=position/numberOfcolumns, position_j=position % numberOfcolumns;
-        if(isPosValid(position_i+1,position_j,matrix.length) && matrix[position_i+1][position_j]==1)
+    public int numberSurroundingBombs(int[][] matrix, int position) {
+        int counter = 0, position_i = position / numberOfcolumns, position_j = position % numberOfcolumns;
+        if (isPosValid(position_i + 1, position_j, matrix.length) && matrix[position_i + 1][position_j] == 1)
             counter++;
-        if(isPosValid(position_i-1,position_j,matrix.length) && matrix[position_i-1][position_j]==1)
+        if (isPosValid(position_i - 1, position_j, matrix.length) && matrix[position_i - 1][position_j] == 1)
             counter++;
-        if(isPosValid(position_i,position_j+1,matrix.length) && matrix[position_i][position_j+1]==1)
+        if (isPosValid(position_i, position_j + 1, matrix.length) && matrix[position_i][position_j + 1] == 1)
             counter++;
-        if(isPosValid(position_i,position_j-1,matrix.length) && matrix[position_i][position_j-1]==1)
+        if (isPosValid(position_i, position_j - 1, matrix.length) && matrix[position_i][position_j - 1] == 1)
             counter++;
-        if(isPosValid(position_i+1,position_j+1,matrix.length) && matrix[position_i+1][position_j+1]==1)
+        if (isPosValid(position_i + 1, position_j + 1, matrix.length) && matrix[position_i + 1][position_j + 1] == 1)
             counter++;
-        if(isPosValid(position_i+1,position_j-1,matrix.length) && matrix[position_i+1][position_j-1]==1)
+        if (isPosValid(position_i + 1, position_j - 1, matrix.length) && matrix[position_i + 1][position_j - 1] == 1)
             counter++;
-        if(isPosValid(position_i-1,position_j-1,matrix.length) && matrix[position_i-1][position_j-1]==1)
+        if (isPosValid(position_i - 1, position_j - 1, matrix.length) && matrix[position_i - 1][position_j - 1] == 1)
             counter++;
-        if(isPosValid(position_i-1,position_j+1,matrix.length) && matrix[position_i-1][position_j+1]==1)
+        if (isPosValid(position_i - 1, position_j + 1, matrix.length) && matrix[position_i - 1][position_j + 1] == 1)
             counter++;
         return counter;
     }
 
-    public boolean isPosValid(int x, int y, int side_length){
-        if(x < 0 || y<0 || x>=side_length || y>=side_length)
+    public boolean isPosValid(int x, int y, int side_length) {
+        if (x < 0 || y < 0 || x >= side_length || y >= side_length)
             return false;
         return true;
     }
 
-    public int[] initialize_drawableOfNumbers(){
-        return new int[]{R.drawable.zero,R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,
-        R.drawable.five,R.drawable.six,R.drawable.seven,R.drawable.eight};
+    public int[] initialize_drawableOfNumbers() {
+        return new int[]{R.drawable.zero, R.drawable.one, R.drawable.two, R.drawable.three, R.drawable.four,
+                R.drawable.five, R.drawable.six, R.drawable.seven, R.drawable.eight};
     }
 
 
@@ -329,7 +326,7 @@ public class Partida extends AppCompatActivity{
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putLong("tiempo_restante",tiempo_restante);
-        outState.putInt("casillas_restantes",num_cells);
+        outState.putLong("tiempo_restante", tiempo_restante);
+        outState.putInt("casillas_restantes", num_cells);
     }
 }

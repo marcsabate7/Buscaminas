@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="295dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="25dp">
@@ -28,7 +29,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_height="208dp"
             android:layout_marginTop="7dp"
             app:srcCompat="@drawable/bomb_image" />
 
@@ -36,7 +37,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="153dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -58,5 +59,14 @@
             android:layout_height="wrap_content"
             android:text="@string/salir_text" />
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/switchMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:shadowColor="#FFFFFF"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="SONIDO"
+        android:textSize="18sp" />
 
 </LinearLayout>

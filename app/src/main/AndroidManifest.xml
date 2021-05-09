@@ -16,7 +16,11 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name=".FinalActivity" />
+        <activity android:name=".FinalActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".Partida"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>

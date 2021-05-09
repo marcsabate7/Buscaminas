@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent toAyuda, toConfiguration;
+    private Switch switchMusic;
     public final static int CLOSE_ALL = 10;
 
     @Override
@@ -21,7 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnAyuda = (Button) findViewById(R.id.buttonAyuda);
         Button btnEmpezar = (Button) findViewById(R.id.buttonIniciar);
         Button btnSalir = (Button) findViewById(R.id.buttonsalir);
+        switchMusic = (Switch) findViewById(R.id.switchMusic);
 
+        switchMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
         btnAyuda.setOnClickListener(this);
         btnEmpezar.setOnClickListener(this);
         btnSalir.setOnClickListener(this);
@@ -39,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toAyuda);
                 break;
             case R.id.buttonIniciar:
+                if(switchMusic.isChecked())
+                    toConfiguration.putExtra("Music","ON");
+                else
+                    toConfiguration.putExtra("Music","OFF");
                 startActivityForResult(toConfiguration,1);
                 break;
             case R.id.buttonsalir:
