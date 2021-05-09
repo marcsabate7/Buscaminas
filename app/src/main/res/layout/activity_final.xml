@@ -13,8 +13,15 @@
         android:id="@+id/partida_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:text="@string/resultados_partida"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="12dp"
+        android:layout_height="wrap_content"
+        android:text="@string/partida_en_marxa"
         android:textAlignment="center" />
 
     <TextView
@@ -56,13 +63,13 @@
         android:id="@+id/editTextTextEmail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonEnviarEmail"
         android:layout_width="165dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/teal_700"
@@ -71,7 +78,7 @@
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonNovaPartida"
         android:layout_width="164dp"
         android:layout_height="66dp"
         android:backgroundTint="@color/teal_700"
@@ -80,7 +87,7 @@
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonSortir"
         android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorButtonNormal"

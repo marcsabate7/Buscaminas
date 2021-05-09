@@ -44,6 +44,7 @@ public class Partida extends AppCompatActivity{
     int num_cells;
     TextView num_casillas;
     TextView timer;
+    TextView titol_partida;
 
 
     @Override
@@ -53,6 +54,7 @@ public class Partida extends AppCompatActivity{
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
+        titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
 
         toStopService = new Intent(this,SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
@@ -64,10 +66,10 @@ public class Partida extends AppCompatActivity{
         matrix = initialize_matrix(numberOfcolumns,listOfBombsIndexes);
 
         user_name = receivedIntent.getStringExtra("userName");
-        Toast.makeText(getApplicationContext(),user_name, Toast.LENGTH_LONG).show();
+        titol_partida.setText("PARTIDA EN MARXA, "+user_name.toUpperCase()+"!!");
 
         if (receivedData.isHave_timer()){
-            Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
             new CountDownTimer(tiempo_restante,1000) {
                 @Override
                 public void onTick(long l) {
@@ -81,36 +83,18 @@ public class Partida extends AppCompatActivity{
 
                     }
                 }
-
                 @Override
-                public void onFinish() {
-                    if (receivedData.isHave_timer()){
-                        // PARTIDA PERDUDA PER TEMPS, JA QUE S'HA ACABAT EL TEMPS
-                        timer.setText("GAME OVER");
-                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
-                        activity_final.putExtra("user_name",user_name);
-                        activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
-                        activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
-                        int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
-                        activity_final.putExtra("total_minas",num_minas);
-                        // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-                        activity_final.putExtra("tiempo_total",25000-tiempo_restante);
+                public void onFinish(){
+                    // PARTIDA PERDUDA PER TEMPS
+                    timer.setText("GAME OVER");
+                    int status_partida = 1;
+                    changeActivityToFinal(status_partida,0);
 
-                        activity_final.putExtra("partida_status","Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado "+num_cells+" casillas por descubrir");
-
-
-
-
-                        startActivityForResult(activity_final,10);
-                    }else{
-                        timer.setText("-");
-                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-                    }
                 }
             }.start();
         }else{
-            Toast.makeText(getApplicationContext(),"EL TIMER ESTA DESACTIVAT", Toast.LENGTH_LONG).show();
+            timer.setText("No hay tiempo!");
+            timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
         graella = (GridView) findViewById(R.id.gridview);
@@ -125,7 +109,6 @@ public class Partida extends AppCompatActivity{
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
         }
-
 
         if (receivedData.isHave_timer()){
             num_casillas.setText("Casillas por descubrir: "+num_cells);
@@ -163,27 +146,14 @@ public class Partida extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     if (listOfBombsIndexes.contains(position)) {
-                        Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         stopService(toStopService);
                         timer.setText("GAME OVER");
-                        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+                        int status_partida = 2;
+                        changeActivityToFinal(status_partida, position);
 
-                        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
-                        activity_final.putExtra("user_name",user_name);
-                        activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
-                        activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
-                        int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
-                        activity_final.putExtra("total_minas",num_minas);
-                        // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-                        activity_final.putExtra("tiempo_total",25000-tiempo_restante);
-                        int position_x = position / numberOfcolumns;
-                        int position_y = position % numberOfcolumns;
-                        activity_final.putExtra("partida_status","Has perdido!! Bomba en casilla "+position_x +", "+ position_y+ "Te han quedado "+num_cells+" casillas por descubrir!!");
-                        activity_final.putExtra("casillas_restantes",num_cells);
-
-                        startActivityForResult(activity_final,10);
                     }else{
                         num_cells--;
                         if (receivedData.isHave_timer()){
@@ -194,24 +164,19 @@ public class Partida extends AppCompatActivity{
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                         }
                         if (num_cells == 0){
-                            // PARTIDA GUANYADA - AGAFAR DADES I PASARLES AL SEGUENT INTENT
-                            // IMPLEMENTAR EXTRAS DE HAS GANADO - acabar
-                            activity_final = new Intent(getApplicationContext(),FinalActivity.class);
-                            startActivityForResult(activity_final,10);
+                            // PARTIDA GUANYADA
+                            int status_partida = 3;
+                            changeActivityToFinal(status_partida, 0);
                         }
                         int counter = numberSurroundingBombs(matrix,position);
                         view.setBackgroundResource(drawableOfNumbers[counter]);
-                        Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"I HAVE "+counter+" BOMBS SURROUNDING ME",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
-            //AIXO ESTA COMENTAT PQ LA FOTO Q TE PASSAT ABANS ESTAVA FETA AMB AIXO, PER MIRAR SI HO FEIA BÉ I ARA VOLIA COMPROVAR SI REACCIONAVA AL CLICK LA GRAELLA
-            //TE DONO PER A IDEA QUE NO M'HA DONAT TEMPS A MI, MIRAR DE FICAR EL LISTENER AQUÍ AL METODE GETVIEW PER ALS QUE SIGUIN BOMBES FER SETBACKGROUND
-
             return view;
         }
-
         @Override
         public int getCount() {
             return this.numberOfCells;
@@ -225,6 +190,38 @@ public class Partida extends AppCompatActivity{
         public long getItemId(int i) {
             return 0;
         }
+    }
+    // AQUESTA FUNCIÓ S'UTILITZA PER A PASAR LES DADES DE LA PARTIDA AL INTENT I AQUEST CAP A L'ACTIVITY FINAL
+    private void changeActivityToFinal(int status_partida,int position) {
+        activity_final = new Intent(getApplicationContext(),FinalActivity.class);
+        activity_final.putExtra("user_name",user_name);
+        activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
+        activity_final.putExtra("porcentage_minas_escogidas",percentage_bombs);
+        int num_minas = (int) ((numberOfcolumns * numberOfcolumns)* percentage_bombs);
+        activity_final.putExtra("total_minas",num_minas);
+        // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
+        activity_final.putExtra("tiempo_total",25000-tiempo_restante);
+        if (status_partida == 1){           // Estatus == 1 per a partides on s'acabe el temps
+            activity_final.putExtra("partida_status","Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado "+num_cells+" casillas por descubrir");
+            activity_final.putExtra("casillas_restantes",num_cells);
+        }
+        if (status_partida == 2){           // Estatus == 2 per a partides on s'ha clicat a una bomba
+            int position_x = position / numberOfcolumns;
+            int position_y = position % numberOfcolumns;
+            activity_final.putExtra("partida_status","Has perdido!! Bomba en casilla "+position_x +", "+ position_y+ ".\n"+"Te han quedado "+num_cells+" casillas por descubrir!!");
+            activity_final.putExtra("casillas_restantes",num_cells);
+        }
+        if (status_partida == 3){           // Estatus == 3 per a partides guanyades
+            activity_final.putExtra("casillas_restantes",num_cells);
+            if (receivedData.isHave_timer()){
+                activity_final.putExtra("partida_status","Has ganado!! Sin control de tiempo!!");
+            }
+            else{
+                activity_final.putExtra("partida_status","Has ganado!! Y te han sobrado "+(25000-tiempo_restante)+" segundos!");
+            }
+            activity_final.putExtra("casillas_restantes",num_cells);
+        }
+        startActivity(activity_final);
     }
 
 

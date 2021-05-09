@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Buscaminas</string>
-    <string name="main_title">Buscaminas</string>
+    <string name="main_title">WELCOME TO BUSCAMINAS</string>
     <string name="welcome_text">Welcome User Text</string>
     <string name="title_major">WELCOME</string>
     <string name="ajustes_image">ajustes image</string>
@@ -27,8 +27,8 @@
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="casillas"></string>
-    <string name="partida_en_marxa">PARTIDA EN MARXA!!</string>
-    <string name="seconds">TIMER</string>
+    <string name="partida_en_marxa">PARTIDA EN MARXA</string>
+    <string name="seconds"></string>
     <string name="title_activity_pantalla_final">PantallaFinal</string>
     <!--
     This string is used for square devices and overridden by hello_world in
