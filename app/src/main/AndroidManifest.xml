@@ -17,7 +17,8 @@
             android:exported="true"></service>
 
         <activity android:name=".FinalActivity" />
-        <activity android:name=".Partida">
+        <activity android:name=".Partida"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

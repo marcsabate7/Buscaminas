@@ -57,6 +57,12 @@ public class Partida extends AppCompatActivity{
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
 
+        // RESTORE SAVEINSTANCE STATE
+        if (savedInstanceState!= null){
+            //num_cells = savedInstanceState.getInt("casillas_restantes");
+            //tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+        }
+
         toStopService = new Intent(this,SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
@@ -68,6 +74,13 @@ public class Partida extends AppCompatActivity{
 
         user_name = receivedIntent.getStringExtra("userName");
         titol_partida.setText("PARTIDA EN MARXA, "+user_name.toUpperCase()+"!!");
+
+        graella = (GridView) findViewById(R.id.gridview);
+        CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
+        graella.setAdapter(gridAdapter);
+        graella.setNumColumns(numberOfcolumns);
+        num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
+        num_casillas.setText("Casillas por descubrir: "+num_cells);
 
         if (receivedData.isHave_timer()){
             //Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
@@ -96,19 +109,6 @@ public class Partida extends AppCompatActivity{
         }else{
             timer.setText("No hay tiempo!");
             timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-        }
-
-        graella = (GridView) findViewById(R.id.gridview);
-        CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
-        graella.setAdapter(gridAdapter);
-        graella.setNumColumns(numberOfcolumns);
-        num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
-        num_casillas.setText("Casillas por descubrir: "+num_cells);
-
-        // RESTORE SAVEINSTANCE STATE
-        if (savedInstanceState!= null){
-            num_cells = savedInstanceState.getInt("casillas_restantes");
-            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
         }
 
         if (receivedData.isHave_timer()){
@@ -150,7 +150,6 @@ public class Partida extends AppCompatActivity{
                         //Toast.makeText(getApplicationContext(),"I AM A BOMB",Toast.LENGTH_SHORT).show();
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
-                        stopService(toStopService);
                         timer.setText("GAME OVER");
                         int status_partida = 2;
                         changeActivityToFinal(status_partida, position);
@@ -192,8 +191,11 @@ public class Partida extends AppCompatActivity{
             return 0;
         }
     }
+
+
     // AQUESTA FUNCIÓ S'UTILITZA PER A PASAR LES DADES DE LA PARTIDA AL INTENT I AQUEST CAP A L'ACTIVITY FINAL
     private void changeActivityToFinal(int status_partida,int position) {
+        stopService(toStopService);
         activity_final = new Intent(getApplicationContext(),FinalActivity.class);
         activity_final.putExtra("user_name",user_name);
         activity_final.putExtra("casillas_totales",numberOfcolumns * numberOfcolumns);
