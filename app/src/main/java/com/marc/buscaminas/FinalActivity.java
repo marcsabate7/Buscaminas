@@ -73,11 +73,14 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 startActivity(emailIntent);
                 break;
             case R.id.buttonNovaPartida:
-                Intent intent = new Intent(this, Configuration.class);
-                startActivity(intent);
+                setResult(Configuration.RESTARTGAME);
+                finish();
+                System.exit(0);
                 break;
             case R.id.buttonSortir:
-                exitAppCLICK(v);
+                setResult(MainActivity.CLOSE_ALL);
+                finish();
+                System.exit(0);
                 break;
 
         }

@@ -31,6 +31,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private Intent intentToGame, intentToService;
     private Bundle bundle;
     private MediaPlayer boomSound;
+    public final static int RESTARTGAME = 20;
 
 
     @Override
@@ -121,6 +122,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
             setResult(MainActivity.CLOSE_ALL);
             finish();
             System.exit(0);
+        }else if(resultCode == RESTARTGAME){
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

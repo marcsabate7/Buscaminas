@@ -1,6 +1,7 @@
 package com.marc.buscaminas;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -221,9 +222,24 @@ public class Partida extends AppCompatActivity{
             }
             activity_final.putExtra("casillas_restantes",num_cells);
         }
-        startActivity(activity_final);
+        startActivityForResult(activity_final,3);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(resultCode==MainActivity.CLOSE_ALL){
+            setResult(MainActivity.CLOSE_ALL);
+            finish();
+            System.exit(0);
+        }else if(resultCode==Configuration.RESTARTGAME){
+            setResult(Configuration.RESTARTGAME);
+            finish();
+            System.exit(0);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void onBackPressed() {
