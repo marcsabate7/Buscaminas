@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class Partida extends AppCompatActivity {
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
+    CustomAdapter gridAdapter;
 
 
     @Override
@@ -57,11 +59,6 @@ public class Partida extends AppCompatActivity {
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
 
-        // RESTORE SAVEINSTANCE STATE
-        if (savedInstanceState != null) {
-            //num_cells = savedInstanceState.getInt("casillas_restantes");
-            //tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-        }
 
         toStopService = new Intent(this, SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
@@ -76,10 +73,18 @@ public class Partida extends AppCompatActivity {
         titol_partida.setText("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
 
         graella = (GridView) findViewById(R.id.gridview);
-        CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
+        gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
+
+        // RESTORE SAVEINSTANCE STATE
+        if (savedInstanceState != null) {
+            num_cells = savedInstanceState.getInt("casillas_restantes");
+            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+            graella = savedInstanceState.getParcelable("adapter");
+        }
+
         num_casillas.setText("Casillas por descubrir: " + num_cells);
 
         if (receivedData.isHave_timer()) {
@@ -325,7 +330,6 @@ public class Partida extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putLong("tiempo_restante", tiempo_restante);
         outState.putInt("casillas_restantes", num_cells);
     }
