@@ -33,6 +33,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
+        //setResult(RESULT_OK);
+
         btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
         btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);
         btn_salir = (Button) findViewById(R.id.buttonSortir);

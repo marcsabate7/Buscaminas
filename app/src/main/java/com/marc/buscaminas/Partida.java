@@ -48,7 +48,9 @@ public class Partida extends AppCompatActivity {
     TextView timer;
     TextView titol_partida;
     CustomAdapter gridAdapter;
+    CountDownTimer count_timer;
 
+    private static final int REQ_ACTIVITY_FINAL = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class Partida extends AppCompatActivity {
 
         if (receivedData.isHave_timer()) {
             //Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
-            new CountDownTimer(tiempo_restante, 1000) {
+            count_timer = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
                     tiempo_restante = l;
@@ -109,6 +111,7 @@ public class Partida extends AppCompatActivity {
                     timer.setText("GAME OVER");
                     int status_partida = 1;
                     changeActivityToFinal(status_partida, 0);
+
 
                 }
             }.start();
@@ -202,6 +205,7 @@ public class Partida extends AppCompatActivity {
         stopService(toStopService);
 
         toActivityFinal = new Intent(this, FinalActivity.class);
+        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);       // EN COMPTES DE CLEAR TOP PODER ES MILLOR FICAR ---> FLAG_ACTIVITY_SINGLE_TOP
         toActivityFinal.putExtra("user_name", user_name);
         toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
         toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
@@ -230,10 +234,13 @@ public class Partida extends AppCompatActivity {
             }
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        startActivityForResult(toActivityFinal, 1);
+
+        count_timer.cancel();
+        startActivity(toActivityFinal);                                                                         // AIXO SEGUR QUE S'HA DE FER AIXI AMB STARTACTIVITY() I DESPRES FINISH
+        finish();
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == MainActivity.CLOSE_ALL) {
@@ -241,9 +248,11 @@ public class Partida extends AppCompatActivity {
         } else if (resultCode == Configuration.RESTARTGAME ) {
             setResult(Configuration.RESTARTGAME);
         }
-        finish();
+        if(resultCode == RESULT_OK && requestCode == REQ_ACTIVITY_FINAL){
+            finishActivity(REQ_ACTIVITY_FINAL);
+        }
         System.exit(0);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -333,4 +342,5 @@ public class Partida extends AppCompatActivity {
         outState.putLong("tiempo_restante", tiempo_restante);
         outState.putInt("casillas_restantes", num_cells);
     }
+
 }
