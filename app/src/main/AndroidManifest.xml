@@ -21,8 +21,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Partida"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+        <activity android:name=".Partida">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

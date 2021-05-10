@@ -78,7 +78,6 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 startActivity(emailIntent);
                 break;
             case R.id.buttonNovaPartida:
-                Toast.makeText(this, "hello2", Toast.LENGTH_SHORT).show();
                 setResult(Configuration.RESTARTGAME);
                 finish();
                 break;
