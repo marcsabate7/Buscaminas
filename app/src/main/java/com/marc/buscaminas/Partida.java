@@ -43,6 +43,7 @@ public class Partida extends AppCompatActivity {
     String user_name;
     private Intent toActivityFinal;
     int num_cells;
+    private CountDownTimer time;
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
@@ -59,8 +60,8 @@ public class Partida extends AppCompatActivity {
 
         // RESTORE SAVEINSTANCE STATE
         if (savedInstanceState != null) {
-            //num_cells = savedInstanceState.getInt("casillas_restantes");
-            //tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+            num_cells = savedInstanceState.getInt("casillas_restantes");
+            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
         }
 
         toStopService = new Intent(this, SoundTrack.class);
@@ -83,8 +84,7 @@ public class Partida extends AppCompatActivity {
         num_casillas.setText("Casillas por descubrir: " + num_cells);
 
         if (receivedData.isHave_timer()) {
-            //Toast.makeText(getApplicationContext(),"EL TIMER ESTA ACTIVAT", Toast.LENGTH_LONG).show();
-            new CountDownTimer(tiempo_restante, 1000) {
+            time = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
                     tiempo_restante = l;
@@ -150,6 +150,7 @@ public class Partida extends AppCompatActivity {
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
+                        time.cancel();
                         timer.setText("GAME OVER");
                         changeActivityToFinal(2, position);
 
@@ -164,6 +165,7 @@ public class Partida extends AppCompatActivity {
                         }
                         if (num_cells == 0) {
                             // PARTIDA GUANYADA
+                            time.cancel();
                             changeActivityToFinal(3, 0);
                         }
                         int counter = numberSurroundingBombs(matrix, position);
@@ -203,7 +205,7 @@ public class Partida extends AppCompatActivity {
         int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
         toActivityFinal.putExtra("total_minas", num_minas);
         // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-        toActivityFinal.putExtra("tiempo_total", 25000 - tiempo_restante);
+        toActivityFinal.putExtra("tiempo_total", (tiempo_restante)/1000);
 
 
         if (status_partida == 1) {           // Estatus == 1 per a partides on s'acabe el temps
@@ -219,7 +221,7 @@ public class Partida extends AppCompatActivity {
         if (status_partida == 3) {           // Estatus == 3 per a partides guanyades
             toActivityFinal.putExtra("casillas_restantes", num_cells);
             if (receivedData.isHave_timer()) {
-                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (25000 - tiempo_restante) + " segundos!");
+                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (tiempo_restante)/1000 + " segundos!");
             } else {
                 toActivityFinal.putExtra("partida_status", "Has ganado!! Sin control de tiempo!!");
             }
