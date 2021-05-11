@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
@@ -60,7 +61,11 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
 
         Date myDate = new Date();
         status.setText(partida_status);
-        diayhora.setText(new SimpleDateFormat("dd-MM-yyyy-h-m").format(myDate));
+        String fecha = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+        fecha = "Fecha: "+fecha;
+        String fecha2 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        fecha2 = "Hora: "+fecha2;
+        diayhora.setText(fecha +" / " + fecha2);
         text_log.setText(log);
         text_email.setText("marc-saba@hotmail.com");
 

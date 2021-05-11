@@ -253,6 +253,7 @@ public class Partida extends AppCompatActivity {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
+                        // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
                         startActivityForResult(toActivityFinal, 1);
                     }
                 });

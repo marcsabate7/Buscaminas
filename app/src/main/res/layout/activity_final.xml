@@ -90,7 +90,7 @@
         android:id="@+id/buttonSortir"
         android:layout_width="163dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/colorButtonNormal"
+        android:backgroundTint="@color/red_low"
         android:text="Salir"
         android:textColor="@color/black"
         android:drawableLeft="@drawable/ic_poweroff"/>

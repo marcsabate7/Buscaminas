@@ -46,18 +46,21 @@
             android:id="@+id/buttonAyuda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_700"
             android:text="@string/button_ayuda" />
 
         <Button
             android:id="@+id/buttonIniciar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_700"
             android:text="@string/button_iniciar" />
 
         <Button
             android:id="@+id/buttonsalir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/red_low"
             android:text="@string/salir_text" />
     </LinearLayout>
 

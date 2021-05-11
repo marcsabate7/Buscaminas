@@ -256,16 +256,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <Button
                 android:id="@+id/EmpezarDesdeConfig"
                 android:layout_width="139dp"
                 android:layout_height="72dp"
                 android:layout_gravity="center"
-                android:background="#FFFFFF"
-                android:backgroundTint="#FFFFFF"
-                android:text="EMPEZAR"
-                android:textColor="@color/white" />
-
+                android:backgroundTint="@color/teal_700"
+                android:text="EMPEZAR" />
 
         </LinearLayout>
     </ScrollView>
