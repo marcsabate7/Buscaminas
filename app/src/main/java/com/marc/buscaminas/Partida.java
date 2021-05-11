@@ -6,31 +6,43 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.provider.ContactsContract;
+import android.service.controls.actions.CommandAction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Partida extends AppCompatActivity {
-    private Intent receivedIntent;
+    private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
     private int[] drawableOfNumbers;
     private DadesDePartida receivedData;
@@ -38,10 +50,9 @@ public class Partida extends AppCompatActivity {
     private int numberOfcolumns;
     private Intent toStopService;
     private GridView graella;
-    long tiempo_restante = 25000;
+    long tiempo_restante = 20000;
     float percentage_bombs;
     String user_name;
-    private Intent toActivityFinal;
     int num_cells;
     private CountDownTimer time;
     TextView num_casillas;
@@ -63,7 +74,6 @@ public class Partida extends AppCompatActivity {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
         }
-
         toStopService = new Intent(this, SoundTrack.class);
         drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
@@ -101,7 +111,7 @@ public class Partida extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     // PARTIDA PERDUDA PER TEMPS
-                    timer.setText("GAME OVER");
+                    //timer.setText("GAME OVER");
                     int status_partida = 1;
                     changeActivityToFinal(status_partida, 0);
 
@@ -150,7 +160,6 @@ public class Partida extends AppCompatActivity {
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
-                        time.cancel();
                         timer.setText("GAME OVER");
                         changeActivityToFinal(2, position);
 
@@ -165,7 +174,6 @@ public class Partida extends AppCompatActivity {
                         }
                         if (num_cells == 0) {
                             // PARTIDA GUANYADA
-                            time.cancel();
                             changeActivityToFinal(3, 0);
                         }
                         int counter = numberSurroundingBombs(matrix, position);
@@ -198,36 +206,58 @@ public class Partida extends AppCompatActivity {
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
 
+        if(time!=null)
+            time.cancel();
+
         toActivityFinal = new Intent(this, FinalActivity.class);
+        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         toActivityFinal.putExtra("user_name", user_name);
         toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
         toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
         int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
         toActivityFinal.putExtra("total_minas", num_minas);
         // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
-        toActivityFinal.putExtra("tiempo_total", (tiempo_restante)/1000);
+        toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
 
-        if (status_partida == 1) {           // Estatus == 1 per a partides on s'acabe el temps
+        if (status_partida == 1) { // Estatus == 1 per a partides on s'acabe el temps
+            showpopupTimeLoss();
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 2) {           // Estatus == 2 per a partides on s'ha clicat a una bomba
+        if (status_partida == 2) {
+            // Estatus == 2 per a partides on s'ha clicat a una bomba
+            showpopupBomb();
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
             toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 3) {           // Estatus == 3 per a partides guanyades
+        if (status_partida == 3) {
+            // Estatus == 3 per a partides guanyades
+            showpopupWin();
             toActivityFinal.putExtra("casillas_restantes", num_cells);
             if (receivedData.isHave_timer()) {
-                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (tiempo_restante)/1000 + " segundos!");
+                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (tiempo_restante) / 1000 + " segundos!");
             } else {
                 toActivityFinal.putExtra("partida_status", "Has ganado!! Sin control de tiempo!!");
             }
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        startActivityForResult(toActivityFinal, 1);
+
+
+
+        final Handler handler = new Handler();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        startActivityForResult(toActivityFinal, 1);
+                    }
+                });
+            }
+        }, 5000);
     }
 
     @Override
@@ -235,7 +265,7 @@ public class Partida extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == MainActivity.CLOSE_ALL) {
             setResult(MainActivity.CLOSE_ALL);
-        } else if (resultCode == Configuration.RESTARTGAME ) {
+        } else if (resultCode == Configuration.RESTARTGAME) {
             setResult(Configuration.RESTARTGAME);
         }
         finish();
@@ -323,6 +353,29 @@ public class Partida extends AppCompatActivity {
                 R.drawable.five, R.drawable.six, R.drawable.seven, R.drawable.eight};
     }
 
+    public void showpopupTimeLoss() {
+        AlertDialog.Builder popupTimeLoss = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.popuptimeloss, null);
+        popupTimeLoss.setView(view);
+        popupTimeLoss.create().show();
+    }
+
+    public void showpopupWin(){
+        AlertDialog.Builder popupWin = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.popupwin, null);
+        popupWin.setView(view);
+        popupWin.create().show();
+    }
+
+    public void showpopupBomb(){
+        AlertDialog.Builder popupBomb = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.popupbomb, null);
+        popupBomb.setView(view);
+        popupBomb.create().show();
+    }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {

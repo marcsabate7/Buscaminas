@@ -122,6 +122,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if(resultCode==MainActivity.CLOSE_ALL) {
+            Toast.makeText(this,"HELLO",Toast.LENGTH_SHORT).show();
             setResult(MainActivity.CLOSE_ALL);
             finish();
         }else if(resultCode == RESTARTGAME){

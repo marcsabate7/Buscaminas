@@ -22,4 +22,6 @@
     <style name="Theme.Buscaminas.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Buscaminas.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme">prova</style>
 </resources>
