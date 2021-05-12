@@ -57,7 +57,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
             startService(intentToService);
         }
 
-
         startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
         userName = findViewById(R.id.EditText_username);
         checkBoxTimer = findViewById(R.id.checkBox);

@@ -58,8 +58,8 @@ public class Partida extends AppCompatActivity {
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
-    public static int[] list_orientation;
-    int[] array_caught;
+    private int[] list_orientation;
+    private int[] array_caught;
     boolean is_change_orientation;
 
 
@@ -113,12 +113,13 @@ public class Partida extends AppCompatActivity {
             list_orientation[i] = -1;
         }
 
+
         // RESTORE SAVEINSTANCE STATE
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
             // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
-            int[] array_caught = savedInstanceState.getIntArray("array_orientation");
+            array_caught = savedInstanceState.getIntArray("array_orientation");
             is_change_orientation = true;
             /*System.out.println(array_caught);
             for(int i =0;i<array_caught.length;i++){
@@ -190,15 +191,16 @@ public class Partida extends AppCompatActivity {
                 view = inflter.inflate(R.layout.row_data, null);
             }
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
-            cell.setScaleType(ImageView.ScaleType.FIT_XY);
+
 
 
             if(is_change_orientation){
                 if(array_caught[position]!=-1){
                     view.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
+                    list_orientation[position] = array_caught[position];
                 }
             }
-
+            cell.setScaleType(ImageView.ScaleType.FIT_XY);
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
