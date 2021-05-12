@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:id="@+id/bombpopupmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="108dp"
+        android:layout_gravity="center"
+        android:background="#220E0E"
+        android:fontFamily="@font/freckle_face"
+        android:gravity="center"
+        android:text="@string/message_popupbomb"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="450dp"
+        android:layout_height="135dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            app:srcCompat="@drawable/bomb_image"
+            android:contentDescription="@string/bomb_image" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#DAFFFFFF"
+            android:paddingTop="20dp"
+            app:srcCompat="@drawable/calavera"
+            android:contentDescription="@string/calavera_description" />
+
+    </LinearLayout>
+
+</LinearLayout>

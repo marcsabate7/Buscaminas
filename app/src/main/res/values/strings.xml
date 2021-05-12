@@ -38,5 +38,11 @@
     <string name="resultados_partida">RESULTADOS PARTIDA</string>
     <string name="dia_activityfinal">Día y hora</string>
     <string name="log_activityfinal">Valores del LOG</string>
+    <string name="message_popupbomb">ALGO TE EXPLOTÓ</string>
+    <string name="calavera_description">es una imagen de calavera</string>
+    <string name="bomb_image">Es uan imagen de una bomba</string>
+    <string name="message_time_over">SE HA ACABADO EL TIEMPO</string>
+    <string name="victoria_text">VICTORIA !!</string>
+    <string name="desciption_victoria">copa_victoria</string>
 
 </resources>

@@ -58,6 +58,7 @@ public class Partida extends AppCompatActivity {
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
+    int[] list_orientation;
 
 
     @Override
@@ -73,14 +74,21 @@ public class Partida extends AppCompatActivity {
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
+        drawableOfNumbers = initialize_drawableOfNumbers();
 
         // RESTORE SAVEINSTANCE STATE
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-        }
+            int[] array_caught = savedInstanceState.getIntArray("array_orientation");
+            for(int i =0;i<array_caught.length;i++){
+                if(array_caught[i]!=-1){
+                    graella.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
+                }
+            }
+        }*/
         toStopService = new Intent(this, SoundTrack.class);
-        drawableOfNumbers = initialize_drawableOfNumbers();
+        //drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
         numberOfcolumns = receivedData.getNumero_graella();
@@ -97,6 +105,24 @@ public class Partida extends AppCompatActivity {
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
+        list_orientation = new int[numberOfcolumns*numberOfcolumns];
+        for(int i = 0;i<list_orientation.length;i++){
+            list_orientation[i] = -1;
+        }
+
+        // RESTORE SAVEINSTANCE STATE
+        if (savedInstanceState != null) {
+            num_cells = savedInstanceState.getInt("casillas_restantes");
+            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+            int[] array_caught = savedInstanceState.getIntArray("array_orientation");
+            for(int i =0;i<array_caught.length;i++){
+                if(array_caught[i]!=-1){
+                    System.out.println("\n"+i+ "  /  "+array_caught[i]+"\n");
+                    View tv = (View) graella.getChildAt(i);
+                    tv.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
+                }
+            }
+        }
 
         if (receivedData.isHave_timer()) {
             time = new CountDownTimer(tiempo_restante, 1000) {
@@ -162,6 +188,7 @@ public class Partida extends AppCompatActivity {
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    System.out.println("\n"+position+"\n");
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
@@ -182,6 +209,7 @@ public class Partida extends AppCompatActivity {
                             changeActivityToFinal(3, 0);
                         }
                         int counter = numberSurroundingBombs(matrix, position);
+                        list_orientation[position] = counter;
                         view.setBackgroundResource(drawableOfNumbers[counter]);
                     }
                 }
@@ -378,5 +406,7 @@ public class Partida extends AppCompatActivity {
 
         outState.putLong("tiempo_restante", tiempo_restante);
         outState.putInt("casillas_restantes", num_cells);
+        outState.putIntArray("array_orientation", list_orientation);
+
     }
 }
