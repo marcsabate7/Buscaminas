@@ -1,5 +1,6 @@
 package com.marc.buscaminas;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -21,6 +22,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class Configuration extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private CheckBox checkBoxTimer;
@@ -39,13 +45,18 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
+        boolean isroot = isTaskRoot();
+        Toast.makeText(this,String.valueOf(isroot),Toast.LENGTH_SHORT).show();
+
         bundle = new Bundle();
-        if(getIntent().getStringExtra("Music").equals("ON")) {
+        if(getIntent().getExtras()==null);
+        else if(getIntent().getStringExtra("Music").equals("ON")) {
             intentToService = new Intent(this, SoundTrack.class);
-            bundle.putString("start","start");
+            bundle.putString("start", "start");
             intentToService.putExtras(bundle);
             startService(intentToService);
         }
+
 
         startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
         userName = findViewById(R.id.EditText_username);
@@ -74,7 +85,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        setResult(MainActivity.CLOSE_ALL);
                         finish();
                     }
                 }).create().show();
@@ -111,24 +121,14 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                     intentToGame.putExtra("DadesDePartida", dataReady);
 
                     boomSound.start();
-                    startActivityForResult(intentToGame,2);
+                    intentToGame.addFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intentToGame);
                 }
                 break;
 
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        if(resultCode==MainActivity.CLOSE_ALL) {
-            Toast.makeText(this,"HELLO",Toast.LENGTH_SHORT).show();
-            setResult(MainActivity.CLOSE_ALL);
-            finish();
-        }else if(resultCode == RESTARTGAME){
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {

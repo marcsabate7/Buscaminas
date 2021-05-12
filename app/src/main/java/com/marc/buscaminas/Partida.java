@@ -64,6 +64,11 @@ public class Partida extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
+        /*
+        boolean isroot = isTaskRoot();
+        Toast.makeText(this,String.valueOf(isroot),Toast.LENGTH_SHORT).show();
+
+         */
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
@@ -181,7 +186,8 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
-
+            boolean isroot = isTaskRoot();
+            Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();
             return view;
         }
 
@@ -210,7 +216,6 @@ public class Partida extends AppCompatActivity {
             time.cancel();
 
         toActivityFinal = new Intent(this, FinalActivity.class);
-        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         toActivityFinal.putExtra("user_name", user_name);
         toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
         toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
@@ -254,24 +259,14 @@ public class Partida extends AppCompatActivity {
                 handler.post(new Runnable() {
                     public void run() {
                         // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
-                        startActivityForResult(toActivityFinal, 1);
+                        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(toActivityFinal);
                     }
                 });
             }
-        }, 5000);
+        }, 2000);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.CLOSE_ALL) {
-            setResult(MainActivity.CLOSE_ALL);
-        } else if (resultCode == Configuration.RESTARTGAME) {
-            setResult(Configuration.RESTARTGAME);
-        }
-        finish();
-        System.exit(0);
-    }
 
     @Override
     public void onBackPressed() {
@@ -285,7 +280,6 @@ public class Partida extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        setResult(MainActivity.CLOSE_ALL);
                         finish();
                     }
                 }).create().show();

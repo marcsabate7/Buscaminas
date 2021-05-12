@@ -34,7 +34,9 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
-        //setResult(RESULT_OK);
+        boolean isroot = isTaskRoot();
+        Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();
+
 
         btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
         btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);
@@ -85,7 +87,7 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 startActivity(emailIntent);
                 break;
             case R.id.buttonNovaPartida:
-                setResult(Configuration.RESTARTGAME);
+                startActivity(new Intent(this,Configuration.class));
                 finish();
                 break;
             case R.id.buttonSortir:
@@ -107,7 +109,6 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        setResult(MainActivity.CLOSE_ALL);
                         finish();
                     }
                 }).create().show();

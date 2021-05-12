@@ -11,6 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Intent toAyuda, toConfiguration;
@@ -54,21 +57,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     toConfiguration.putExtra("Music","ON");
                 else
                     toConfiguration.putExtra("Music","OFF");
-                startActivityForResult(toConfiguration,1);
+                toConfiguration.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(toConfiguration);
                 break;
             case R.id.buttonsalir:
                 exitAppCLICK(v);
                 break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode==CLOSE_ALL) {
-            finish();
-            System.exit(0);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void exitAppCLICK (View view) {
