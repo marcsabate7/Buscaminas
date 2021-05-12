@@ -117,11 +117,14 @@ public class Partida extends AppCompatActivity {
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
             // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
             int[] array_caught = savedInstanceState.getIntArray("array_orientation");
+            System.out.println(array_caught);
             for(int i =0;i<array_caught.length;i++){
                 if(array_caught[i]!=-1){
                     System.out.println("\n"+i+ "  /  "+array_caught[i]+"\n");
                     View tv = (View) graella.getChildAt(i);
-                    tv.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
+                    if (tv != null) {                                                         // TOTES SON NULL E PROVAT FICANT TAMBÉ LO DEL ADAPTER QUNA ES == NULL LO DEL INFLATER VAMOS I NO TIRE
+                        tv.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
+                    }
                 }
             }
         }
