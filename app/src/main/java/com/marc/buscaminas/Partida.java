@@ -105,6 +105,7 @@ public class Partida extends AppCompatActivity {
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
+        // INICIALITZACIÓ DEL ARRAY
         list_orientation = new int[numberOfcolumns*numberOfcolumns];
         for(int i = 0;i<list_orientation.length;i++){
             list_orientation[i] = -1;
@@ -114,6 +115,7 @@ public class Partida extends AppCompatActivity {
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+            // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
             int[] array_caught = savedInstanceState.getIntArray("array_orientation");
             for(int i =0;i<array_caught.length;i++){
                 if(array_caught[i]!=-1){
