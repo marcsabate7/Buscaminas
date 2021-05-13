@@ -193,10 +193,9 @@ public class Partida extends AppCompatActivity {
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
 
 
-
             if(is_change_orientation){
                 if(array_caught[position]!=-1){
-                    view.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
+                    cell.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
                     list_orientation[position] = array_caught[position];
                 }
             }
@@ -230,8 +229,8 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
-            boolean isroot = isTaskRoot();
-            Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();
+            /*boolean isroot = isTaskRoot();
+            Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();*/
             return view;
         }
 
@@ -256,8 +255,10 @@ public class Partida extends AppCompatActivity {
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
 
-        if(time!=null)
+        if(receivedData.isHave_timer()) {
+            Toast.makeText(this, "entro al cancel", Toast.LENGTH_SHORT).show();
             time.cancel();
+        }
 
         toActivityFinal = new Intent(this, FinalActivity.class);
         toActivityFinal.putExtra("user_name", user_name);
@@ -303,8 +304,10 @@ public class Partida extends AppCompatActivity {
                 handler.post(new Runnable() {
                     public void run() {
                         // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
-                        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        //toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Toast.makeText(getApplicationContext(),"Entrem handler",Toast.LENGTH_SHORT).show();
                         startActivity(toActivityFinal);
+                        finish();
                     }
                 });
             }

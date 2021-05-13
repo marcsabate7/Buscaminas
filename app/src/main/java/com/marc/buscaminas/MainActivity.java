@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.buttonAyuda:
                 startActivity(toAyuda);
+                finish();
                 break;
             case R.id.buttonIniciar:
                 if(switchMusic.isChecked())
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     toConfiguration.putExtra("Music","OFF");
                 toConfiguration.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(toConfiguration);
+                finish();
                 break;
             case R.id.buttonsalir:
                 exitAppCLICK(v);

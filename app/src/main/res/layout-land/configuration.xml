@@ -79,7 +79,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/EditText_username"
                         android:layout_width="222dp"
-                        android:layout_height="32dp"
+                        android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
                         android:focusable="auto"
                         android:focusableInTouchMode="true"
