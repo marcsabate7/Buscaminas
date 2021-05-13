@@ -39,7 +39,7 @@
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:text="Alias Identificativo"
@@ -55,8 +55,8 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="70dp"
-                android:layout_height="77dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -97,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="40dp"
-                android:layout_height="38dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_gridicon" />
 
@@ -122,7 +122,7 @@
             <RadioGroup
                 android:id="@+id/RadioGroupGraella"
                 android:layout_width="391dp"
-                android:layout_height="62dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="20dp">
@@ -160,7 +160,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <LinearLayout
@@ -185,7 +185,7 @@
                     <ImageView
                         android:id="@+id/imageView5"
                         android:layout_width="40dp"
-                        android:layout_height="38dp"
+                        android:layout_height="37dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_clockicon" />
 
