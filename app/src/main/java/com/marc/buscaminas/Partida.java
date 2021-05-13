@@ -46,7 +46,7 @@ public class Partida extends AppCompatActivity {
     private int[][] matrix;
     private int[] drawableOfNumbers;
     private DadesDePartida receivedData;
-    private List<Integer> listOfBombsIndexes;
+    private ArrayList<Integer> listOfBombsIndexes;
     private int numberOfcolumns;
     private Intent toStopService;
     private GridView graella;
@@ -54,7 +54,7 @@ public class Partida extends AppCompatActivity {
     float percentage_bombs;
     String user_name;
     int num_cells;
-    private CountDownTimer time;
+    CountDownTimer time;
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
@@ -78,17 +78,9 @@ public class Partida extends AppCompatActivity {
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
         drawableOfNumbers = initialize_drawableOfNumbers();
 
-        // RESTORE SAVEINSTANCE STATE
-        /*if (savedInstanceState != null) {
-            num_cells = savedInstanceState.getInt("casillas_restantes");
-            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-            int[] array_caught = savedInstanceState.getIntArray("array_orientation");
-            for(int i =0;i<array_caught.length;i++){
-                if(array_caught[i]!=-1){
-                    graella.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
-                }
-            }
-        }*/
+
+
+
         toStopService = new Intent(this, SoundTrack.class);
         //drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
@@ -96,8 +88,6 @@ public class Partida extends AppCompatActivity {
         numberOfcolumns = receivedData.getNumero_graella();
         percentage_bombs = receivedData.getPercentatge();
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
-        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
-
         user_name = receivedIntent.getStringExtra("userName");
         titol_partida.setText("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
 
@@ -113,25 +103,17 @@ public class Partida extends AppCompatActivity {
             list_orientation[i] = -1;
         }
 
-
-        // RESTORE SAVEINSTANCE STATE
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
             // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
             array_caught = savedInstanceState.getIntArray("array_orientation");
+            listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
             is_change_orientation = true;
-            /*System.out.println(array_caught);
-            for(int i =0;i<array_caught.length;i++){
-                if(array_caught[i]!=-1){
-                    System.out.println("\n"+i+ "  /  "+array_caught[i]+"\n");
-                    View tv = (View) graella.getChildAt(i);
-                    if (tv != null) {                                                         // TOTES SON NULL E PROVAT FICANT TAMBÉ LO DEL ADAPTER QUNA ES == NULL LO DEL INFLATER VAMOS I NO TIRE
-                        tv.setBackgroundResource(drawableOfNumbers[array_caught[i]]);
-                    }
-                }
-            }*/
         }
+
+        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
+
 
         if (receivedData.isHave_timer()) {
             time = new CountDownTimer(tiempo_restante, 1000) {
@@ -151,7 +133,6 @@ public class Partida extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     // PARTIDA PERDUDA PER TEMPS
-                    //timer.setText("GAME OVER");
                     int status_partida = 1;
                     changeActivityToFinal(status_partida, 0);
 
@@ -256,7 +237,7 @@ public class Partida extends AppCompatActivity {
         stopService(toStopService);
 
         if(receivedData.isHave_timer()) {
-            Toast.makeText(this, "entro al cancel", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "entro al cancel", Toast.LENGTH_SHORT).show();
             time.cancel();
         }
 
@@ -296,7 +277,6 @@ public class Partida extends AppCompatActivity {
         }
 
 
-
         final Handler handler = new Handler();
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -304,8 +284,8 @@ public class Partida extends AppCompatActivity {
                 handler.post(new Runnable() {
                     public void run() {
                         // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
-                        //toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Toast.makeText(getApplicationContext(),"Entrem handler",Toast.LENGTH_SHORT).show();
+                        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        //Toast.makeText(getApplicationContext(),"Entrem handler",Toast.LENGTH_SHORT).show();
                         startActivity(toActivityFinal);
                         finish();
                     }
@@ -332,9 +312,9 @@ public class Partida extends AppCompatActivity {
                 }).create().show();
     }
 
-    public List<Integer> bombs_index_list(int numColumns, float percentage) {
+    public ArrayList<Integer> bombs_index_list(int numColumns, float percentage) {
         Random random = new Random();
-        List<Integer> listOfIndexBomb = new ArrayList<>();
+        ArrayList<Integer> listOfIndexBomb = new ArrayList<>();
 
         int max_length = (int) ((numColumns * numColumns) * percentage);
 
@@ -422,10 +402,14 @@ public class Partida extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        if(receivedData.isHave_timer()) {
+            //Toast.makeText(this, "entro al cancel al onsave", Toast.LENGTH_SHORT).show();
+            time.cancel();
+        }
         outState.putLong("tiempo_restante", tiempo_restante);
         outState.putInt("casillas_restantes", num_cells);
         outState.putIntArray("array_orientation", list_orientation);
+        outState.putIntegerArrayList("list_bombs",listOfBombsIndexes);
 
     }
 }
