@@ -2,270 +2,266 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
     android:paddingStart="20dp"
     android:paddingRight="20dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/configuración"
+                android:layout_width="278dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:shadowRadius="15"
+                android:text="CONFIGURACIÓN"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="Alias Identificativo"
+                android:textColor="@color/teal_200"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="61dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/ic_usericon" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EditText_username"
+                    android:layout_width="291dp"
+                    android:layout_height="50dp"
+                    android:drawablePadding="15dp"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
+                    android:hint="UserName"
+                    android:inputType="text"
+                    android:shadowRadius="20" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_gridicon" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:text="@string/mida_graella"
+                android:textAlignment="textStart"
+                android:textColor="@color/teal_200"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/RadioGroupGraella"
+                android:layout_width="391dp"
+                android:layout_height="62dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingStart="20dp">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="7"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="6"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/lastRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="5"
+                    android:textSize="18sp" />
+            </RadioGroup>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="89dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/configuración"
-                    android:layout_width="278dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:shadowRadius="15"
-                    android:text="CONFIGURACIÓN"
-                    android:textAlignment="center"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="1"
-                    android:text="Alias Identificativo"
-                    android:textColor="@color/teal_200"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="92dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingEnd="20dp">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="61dp"
-                    android:layout_height="65dp"
-                    android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/ic_usericon" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/EditText_username"
-                        android:layout_width="291dp"
-                        android:layout_height="50dp"
-                        android:drawablePadding="15dp"
-                        android:focusable="auto"
-                        android:focusableInTouchMode="true"
-                        android:hint="UserName"
-                        android:inputType="text"
-                        android:shadowRadius="20" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:text="Control de tiempo"
+                android:textColor="@color/teal_200"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
                 android:orientation="horizontal"
                 android:paddingTop="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/imageView5"
+                    android:layout_width="44dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_gridicon" />
+                    app:srcCompat="@drawable/ic_clockicon" />
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="315dp"
-                    android:layout_height="wrap_content"
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                    android:layout_width="322dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingStart="10dp"
-                    android:text="@string/mida_graella"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/teal_200"
-                    android:textSize="18sp" />
+                    android:buttonTint="#7CB342"
+                    android:checked="false"
+                    android:scaleX="1"
+                    android:scaleY="1" />
             </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="% de Minas"
+                android:textColor="@color/teal_200"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
                 android:orientation="horizontal">
 
-                <RadioGroup
-                    android:id="@+id/RadioGroupGraella"
-                    android:layout_width="391dp"
-                    android:layout_height="62dp"
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="190dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="20dp">
+                    app:srcCompat="@drawable/ic_bomb" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="7"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="6"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/lastRadioButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="5"
-                        android:textSize="18sp" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="117dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView8"
+                <RadioGroup
+                    android:id="@+id/RadioGroupBombs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Control de tiempo"
-                    android:textColor="@color/teal_200"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="88dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="44dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_clockicon" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                        android:layout_width="322dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:buttonTint="#7CB342"
-                        android:checked="false"
-                        android:scaleX="1"
-                        android:scaleY="1" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="% de Minas"
-                    android:textColor="@color/teal_200"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:checkedButton="@+id/radioButton6"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="190dp"
+                    <RadioButton
+                        android:id="@+id/radioButton4"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_bomb" />
+                        android:text="15" />
 
-                    <RadioGroup
-                        android:id="@+id/RadioGroupBombs"
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/radioButton6"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:checkedButton="@+id/radioButton6">
+                        android:text="25" />
 
-                        <RadioButton
-                            android:id="@+id/radioButton4"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="15" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton6"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="25" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton5"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="35" />
-                    </RadioGroup>
-                </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/radioButton5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="35" />
+                </RadioGroup>
             </LinearLayout>
-
-
-            <Button
-                android:id="@+id/EmpezarDesdeConfig"
-                android:layout_width="139dp"
-                android:layout_height="72dp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/teal_700"
-                android:text="EMPEZAR" />
-
         </LinearLayout>
-    </ScrollView>
+
+
+        <Button
+            android:id="@+id/EmpezarDesdeConfig"
+            android:layout_width="139dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/teal_700"
+            android:text="EMPEZAR" />
+
+    </LinearLayout>
 
 </LinearLayout>
