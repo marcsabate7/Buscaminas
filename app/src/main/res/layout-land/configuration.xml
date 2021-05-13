@@ -50,7 +50,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="1dp">
 
 
             <ImageView
@@ -81,6 +82,7 @@
                     android:focusableInTouchMode="true"
                     android:hint="UserName"
                     android:inputType="text"
+                    android:padding="1dp"
                     android:shadowRadius="20" />
 
             </com.google.android.material.textfield.TextInputLayout>
