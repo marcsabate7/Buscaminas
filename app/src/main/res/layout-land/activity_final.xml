@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="494dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/partida_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/resultados_partida"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/partida_en_marxa"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dia_activityfinal" />
+
+        <EditText
+            android:id="@+id/editTextTextdiayhora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E-mail destinatario" />
+
+        <EditText
+            android:id="@+id/editTextTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:text=""
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/log_activityfinal" />
+
+        <EditText
+            android:id="@+id/editTextTextlog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/buttonEnviarEmail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:drawableLeft="@drawable/ic_mail"
+            android:text="Enviar E-mail"
+            android:textColor="@color/black"
+            app:iconPadding="0dp" />
+
+        <Button
+            android:id="@+id/buttonNovaPartida"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:drawableLeft="@drawable/ic_backarrowgreen"
+            android:text="Nueva Partida"
+            android:textColor="@color/black"
+            app:iconPadding="0dp" />
+
+        <Button
+            android:id="@+id/buttonSortir"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/red_low"
+            android:drawableLeft="@drawable/ic_poweroff"
+            android:text="Salir"
+            android:textColor="@color/black"
+            app:iconPadding="0dp" />
+    </LinearLayout>
+
+</LinearLayout>
