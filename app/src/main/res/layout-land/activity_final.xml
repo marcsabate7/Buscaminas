@@ -26,7 +26,6 @@
             android:id="@+id/textViewStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:text="@string/partida_en_marxa"
             android:textAlignment="center" />
 
@@ -79,7 +78,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <Button

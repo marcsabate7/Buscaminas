@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
@@ -14,10 +14,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/configuración"
@@ -32,8 +32,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -48,7 +48,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
@@ -58,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="61dp"
-                android:layout_height="65dp"
+                android:layout_width="49dp"
+                android:layout_height="55dp"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -69,7 +69,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
@@ -93,7 +93,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
@@ -108,7 +108,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="315dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="10dp"
@@ -119,7 +119,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -164,30 +164,30 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Control de tiempo"
                 android:textColor="@color/teal_200"
                 android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="10dp">
 
                 <ImageView
                     android:id="@+id/imageView5"
-                    android:layout_width="44dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="46dp"
+                    android:layout_height="61dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_clockicon" />
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                    android:layout_width="322dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="61dp"
                     android:layout_weight="1"
                     android:buttonTint="#7CB342"
                     android:checked="false"
@@ -203,7 +203,7 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="% de Minas"
                 android:textColor="@color/teal_200"
@@ -211,20 +211,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="127dp"
+                    android:layout_height="64dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_bomb" />
 
                 <RadioGroup
                     android:id="@+id/RadioGroupBombs"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="62dp"
                     android:layout_weight="1"
                     android:checkedButton="@+id/radioButton6"
                     android:orientation="horizontal">
@@ -256,10 +256,11 @@
 
         <Button
             android:id="@+id/EmpezarDesdeConfig"
-            android:layout_width="139dp"
-            android:layout_height="72dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/teal_700"
+            android:padding="15dp"
             android:text="EMPEZAR" />
 
     </LinearLayout>
