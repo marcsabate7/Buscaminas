@@ -16,6 +16,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="47dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:contentDescription="@string/description_ayuda"
             app:srcCompat="@drawable/ic_helpsign" />

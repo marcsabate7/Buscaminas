@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="350dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/white"
@@ -13,8 +13,11 @@
 
     <TextView
         android:id="@+id/bombpopupmessage"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="108dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="#220E0E"
         android:fontFamily="@font/freckle_face"
         android:gravity="center"
@@ -28,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="309dp"
+        android:layout_width="wrap_content"
         android:layout_height="135dp"
         android:layout_gravity="center"
         android:gravity="center"
