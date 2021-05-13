@@ -34,9 +34,6 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
-        boolean isroot = isTaskRoot();
-        Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();
-
 
         btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
         btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);

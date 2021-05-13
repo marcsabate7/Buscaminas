@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -40,6 +41,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.graphics.Color.TRANSPARENT;
+
 
 public class Partida extends AppCompatActivity {
     private Intent receivedIntent, toActivityFinal;
@@ -58,8 +61,7 @@ public class Partida extends AppCompatActivity {
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
-    private int[] list_orientation;
-    private int[] array_caught;
+    private int[] list_orientation, array_caught, list_of_flags, flags_caught;
     boolean is_change_orientation;
 
 
@@ -67,11 +69,7 @@ public class Partida extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
-        /*
-        boolean isroot = isTaskRoot();
-        Toast.makeText(this,String.valueOf(isroot),Toast.LENGTH_SHORT).show();
 
-         */
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
@@ -82,7 +80,6 @@ public class Partida extends AppCompatActivity {
 
 
         toStopService = new Intent(this, SoundTrack.class);
-        //drawableOfNumbers = initialize_drawableOfNumbers();
         receivedIntent = getIntent();
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
         numberOfcolumns = receivedData.getNumero_graella();
@@ -99,9 +96,15 @@ public class Partida extends AppCompatActivity {
         num_casillas.setText("Casillas por descubrir: " + num_cells);
         // INICIALITZACIÓ DEL ARRAY
         list_orientation = new int[numberOfcolumns*numberOfcolumns];
+        list_of_flags = new int[numberOfcolumns*numberOfcolumns];
         for(int i = 0;i<list_orientation.length;i++){
             list_orientation[i] = -1;
+            list_of_flags[i]=-1;
         }
+
+
+
+
 
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
@@ -109,6 +112,8 @@ public class Partida extends AppCompatActivity {
             // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
             array_caught = savedInstanceState.getIntArray("array_orientation");
             listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
+            flags_caught = savedInstanceState.getIntArray("flags_posades");
+
             is_change_orientation = true;
         }
 
@@ -159,6 +164,7 @@ public class Partida extends AppCompatActivity {
         private ImageButton cell;
         private int numberOfCells;
         private LayoutInflater inflter;
+        private Drawable defaultbackgrond;
 
         public CustomAdapter(Context c, int numberOfCells) {
             this.context = c;
@@ -172,15 +178,37 @@ public class Partida extends AppCompatActivity {
                 view = inflter.inflate(R.layout.row_data, null);
             }
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
-
+            defaultbackgrond = cell.getBackground();
 
             if(is_change_orientation){
                 if(array_caught[position]!=-1){
                     cell.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
                     list_orientation[position] = array_caught[position];
+                    notifyDataSetChanged();
+                }
+                if(flags_caught[position]==0){
+                    list_of_flags[position]=0;
+                    cell.setBackgroundResource(R.drawable.blueflag);
                 }
             }
             cell.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            cell.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    if(view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())){
+                        Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY",Toast.LENGTH_SHORT).show();
+                        view.setBackground(defaultbackgrond);
+                        list_of_flags[position]=-1;
+                    }else {
+                        view.setBackgroundResource(R.drawable.blueflag);
+                        list_of_flags[position]=0;
+                    }
+                    return true;
+                }
+            });
+
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -190,6 +218,7 @@ public class Partida extends AppCompatActivity {
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
                         changeActivityToFinal(2, position);
+
 
                     } else {
                         num_cells--;
@@ -210,8 +239,6 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
-            /*boolean isroot = isTaskRoot();
-            Toast.makeText(getApplicationContext(),String.valueOf(isroot),Toast.LENGTH_SHORT).show();*/
             return view;
         }
 
@@ -410,5 +437,6 @@ public class Partida extends AppCompatActivity {
         outState.putInt("casillas_restantes", num_cells);
         outState.putIntArray("array_orientation", list_orientation);
         outState.putIntegerArrayList("list_bombs",listOfBombsIndexes);
+        outState.putIntArray("flags_posades", list_of_flags);
     }
 }

@@ -45,8 +45,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
-        //boolean isroot = isTaskRoot();
-        //Toast.makeText(this,String.valueOf(isroot),Toast.LENGTH_SHORT).show();
 
         bundle = new Bundle();
         if(getIntent().getExtras()==null);
