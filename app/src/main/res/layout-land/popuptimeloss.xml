@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_weight="1"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/game_over"
         app:srcCompat="@drawable/ic_gameover" />
 
 </LinearLayout>

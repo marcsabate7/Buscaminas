@@ -16,7 +16,7 @@
         android:layout_height="117dp"
         android:fontFamily="@font/freckle_face"
         android:gravity="center"
-        android:text="SE HA ACABADO EL TIEMPO"
+        android:text="@string/message_time_over"
         android:textAlignment="center"
         android:textColor="#FDD835"
         android:textSize="36sp"
@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="225dp"
         android:layout_weight="1"
+        android:contentDescription="@string/game_over"
         app:srcCompat="@drawable/ic_gameover" />
 
 </LinearLayout>

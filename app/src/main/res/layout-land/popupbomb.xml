@@ -41,7 +41,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:contentDescription="@string/bomb_image"
+            android:contentDescription="@string/image_bomb"
             android:paddingBottom="10dp"
             app:srcCompat="@drawable/bomb_image" />
 

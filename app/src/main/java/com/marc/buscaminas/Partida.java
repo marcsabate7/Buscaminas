@@ -410,6 +410,5 @@ public class Partida extends AppCompatActivity {
         outState.putInt("casillas_restantes", num_cells);
         outState.putIntArray("array_orientation", list_orientation);
         outState.putIntegerArrayList("list_bombs",listOfBombsIndexes);
-
     }
 }

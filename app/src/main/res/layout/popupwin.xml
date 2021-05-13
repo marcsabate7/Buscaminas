@@ -15,7 +15,7 @@
         android:background="#220E0E"
         android:fontFamily="@font/freckle_face"
         android:gravity="center"
-        android:text="VICTORIA !!"
+        android:text="@string/message_victoria"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
@@ -30,6 +30,7 @@
         android:layout_height="236dp"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:contentDescription="@string/desciption_victoria"
         android:paddingTop="20dp"
         app:srcCompat="@drawable/ic_trophy" />
 

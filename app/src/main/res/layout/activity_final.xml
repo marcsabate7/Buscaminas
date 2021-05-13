@@ -50,13 +50,14 @@
         android:layout_height="match_parent"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="" />
+        android:text=""
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="E-mail destinatario" />
+        android:text="@string/text_email" />
 
     <EditText
         android:id="@+id/editTextTextEmail"
@@ -65,7 +66,8 @@
         android:layout_marginBottom="30dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="" />
+        android:text=""
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/buttonEnviarEmail"
@@ -73,7 +75,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/teal_700"
         android:drawableLeft="@drawable/ic_mail"
-        android:text="Enviar E-mail"
+        android:text="@string/email_button"
         android:textColor="@color/black" />
 
     <Button
@@ -82,7 +84,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/teal_700"
         android:drawableLeft="@drawable/ic_backarrowgreen"
-        android:text="Nueva Partida"
+        android:text="@string/nueva_partida_button"
         android:textColor="@color/black" />
 
     <Button
@@ -91,6 +93,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/red_low"
         android:drawableLeft="@drawable/ic_poweroff"
-        android:text="Salir"
+        android:text="@string/salir_text"
         android:textColor="@color/black" />
 </LinearLayout>

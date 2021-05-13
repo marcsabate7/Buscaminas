@@ -7,6 +7,7 @@
     <string name="salir_text">Salir</string>
     <string name="button_iniciar">INICIAR PARTIDA</string>
     <string name="button_ayuda">AYUDA</string>
+    <string name="image_bomb">Es uan imagen de una bomba</string>
     <string name="text_ayuda">
         El juego consiste en despejar todas las casillas de una parrilla que no oculten una mina.\n
         Algunas casillas tienen un número, este número indica las minas que suman todas las casillas circundantes. Así, si una casilla tiene
@@ -23,7 +24,7 @@
     <string name="back_pantalla_inicio">VOLVER</string>
     <string name="mida_graella">Mida Graella</string>
     <string name="title_activity_partida">Partida</string>
-    <string name="quitMessageConfirmation">Está seguro de querer abandonar la aplicación?</string>
+    <string name="quitMessageConfirmation">Está seguro de que desea abandonar la aplicación?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="casillas"></string>
@@ -40,9 +41,15 @@
     <string name="log_activityfinal">Valores del LOG</string>
     <string name="message_popupbomb">ALGO TE EXPLOTÓ</string>
     <string name="calavera_description">es una imagen de calavera</string>
-    <string name="bomb_image">Es uan imagen de una bomba</string>
     <string name="message_time_over">SE HA ACABADO EL TIEMPO</string>
     <string name="victoria_text">VICTORIA !!</string>
     <string name="desciption_victoria">copa_victoria</string>
+    <string name="text_email">E-mail destinatario</string>
+    <string name="email_button">Enviar E-mail</string>
+    <string name="nueva_partida_button">Nueva Partida</string>
+    <string name="sonido_button">SONIDO</string>
+    <string name="game_over">gave over image</string>
+    <string name="message_victoria">VICTORIA !!</string>
+    <string name="copa_image">copa</string>
 
 </resources>
