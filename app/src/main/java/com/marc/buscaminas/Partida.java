@@ -96,6 +96,7 @@ public class Partida extends AppCompatActivity {
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
+
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
         // INICIALITZACIÓ DEL ARRAY
