@@ -22,7 +22,7 @@
     <string name="title_section">AYUDA</string>
     <string name="description_ayuda">description</string>
     <string name="back_pantalla_inicio">VOLVER</string>
-    <string name="mida_graella">Mida Graella</string>
+    <string name="mida_graella"> Tamaño de la parrilla</string>
     <string name="title_activity_partida">Partida</string>
     <string name="quitMessageConfirmation">Está seguro de que desea abandonar la aplicación?</string>
     <string name="yes">Sí</string>
