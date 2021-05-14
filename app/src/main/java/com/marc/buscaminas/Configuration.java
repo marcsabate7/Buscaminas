@@ -96,7 +96,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
             case R.id.EmpezarDesdeConfig:
 
                 if (userName.getText().toString().trim().equalsIgnoreCase("")) {
-                    userName.setError("This field can not be blank");
+                    userName.setError("Completa el nombre para empezar la partida!");
+                    Toast.makeText(this,"Campo nombre vacio, completalo para empezar la partida!",Toast.LENGTH_SHORT).show();
                 } else if (idButtonParrilla == -1) {
                     RadioButton radioButton = (RadioButton) findViewById(R.id.lastRadioButton);
                     radioButton.setError("An option must be selected");

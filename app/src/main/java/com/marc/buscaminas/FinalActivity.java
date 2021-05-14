@@ -73,14 +73,20 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonEnviarEmail:
-                Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
-                String correu = text_email.getText().toString();
-                String[] TO = {correu};
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO); // * configurar email aquí!
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Log partida buscaminas");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, partida_status + "\n" + log);
-                startActivity(emailIntent);
+                if (text_email.getText().toString().trim().equalsIgnoreCase("")) {
+                    text_email.setError("This field can not be blank");
+                    Toast.makeText(this,"Campo email vacio, completalo para enviar email!",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
+                    String correu = text_email.getText().toString();
+                    String[] TO = {correu};
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, TO); // * configurar email aquí!
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Log partida buscaminas");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, partida_status + "\n" + log);
+                    startActivity(emailIntent);
+                }
                 break;
             case R.id.buttonNovaPartida:
                 startActivity(new Intent(this,Configuration.class));
