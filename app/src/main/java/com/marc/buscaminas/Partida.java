@@ -18,6 +18,8 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.service.controls.actions.CommandAction;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +88,9 @@ public class Partida extends AppCompatActivity {
         percentage_bombs = receivedData.getPercentatge();
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
         user_name = receivedIntent.getStringExtra("userName");
-        titol_partida.setText("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
+        SpannableString mitextoU = new SpannableString("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
+        mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
+        titol_partida.setText(mitextoU);
 
         graella = (GridView) findViewById(R.id.gridview);
         CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);

@@ -51,5 +51,6 @@
     <string name="game_over">gave over image</string>
     <string name="message_victoria">VICTORIA !!</string>
     <string name="copa_image">copa</string>
+    <string name="message_flag">*Para poner/quitar una bandera manten la celda pulsada</string>
 
 </resources>
