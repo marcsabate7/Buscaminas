@@ -67,7 +67,8 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text=""
-        android:autofillHints="" />
+        android:autofillHints=""
+        android:hint="marc-saba@hotmail.com"/>
 
     <Button
         android:id="@+id/buttonEnviarEmail"

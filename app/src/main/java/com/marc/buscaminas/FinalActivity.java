@@ -66,7 +66,6 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         fecha2 = "Hora: "+fecha2;
         diayhora.setText(fecha +" / " + fecha2);
         text_log.setText(log);
-        text_email.setText("marc-saba@hotmail.com");
 
     }
 

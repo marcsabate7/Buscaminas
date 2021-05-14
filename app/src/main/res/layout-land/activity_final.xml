@@ -75,7 +75,8 @@
             android:inputType="textEmailAddress"
             android:text=""
             android:textSize="12sp"
-            android:autofillHints="" />
+            android:autofillHints=""
+            android:hint="marc-saba@hotmail.com"/>
 
     </LinearLayout>
 
