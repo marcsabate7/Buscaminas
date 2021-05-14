@@ -68,7 +68,8 @@
                 android:shadowColor="#FFFFFF"
                 android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="@string/sonido_button"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
