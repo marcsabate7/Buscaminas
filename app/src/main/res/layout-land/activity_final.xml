@@ -46,6 +46,22 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/log_activityfinal" />
+
+        <EditText
+            android:id="@+id/editTextTextlog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textSize="12sp" />
+
+        <TextView
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,22 +73,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:text=""
-            android:textSize="12sp"
-            android:autofillHints="" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/log_activityfinal" />
-
-        <EditText
-            android:id="@+id/editTextTextlog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:text=""
             android:textSize="12sp"
             android:autofillHints="" />
