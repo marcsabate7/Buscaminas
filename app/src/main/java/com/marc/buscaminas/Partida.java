@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -290,6 +291,8 @@ public class Partida extends AppCompatActivity {
         }
         if (status_partida == 2) {
             // Estatus == 2 per a partides on s'ha clicat a una bomba
+            MediaPlayer boom = MediaPlayer.create(this,R.raw.boomsound);
+            boom.start();
             showpopupBomb();
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
