@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="206dp"
@@ -37,14 +39,19 @@
 
     <GridView
         android:id="@+id/gridview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:alwaysDrawnWithCache="true"
         android:animateLayoutChanges="true"
         android:background="#A13535"
+        android:fadeScrollbars="false"
+        android:fastScrollEnabled="false"
         android:gravity="center"
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
+        android:padding="10dp"
+        android:scrollbars="none"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp"></GridView>
 
