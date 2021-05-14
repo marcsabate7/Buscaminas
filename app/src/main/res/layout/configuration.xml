@@ -21,8 +21,8 @@
 
             <TextView
                 android:id="@+id/configuración"
-                android:layout_width="278dp"
-                android:layout_height="79dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowRadius="15"
