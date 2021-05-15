@@ -205,11 +205,23 @@ public class Partida extends AppCompatActivity {
 
                     if(view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())){
                         Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY",Toast.LENGTH_SHORT).show();
-                        view.setBackground(defaultbackgrond);
+                        if(list_orientation[position]!=-1) {
+                            view.setBackgroundResource(drawableOfNumbers[list_orientation[position]]);
+                        }
+                        else
+                            view.setBackground(defaultbackgrond);
                         list_of_flags[position]=-1;
                     }else {
                         view.setBackgroundResource(R.drawable.blueflag);
                         list_of_flags[position]=0;
+                    }
+
+                    if (receivedData.isHave_timer()) {
+                        num_casillas.setText("Casillas por descubrir: " + num_cells);
+                        num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    } else {
+                        num_casillas.setText("Casillas por descubrir: " + num_cells);
+                        num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                     }
                     return true;
                 }
@@ -227,7 +239,11 @@ public class Partida extends AppCompatActivity {
 
 
                     } else {
-                        num_cells--;
+
+                        if(list_orientation[position]==-1) {
+                            num_cells--;
+                        }
+
                         if (receivedData.isHave_timer()) {
                             num_casillas.setText("Casillas por descubrir: " + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));

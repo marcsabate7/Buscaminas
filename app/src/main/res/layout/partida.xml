@@ -20,18 +20,24 @@
         <TextView
             android:id="@+id/textViewPartidaMarxa"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="7dp"
+            android:gravity="center"
             android:text="@string/partida_en_marxa"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_flag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="253dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
             android:text="@string/message_flag"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#F8000000" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,14 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/casillas" />
+                android:text="@string/casillas"
+                android:textColor="#FFFEFE" />
 
             <TextView
                 android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/seconds" />
+                android:text="@string/seconds"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </LinearLayout>
@@ -62,14 +70,15 @@
         android:layout_height="wrap_content"
         android:background="#A13535"
         android:gravity="center"
-        android:padding="3dp"
         android:horizontalSpacing="3dp"
         android:numColumns="auto_fit"
+        android:padding="3dp"
         android:verticalSpacing="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.275"></GridView>
+        app:layout_constraintVertical_bias="0.242"></GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
