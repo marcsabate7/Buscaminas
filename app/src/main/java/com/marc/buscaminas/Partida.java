@@ -336,7 +336,6 @@ public class Partida extends AppCompatActivity {
                     public void run() {
                         // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
                         toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        //Toast.makeText(getApplicationContext(),"Entrem handler",Toast.LENGTH_SHORT).show();
                         startActivity(toActivityFinal);
                         finish();
                     }
@@ -432,6 +431,7 @@ public class Partida extends AppCompatActivity {
         View view = inflater.inflate(R.layout.popuptimeloss, null);
         popupTimeLoss.setView(view);
         popupTimeLoss.create().show();
+        popupTimeLoss.setCancelable(false);
     }
 
     public void showpopupWin(){
@@ -440,6 +440,7 @@ public class Partida extends AppCompatActivity {
         View view = inflater.inflate(R.layout.popupwin, null);
         popupWin.setView(view);
         popupWin.create().show();
+        popupWin.setCancelable(false);
     }
 
     public void showpopupBomb(){
@@ -448,6 +449,7 @@ public class Partida extends AppCompatActivity {
         View view = inflater.inflate(R.layout.popupbomb, null);
         popupBomb.setView(view);
         popupBomb.create().show();
+        popupBomb.setCancelable(false);
     }
 
     @Override

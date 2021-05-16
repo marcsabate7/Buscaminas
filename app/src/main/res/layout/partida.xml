@@ -10,14 +10,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="409dp"
-        android:layout_height="152dp"
+        android:layout_width="347dp"
+        android:layout_height="173dp"
         android:orientation="vertical"
         android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027">
 
         <TextView
             android:id="@+id/textViewPartidaMarxa"
@@ -53,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/casillas"
                 android:textColor="#FFFEFE" />
 
@@ -61,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/seconds"
                 android:textColor="#FFFFFF" />
 
