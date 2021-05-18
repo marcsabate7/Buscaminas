@@ -235,8 +235,8 @@ public class Partida extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
-                        changeActivityToFinal(2, position);
 
+                        changeActivityToFinal(2, position);
 
                     } else {
 
@@ -309,6 +309,24 @@ public class Partida extends AppCompatActivity {
             // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this,R.raw.boomsound);
             boom.start();
+
+            for(int i = 0;i<graella.getChildCount();i++){
+                if(listOfBombsIndexes.contains(i)){
+                    graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
+                }
+            }
+
+            final Handler handler = new Handler();
+            Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                public void run() {
+                    handler.post(new Runnable() {
+                        public void run() {
+                        }
+                    });
+                }
+            }, 2000);
+
             showpopupBomb();
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
@@ -449,6 +467,7 @@ public class Partida extends AppCompatActivity {
         View view = inflater.inflate(R.layout.popupbomb, null);
         popupBomb.setView(view);
         popupBomb.setCancelable(false);
+        popupBomb.create().show();
     }
 
     @Override

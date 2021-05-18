@@ -2,23 +2,21 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout"
     android:layout_width="347dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:layout_gravity="center_horizontal"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/textViewPartidaMarxa"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="7dp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:includeFontPadding="false"
         android:text="@string/partida_en_marxa"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -29,7 +27,6 @@
         android:id="@+id/text_flag"
         android:layout_width="253dp"
         android:layout_height="40dp"
-        android:layout_gravity="center"
         android:text="@string/message_flag"
         android:textAlignment="center"
         android:textColor="#F8000000" />
@@ -71,7 +68,6 @@
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A13535"
             android:gravity="center"
             android:horizontalSpacing="3dp"
             android:numColumns="auto_fit"
