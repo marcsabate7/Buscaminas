@@ -236,7 +236,30 @@ public class Partida extends AppCompatActivity {
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
 
-                        changeActivityToFinal(2, position);
+                        /*for(int i = 0;i<listOfBombsIndexes.size();i++){
+                            graella.getChildAt(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
+                        }*/
+
+                        /*for(int i = 0;i<graella.getChildCount();i++){
+                            if(listOfBombsIndexes.contains(i)){
+                                //graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
+                                //Toast.makeText(getApplicationContext(),"TOast handler",Toast.LENGTH_SHORT).show();
+                            }
+                        }*/
+                        graella.getChildAt(3).setBackgroundResource(R.drawable.ic_bomb2);
+                        final Handler handler = new Handler();
+                        Timer t = new Timer();
+                        t.schedule(new TimerTask() {
+                            public void run() {
+                                handler.post(new Runnable() {
+                                    public void run() {
+                                        changeActivityToFinal(2, position);
+                                    }
+                                });
+                            }
+                        }, 10000);
+
+                        //changeActivityToFinal(2, position);
 
                     } else {
 
@@ -309,24 +332,6 @@ public class Partida extends AppCompatActivity {
             // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this,R.raw.boomsound);
             boom.start();
-
-            for(int i = 0;i<graella.getChildCount();i++){
-                if(listOfBombsIndexes.contains(i)){
-                    graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
-                }
-            }
-
-            final Handler handler = new Handler();
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                public void run() {
-                    handler.post(new Runnable() {
-                        public void run() {
-                        }
-                    });
-                }
-            }, 2000);
-
             showpopupBomb();
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
