@@ -430,6 +430,7 @@ public class Partida extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.popuptimeloss, null);
         popupTimeLoss.setView(view);
+        popupTimeLoss.setCancelable(false);
         popupTimeLoss.create().show();
         popupTimeLoss.setCancelable(false);
     }
@@ -439,6 +440,7 @@ public class Partida extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.popupwin, null);
         popupWin.setView(view);
+        popupWin.setCancelable(false);
         popupWin.create().show();
         popupWin.setCancelable(false);
     }
@@ -448,6 +450,7 @@ public class Partida extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.popupbomb, null);
         popupBomb.setView(view);
+        popupBomb.setCancelable(false);
         popupBomb.create().show();
         popupBomb.setCancelable(false);
     }
