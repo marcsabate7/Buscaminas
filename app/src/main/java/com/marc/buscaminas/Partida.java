@@ -56,6 +56,7 @@ public class Partida extends AppCompatActivity {
     private int numberOfcolumns;
     private Intent toStopService;
     private GridView graella;
+    private CustomAdapter gridAdapter;
     long tiempo_restante = 20000;
     float percentage_bombs;
     String user_name;
@@ -94,7 +95,7 @@ public class Partida extends AppCompatActivity {
         titol_partida.setText(mitextoU);
 
         graella = (GridView) findViewById(R.id.gridview);
-        CustomAdapter gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
+        gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
 
@@ -178,11 +179,14 @@ public class Partida extends AppCompatActivity {
             this.numberOfCells = numberOfCells;
         }
 
+
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             if (view == null) {
                 view = inflter.inflate(R.layout.row_data, null);
             }
+
+
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
             defaultbackgrond = cell.getBackground();
 
@@ -197,6 +201,7 @@ public class Partida extends AppCompatActivity {
                     cell.setBackgroundResource(R.drawable.blueflag);
                 }
             }
+
             cell.setScaleType(ImageView.ScaleType.FIT_XY);
 
             cell.setOnLongClickListener(new View.OnLongClickListener() {
@@ -236,30 +241,31 @@ public class Partida extends AppCompatActivity {
                         // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
 
+                        /*
+                        Toast.makeText(getApplicationContext()," "+graella.getChildCount(),Toast.LENGTH_SHORT).show();
+                        int sum =0 ;
+
+                        if(graella.getChildAt(position).equals(view))
+                            Toast.makeText(getApplicationContext(),"HELLO THERE",Toast.LENGTH_SHORT).show();
+
+
+                        for(int i=0; i<graella.getChildCount();i++){
+                            if(i!=position && listOfBombsIndexes.contains(i)) {
+                                graella.getChildAt()
+                                Toast.makeText(getApplicationContext(),"")
+                                //graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
+                                sum++;
+                            }
+                        }
+                        Toast.makeText(getApplicationContext()," "+sum,Toast.LENGTH_SHORT).show();
+
+                             */
+
                         /*for(int i = 0;i<listOfBombsIndexes.size();i++){
                             graella.getChildAt(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
                         }*/
 
-                        /*for(int i = 0;i<graella.getChildCount();i++){
-                            if(listOfBombsIndexes.contains(i)){
-                                //graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
-                                //Toast.makeText(getApplicationContext(),"TOast handler",Toast.LENGTH_SHORT).show();
-                            }
-                        }*/
-                        graella.getChildAt(3).setBackgroundResource(R.drawable.ic_bomb2);
-                        final Handler handler = new Handler();
-                        Timer t = new Timer();
-                        t.schedule(new TimerTask() {
-                            public void run() {
-                                handler.post(new Runnable() {
-                                    public void run() {
-                                        changeActivityToFinal(2, position);
-                                    }
-                                });
-                            }
-                        }, 10000);
-
-                        //changeActivityToFinal(2, position);
+                        changeActivityToFinal(2, position);
 
                     } else {
 
@@ -332,7 +338,21 @@ public class Partida extends AppCompatActivity {
             // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this,R.raw.boomsound);
             boom.start();
-            showpopupBomb();
+
+
+            final Handler handler = new Handler();
+            Timer t = new Timer();
+            t.schedule(new TimerTask() {
+                public void run() {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            showpopupBomb();
+                        }
+                    });
+                }
+            }, 4000);
+
+
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
             toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
@@ -364,7 +384,7 @@ public class Partida extends AppCompatActivity {
                     }
                 });
             }
-        }, 2000);
+        }, 5000);
     }
 
 
