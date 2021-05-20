@@ -5,7 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -514,5 +517,19 @@ public class Partida extends AppCompatActivity {
         outState.putIntArray("array_orientation", list_orientation);
         outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
         outState.putIntArray("flags_posades", list_of_flags);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Comprovar si sonido esta activat, si ho esta apagarlo
+        stopService(toStopService);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Comprovar si sonido haurie de estar activat si ho esta engeggarlo
+        startService(toStopService);
     }
 }
