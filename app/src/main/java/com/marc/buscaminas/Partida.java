@@ -53,6 +53,7 @@ public class Partida extends AppCompatActivity {
     private int[] drawableOfNumbers;
     private DadesDePartida receivedData;
     private ArrayList<Integer> listOfBombsIndexes;
+    private List<ImageButton> copyofviews = new ArrayList<>();
     private int numberOfcolumns;
     private Intent toStopService;
     private GridView graella;
@@ -69,6 +70,7 @@ public class Partida extends AppCompatActivity {
     boolean is_change_orientation;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +81,6 @@ public class Partida extends AppCompatActivity {
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
         drawableOfNumbers = initialize_drawableOfNumbers();
-
-
 
 
         toStopService = new Intent(this, SoundTrack.class);
@@ -94,23 +94,21 @@ public class Partida extends AppCompatActivity {
         mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
         titol_partida.setText(mitextoU);
 
+        list_orientation = new int[numberOfcolumns * numberOfcolumns];
+        list_of_flags = new int[numberOfcolumns * numberOfcolumns];
+        for (int i = 0; i < list_orientation.length; i++) {
+            list_orientation[i] = -1;
+            list_of_flags[i] = -1;
+        }
+
         graella = (GridView) findViewById(R.id.gridview);
         gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
 
+
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
-        // INICIALITZACIÓ DEL ARRAY
-        list_orientation = new int[numberOfcolumns*numberOfcolumns];
-        list_of_flags = new int[numberOfcolumns*numberOfcolumns];
-        for(int i = 0;i<list_orientation.length;i++){
-            list_orientation[i] = -1;
-            list_of_flags[i]=-1;
-        }
-
-
-
 
 
         if (savedInstanceState != null) {
@@ -179,46 +177,44 @@ public class Partida extends AppCompatActivity {
             this.numberOfCells = numberOfCells;
         }
 
-
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             if (view == null) {
                 view = inflter.inflate(R.layout.row_data, null);
             }
 
-
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
             defaultbackgrond = cell.getBackground();
 
-            if(is_change_orientation){
-                if(array_caught[position]!=-1){
+            if (is_change_orientation) {
+                if (array_caught[position] != -1) {
                     cell.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
                     list_orientation[position] = array_caught[position];
-                    notifyDataSetChanged();
+
                 }
-                if(flags_caught[position]==0){
-                    list_of_flags[position]=0;
+                if (flags_caught[position] == 0) {
+                    list_of_flags[position] = 0;
                     cell.setBackgroundResource(R.drawable.blueflag);
                 }
             }
+            comprovacions(position);
 
-            cell.setScaleType(ImageView.ScaleType.FIT_XY);
+            //cell.setScaleType(ImageView.ScaleType.FIT_XY);
 
             cell.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
 
-                    if(view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())){
-                        Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY",Toast.LENGTH_SHORT).show();
-                        if(list_orientation[position]!=-1) {
+                    if (view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())) {
+                        Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY", Toast.LENGTH_SHORT).show();
+                        if (list_orientation[position] != -1) {
                             view.setBackgroundResource(drawableOfNumbers[list_orientation[position]]);
-                        }
-                        else
+                        } else
                             view.setBackground(defaultbackgrond);
-                        list_of_flags[position]=-1;
-                    }else {
+                        list_of_flags[position] = -1;
+                    } else {
                         view.setBackgroundResource(R.drawable.blueflag);
-                        list_of_flags[position]=0;
+                        list_of_flags[position] = 0;
                     }
 
                     if (receivedData.isHave_timer()) {
@@ -235,41 +231,15 @@ public class Partida extends AppCompatActivity {
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println("\n"+position+"\n");
+                    System.out.println("\n" + position + "\n");
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
-                        // PARTIDA PERDUDA PERQUE HA CLICAT A UNA BOMBA
                         timer.setText("GAME OVER");
-
-                        /*
-                        Toast.makeText(getApplicationContext()," "+graella.getChildCount(),Toast.LENGTH_SHORT).show();
-                        int sum =0 ;
-
-                        if(graella.getChildAt(position).equals(view))
-                            Toast.makeText(getApplicationContext(),"HELLO THERE",Toast.LENGTH_SHORT).show();
-
-
-                        for(int i=0; i<graella.getChildCount();i++){
-                            if(i!=position && listOfBombsIndexes.contains(i)) {
-                                graella.getChildAt()
-                                Toast.makeText(getApplicationContext(),"")
-                                //graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
-                                sum++;
-                            }
-                        }
-                        Toast.makeText(getApplicationContext()," "+sum,Toast.LENGTH_SHORT).show();
-
-                             */
-
-                        /*for(int i = 0;i<listOfBombsIndexes.size();i++){
-                            graella.getChildAt(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
-                        }*/
-
                         changeActivityToFinal(2, position);
 
                     } else {
 
-                        if(list_orientation[position]==-1) {
+                        if (list_orientation[position] == -1) {
                             num_cells--;
                         }
 
@@ -290,6 +260,7 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
+            copyofviews.add(cell);
             return view;
         }
 
@@ -307,6 +278,38 @@ public class Partida extends AppCompatActivity {
         public long getItemId(int i) {
             return 0;
         }
+
+        public void comprovacions(int position) {
+                 /*
+                        Toast.makeText(getApplicationContext()," "+graella.getChildCount(),Toast.LENGTH_SHORT).show();
+                        int sum =0 ;
+
+                        if(graella.getChildAt(position).equals(view))
+                            Toast.makeText(getApplicationContext(),"HELLO THERE",Toast.LENGTH_SHORT).show();
+
+
+                        for(int i=0; i<graella.getChildCount();i++){
+                            if(i!=position && listOfBombsIndexes.contains(i)) {
+                                graella.getChildAt()
+                                Toast.makeText(getApplicationContext(),"")
+                                //graella.getChildAt(i).setBackgroundResource(R.drawable.ic_bomb2);
+                                sum++;
+                            }
+                        }
+                        Toast.makeText(getApplicationContext()," "+sum,Toast.LENGTH_SHORT).show();
+
+
+
+            for(int i = 0;i<listOfBombsIndexes.size();i++){
+                if(!graella.getChildAt(listOfBombsIndexes.get(i)).getBackground().getConstantState().equals(R.drawable.ic_bomb2))
+                    Toast.makeText(getApplicationContext()," "+i,Toast.LENGTH_SHORT).show();
+                else
+                    graella.getChildAt(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
+                //graella.getChildAt(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
+
+                  */
+
+        }
     }
 
 
@@ -314,8 +317,7 @@ public class Partida extends AppCompatActivity {
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
 
-        if(receivedData.isHave_timer()) {
-            //Toast.makeText(this, "entro al cancel", Toast.LENGTH_SHORT).show();
+        if (time != null) {
             time.cancel();
         }
 
@@ -328,7 +330,23 @@ public class Partida extends AppCompatActivity {
         // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
         toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
+        for(int i=0; i<listOfBombsIndexes.size(); i++){
+            copyofviews.get(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
+        }
+        ImageButton btn = copyofviews.get(0);
 
+        Toast.makeText(getApplicationContext(),"I am 0 a bomb? "+btn.getBackground().getConstantState().
+                equals(getDrawable(R.drawable.ic_bomb2).getConstantState()),Toast.LENGTH_SHORT).show();
+/*
+        btn = copyofviews.get(1);
+        Toast.makeText(getApplicationContext(),"I am 1 a bomb? "+btn.getBackground().getConstantState().
+                equals(getDrawable(R.drawable.ic_bomb2).getConstantState()),Toast.LENGTH_SHORT).show();
+
+        btn = copyofviews.get(2);
+        Toast.makeText(getApplicationContext(),"I am 2 a bomb? "+btn.getBackground().getConstantState().
+                equals(getDrawable(R.drawable.ic_bomb2).getConstantState()),Toast.LENGTH_SHORT).show();
+
+ */
         if (status_partida == 1) { // Estatus == 1 per a partides on s'acabe el temps
             showpopupTimeLoss();
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
@@ -336,9 +354,8 @@ public class Partida extends AppCompatActivity {
         }
         if (status_partida == 2) {
             // Estatus == 2 per a partides on s'ha clicat a una bomba
-            MediaPlayer boom = MediaPlayer.create(this,R.raw.boomsound);
+            MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
-
 
             final Handler handler = new Handler();
             Timer t = new Timer();
@@ -350,7 +367,7 @@ public class Partida extends AppCompatActivity {
                         }
                     });
                 }
-            }, 4000);
+            }, 3000);
 
 
             int position_x = position / numberOfcolumns;
@@ -378,7 +395,7 @@ public class Partida extends AppCompatActivity {
                 handler.post(new Runnable() {
                     public void run() {
                         // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
-                        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(toActivityFinal);
                         finish();
                     }
@@ -477,7 +494,7 @@ public class Partida extends AppCompatActivity {
         popupTimeLoss.create().show();
     }
 
-    public void showpopupWin(){
+    public void showpopupWin() {
         AlertDialog.Builder popupWin = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.popupwin, null);
@@ -486,7 +503,7 @@ public class Partida extends AppCompatActivity {
         popupWin.create().show();
     }
 
-    public void showpopupBomb(){
+    public void showpopupBomb() {
         AlertDialog.Builder popupBomb = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View view = inflater.inflate(R.layout.popupbomb, null);
@@ -498,14 +515,14 @@ public class Partida extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(receivedData.isHave_timer()) {
+        if (receivedData.isHave_timer()) {
             //Toast.makeText(this, "entro al cancel al onsave", Toast.LENGTH_SHORT).show();
             time.cancel();
         }
         outState.putLong("tiempo_restante", tiempo_restante);
         outState.putInt("casillas_restantes", num_cells);
         outState.putIntArray("array_orientation", list_orientation);
-        outState.putIntegerArrayList("list_bombs",listOfBombsIndexes);
+        outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
         outState.putIntArray("flags_posades", list_of_flags);
     }
 }
