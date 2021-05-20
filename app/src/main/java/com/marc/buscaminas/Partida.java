@@ -203,7 +203,7 @@ public class Partida extends AppCompatActivity {
                 public boolean onLongClick(View view) {
 
                     if (view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())) {
-                        Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY", Toast.LENGTH_SHORT).show();
                         if (list_orientation[position] != -1) {
                             view.setBackgroundResource(drawableOfNumbers[list_orientation[position]]);
                         } else
@@ -286,6 +286,7 @@ public class Partida extends AppCompatActivity {
             time.cancel();
         }
 
+
         toActivityFinal = new Intent(this, FinalActivity.class);
         toActivityFinal.putExtra("user_name", user_name);
         toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
@@ -310,7 +311,10 @@ public class Partida extends AppCompatActivity {
         }, 1000);
 
 
-        if (status_partida == 1) { // Estatus == 1 per a partides on s'acabe el temps
+        if (status_partida == 1) {                      // Estatus == 1 per a partides on s'acabe el temps
+            timer.setText("GAME OVER");
+            MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
+            game_over_sound.start();
 
             final Handler handler = new Handler();
             Timer t = new Timer();
@@ -326,8 +330,7 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 2) {
-            // Estatus == 2 per a partides on s'ha clicat a una bomba
+        if (status_partida == 2) {                  // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
 
@@ -349,8 +352,11 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 3) {
-            // Estatus == 3 per a partides guanyades
+        if (status_partida == 3) {                  // Estatus == 3 per a partides guanyadesç
+
+            MediaPlayer victory = MediaPlayer.create(this, R.raw.victory);
+            victory.start();
+
             final Handler handler = new Handler();
             Timer t = new Timer();
             t.schedule(new TimerTask() {
@@ -501,7 +507,6 @@ public class Partida extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (receivedData.isHave_timer()) {
-            //Toast.makeText(this, "entro al cancel al onsave", Toast.LENGTH_SHORT).show();
             time.cancel();
         }
         outState.putLong("tiempo_restante", tiempo_restante);
