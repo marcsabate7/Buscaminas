@@ -52,5 +52,14 @@
     <string name="message_victoria">VICTORIA !!</string>
     <string name="copa_image">copa</string>
     <string name="message_flag">*Para poner/quitar una bandera manten la celda pulsada</string>
+    <string name="TimespinnerTitle">Tiempos</string>
+    <string-array name="TimespinnerChoices">
+        <item>Fácil - 150s</item>
+        <item>Medio - 80s</item>
+        <item>Duro - 60s</item>
+        <item>Leyenda - 40s</item>
+    </string-array>
+
+
 
 </resources>

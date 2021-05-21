@@ -1,5 +1,6 @@
 package com.marc.buscaminas;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,12 +10,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -22,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -37,7 +42,10 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private Intent intentToGame, intentToService;
     private Bundle bundle;
     private MediaPlayer boomSound;
-    public final static int RESTARTGAME = 20;
+    private Spinner timespinner;
+    private ArrayAdapter<String> spinAdapter;
+
+
 
 
     @Override
@@ -59,11 +67,19 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         userName = findViewById(R.id.EditText_username);
         checkBoxTimer = findViewById(R.id.checkBox);
         intentToGame = new Intent(this, Partida.class);
+        timespinner = (Spinner) findViewById(R.id.tiemposspiner);
+        List<String> str = Arrays.asList(getResources().getStringArray(R.array.TimespinnerChoices));
+        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,str);
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timespinner.setAdapter(spinAdapter);
+        timespinner.setOnItemSelectedListener(new InfoSpinner());
+
 
         radioGroupNumeroParrilla = findViewById(R.id.RadioGroupGraella);
         radioGroupNumeroParrilla.setOnCheckedChangeListener(this);
         radioGroupBombsPercentage = findViewById(R.id.RadioGroupBombs);
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
+
 
         boomSound = MediaPlayer.create(this, R.raw.boomsound);
         startGame.setOnClickListener(this);
@@ -117,12 +133,28 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                         dataReady.setHave_timer(true);
 
                     intentToGame.putExtra("DadesDePartida", dataReady);
+                    intentToGame.putExtra("time_value",timespinner.getSelectedItem().toString());
+                    Toast.makeText(this,timespinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
 
                     boomSound.start();
                     intentToGame.addFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intentToGame);
                 }
                 break;
+
+        }
+    }
+
+    private class InfoSpinner implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
+            Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
 
         }
     }

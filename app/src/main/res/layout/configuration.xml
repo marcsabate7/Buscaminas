@@ -171,15 +171,16 @@
                 android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="353dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="10dp">
+                android:paddingTop="10dp"
+                android:paddingRight="30dp">
 
                 <ImageView
                     android:id="@+id/imageView5"
-                    android:layout_width="46dp"
-                    android:layout_height="61dp"
+                    android:layout_width="39dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_clockicon" />
 
@@ -187,13 +188,25 @@
                     android:id="@+id/checkBox"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:layout_width="wrap_content"
-                    android:layout_height="61dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:buttonTint="#7CB342"
                     android:checked="false"
                     android:scaleX="1"
                     android:scaleY="1" />
+
+                <Spinner
+                    android:id="@+id/tiemposspiner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:entries="@array/TimespinnerChoices"
+                    android:prompt="@string/TimespinnerTitle"
+                    android:spinnerMode="dialog" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

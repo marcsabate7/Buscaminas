@@ -57,12 +57,12 @@ public class Partida extends AppCompatActivity {
     private int[] drawableOfNumbers;
     private DadesDePartida receivedData;
     private ArrayList<Integer> listOfBombsIndexes;
-    private HashMap<Integer,ImageButton> copyofviews = new HashMap<>();
+    private HashMap<Integer, ImageButton> copyofviews = new HashMap<>();
     private int numberOfcolumns;
     private Intent toStopService;
     private GridView graella;
     private CustomAdapter gridAdapter;
-    long tiempo_restante = 20000;
+    long tiempo_restante;
     float percentage_bombs;
     String user_name;
     int num_cells;
@@ -129,6 +129,8 @@ public class Partida extends AppCompatActivity {
 
 
         if (receivedData.isHave_timer()) {
+            tiempo_restante = timechoice(receivedIntent.getStringExtra("time_value"));
+            Toast.makeText(getApplicationContext(), "" + tiempo_restante, Toast.LENGTH_SHORT).show();
             time = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
@@ -260,7 +262,7 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
-            copyofviews.put(position,cell);
+            copyofviews.put(position, cell);
             return view;
         }
 
@@ -318,59 +320,27 @@ public class Partida extends AppCompatActivity {
             timer.setText("GAME OVER");
             MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
             game_over_sound.start();
+            delayPopups(4000, status_partida);
 
-            final Handler handler = new Handler();
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                public void run() {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            showpopupTimeLoss();
-                        }
-                    });
-                }
-            }, 3000);
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
         if (status_partida == 2) {                  // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
-
-            final Handler handler = new Handler();
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                public void run() {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            showpopupBomb();
-                        }
-                    });
-                }
-            }, 3000);
-
+            delayPopups(4000, status_partida);
 
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
             toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
+
         }
         if (status_partida == 3) {                  // Estatus == 3 per a partides guanyadesç
 
             MediaPlayer victory = MediaPlayer.create(this, R.raw.victory);
             victory.start();
-
-            final Handler handler = new Handler();
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                public void run() {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            showpopupWin();
-                        }
-                    });
-                }
-            }, 3000);
+            delayPopups(4000, status_partida);
 
             toActivityFinal.putExtra("casillas_restantes", num_cells);
             if (receivedData.isHave_timer()) {
@@ -395,7 +365,7 @@ public class Partida extends AppCompatActivity {
                     }
                 });
             }
-        }, 5000);
+        }, 6000);
     }
 
 
@@ -414,6 +384,25 @@ public class Partida extends AppCompatActivity {
                         finish();
                     }
                 }).create().show();
+    }
+
+    public long timechoice(String received) {
+        long result = 0L;
+        switch (received) {
+            case "Fácil - 150s":
+                result = 150000L;
+                break;
+            case "Medio - 80s":
+                result = 80000L;
+                break;
+            case "Duro - 60s":
+                result = 60000L;
+                break;
+            case "Leyenda - 40s":
+                result = 40000L;
+                break;
+        }
+        return result;
     }
 
     public ArrayList<Integer> bombs_index_list(int numColumns, float percentage) {
@@ -506,6 +495,33 @@ public class Partida extends AppCompatActivity {
         popupBomb.create().show();
     }
 
+    public void delayPopups(int milliseconds, int option) {
+        //option 1 for Timeloss,  option 2 for Bomb,   option 3 for Victory
+
+        final Handler handler = new Handler();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        switch (option) {
+                            case 1:
+                                showpopupTimeLoss();
+                                break;
+                            case 2:
+                                showpopupBomb();
+                                break;
+                            case 3:
+                                showpopupWin();
+                                break;
+                        }
+                    }
+                });
+            }
+        }, milliseconds);
+
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -518,7 +534,7 @@ public class Partida extends AppCompatActivity {
         outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
         outState.putIntArray("flags_posades", list_of_flags);
     }
-
+/*
     @Override
     protected void onPause() {
         super.onPause();
@@ -532,4 +548,6 @@ public class Partida extends AppCompatActivity {
         // Comprovar si sonido haurie de estar activat si ho esta engeggarlo
         startService(toStopService);
     }
+
+ */
 }
