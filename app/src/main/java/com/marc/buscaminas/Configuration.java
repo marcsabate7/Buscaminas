@@ -39,13 +39,16 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private EditText userName;
     private RadioGroup radioGroupNumeroParrilla, radioGroupBombsPercentage;
     private RadioButton btnParrilla, btnBombs;
-    private Intent intentToGame, intentToService;
+    private Intent intentToGame, intentToService, receivedIntent;
     private Bundle bundle;
     private MediaPlayer boomSound;
     private Spinner timespinner;
     private ArrayAdapter<String> spinAdapter;
-
-
+    private DadesDePartida receivedDadesDePartida;
+    private int receivedNumGraella, currentNumGraella;
+    private float receivedPercentatge, currentPercentatge;
+    private String receivedUser, receivedTime, currentUserName, currentTime;
+    private boolean receivedHaveTimer, currentHaveTimer;
 
 
     @Override
@@ -53,15 +56,9 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
 
-
+        receivedIntent = getIntent();
         bundle = new Bundle();
-        if(getIntent().getExtras()==null);
-        else if(getIntent().getStringExtra("Music").equals("ON")) {
-            intentToService = new Intent(this, SoundTrack.class);
-            bundle.putString("start", "start");
-            intentToService.putExtras(bundle);
-            startService(intentToService);
-        }
+
 
         startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
         userName = findViewById(R.id.EditText_username);
@@ -69,7 +66,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         intentToGame = new Intent(this, Partida.class);
         timespinner = (Spinner) findViewById(R.id.tiemposspiner);
         List<String> str = Arrays.asList(getResources().getStringArray(R.array.TimespinnerChoices));
-        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,str);
+        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, str);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timespinner.setAdapter(spinAdapter);
         timespinner.setOnItemSelectedListener(new InfoSpinner());
@@ -80,6 +77,28 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         radioGroupBombsPercentage = findViewById(R.id.RadioGroupBombs);
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
 
+
+        if (receivedIntent.getExtras() != null) {
+            if (receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")) {
+                intentToService = new Intent(this, SoundTrack.class);
+                bundle.putString("start", "start");
+                intentToService.putExtras(bundle);
+                startService(intentToService);
+            } else if (receivedIntent.getStringExtra("Music")!=null &&!receivedIntent.getStringExtra("Music").equals("ON"));
+            else {
+
+                Toast.makeText(getApplicationContext(), "TROBO UN FROM FINAL", Toast.LENGTH_SHORT).show();
+                receivedDadesDePartida = receivedIntent.getExtras().getParcelable("DadesDePartida");
+                receivedUser = receivedDadesDePartida.getUserName();
+                userName.setText(receivedUser);
+                receivedNumGraella = receivedDadesDePartida.getNumero_graella();
+
+                receivedHaveTimer = receivedDadesDePartida.isHave_timer();
+                checkBoxTimer.setChecked(receivedHaveTimer);
+                receivedTime = receivedDadesDePartida.getTime();
+
+            }
+        }
 
         boomSound = MediaPlayer.create(this, R.raw.boomsound);
         startGame.setOnClickListener(this);
@@ -113,31 +132,25 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
                 if (userName.getText().toString().trim().equalsIgnoreCase("")) {
                     userName.setError("Completa el nombre para empezar la partida!");
-                    Toast.makeText(this,"Campo nombre vacio, completalo para empezar la partida!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Campo nombre vacio, completalo para empezar la partida!", Toast.LENGTH_SHORT).show();
                 } else if (idButtonParrilla == -1) {
                     RadioButton radioButton = (RadioButton) findViewById(R.id.lastRadioButton);
                     radioButton.setError("An option must be selected");
                 } else {
-                    intentToGame.putExtra("userName", userName.getText().toString());
-
-                    DadesDePartida dataReady = new DadesDePartida();
 
                     btnParrilla = (RadioButton) findViewById(idButtonParrilla);
-                    dataReady.setNumero_graella(Integer.parseInt(btnParrilla.getText().toString()));
-
                     btnBombs = (RadioButton) findViewById(idButtonBombs);
-                    float percentage = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
-                    dataReady.setPercentatge(percentage);
 
-                    if (checkBoxTimer.isChecked())
-                        dataReady.setHave_timer(true);
+                    String user = userName.getText().toString();
+                    int numgraella = Integer.parseInt(btnParrilla.getText().toString());
+                    float percentage = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
+                    boolean havetimer = checkBoxTimer.isChecked();
+                    String timeselected = timespinner.getSelectedItem().toString();
+                    DadesDePartida dataReady = new DadesDePartida(user, numgraella, percentage, havetimer, timeselected);
 
                     intentToGame.putExtra("DadesDePartida", dataReady);
-                    intentToGame.putExtra("time_value",timespinner.getSelectedItem().toString());
-                    Toast.makeText(this,timespinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
-
                     boomSound.start();
-                    intentToGame.addFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TASK);
+                    intentToGame.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intentToGame);
                 }
                 break;
@@ -149,8 +162,12 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
+            /*
             Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
                     Toast.LENGTH_SHORT).show();
+
+             */
+
         }
 
         @Override
@@ -165,4 +182,5 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     }
 
 }
+
 

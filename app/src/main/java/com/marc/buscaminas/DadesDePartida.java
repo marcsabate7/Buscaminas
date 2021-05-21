@@ -11,16 +11,22 @@ public class DadesDePartida implements Parcelable {
     private int numero_graella;
     private float percentatge;
     private boolean have_timer;
+    private String time;
+    private String userName;
 
-    public DadesDePartida(int numero_graella, float percentatge, boolean have_timer){
+    public DadesDePartida(String userName,int numero_graella, float percentatge, boolean have_timer, String time){
+        this.userName = userName;
         this.numero_graella = numero_graella;
         this.percentatge = percentatge;
         this.have_timer = have_timer;
+        this.time = time;
     }
     public DadesDePartida(){
+        this.userName = null;
         this.numero_graella = 7;
         this.percentatge = 0.25f;
         this.have_timer = false;
+        this.time = null;
     }
 
     public void setNumero_graella(int numero_graella){
@@ -42,11 +48,15 @@ public class DadesDePartida implements Parcelable {
     public boolean isHave_timer(){
         return this.have_timer;
     }
+    public String getTime(){return this.time;}
+    public String getUserName(){return this.userName;}
 
     protected DadesDePartida(Parcel in) {
+        userName = in.readString();
         numero_graella = in.readInt();
         percentatge = in.readFloat();
         have_timer = in.readByte() != 0;
+        time = in.readString();
     }
 
     public static final Creator<DadesDePartida> CREATOR = new Creator<DadesDePartida>() {
@@ -69,8 +79,10 @@ public class DadesDePartida implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(userName);
         parcel.writeInt(numero_graella);
         parcel.writeFloat(percentatge);
         parcel.writeByte((byte) (have_timer ? 1 : 0));
+        parcel.writeString(time);
     }
 }

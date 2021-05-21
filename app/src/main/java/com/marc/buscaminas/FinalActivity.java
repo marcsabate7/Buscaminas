@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
     private Button btn_email, btn_nova_partida, btn_salir;
+    private DadesDePartida dadesDePartida;
     TextView status;
     TextView diayhora;
     TextView text_log;
@@ -45,6 +46,7 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
 
 
         Intent intent = getIntent();
+        dadesDePartida = intent.getExtras().getParcelable("DadesDePartida");
         String name_user = intent.getStringExtra("user_name");
         int total_casillas = intent.getIntExtra("casillas_totales", 1);
         float porcentage_minas = intent.getFloatExtra("porcentage_minas_escogidas", 1);
@@ -89,7 +91,10 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 }
                 break;
             case R.id.buttonNovaPartida:
-                startActivity(new Intent(this,Configuration.class));
+                Intent toConfig = (new Intent(this,Configuration.class));
+                toConfig.putExtra("DadesDePartida",dadesDePartida);
+                toConfig.putExtra("from final","from final");
+                startActivity(toConfig);
                 finish();
                 break;
             case R.id.buttonSortir:

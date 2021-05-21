@@ -64,14 +64,14 @@ public class Partida extends AppCompatActivity {
     private CustomAdapter gridAdapter;
     long tiempo_restante;
     float percentage_bombs;
-    String user_name;
+    String user_name, timeString;
     int num_cells;
     CountDownTimer time;
     TextView num_casillas;
     TextView timer;
     TextView titol_partida;
     private int[] list_orientation, array_caught, list_of_flags, flags_caught;
-    boolean is_change_orientation;
+    boolean is_change_orientation, havetimer;
 
 
     @Override
@@ -88,11 +88,21 @@ public class Partida extends AppCompatActivity {
 
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
+
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
+        user_name = receivedData.getUserName();
         numberOfcolumns = receivedData.getNumero_graella();
         percentage_bombs = receivedData.getPercentatge();
+        havetimer = receivedData.isHave_timer();
+        if((havetimer = receivedData.isHave_timer()))
+            timeString = receivedData.getTime();
+
+
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
-        user_name = receivedIntent.getStringExtra("userName");
+
+        //user_name = receivedIntent.getStringExtra("userName");
+
+
         SpannableString mitextoU = new SpannableString("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
         mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
         titol_partida.setText(mitextoU);
@@ -128,14 +138,14 @@ public class Partida extends AppCompatActivity {
         matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
 
-        if (receivedData.isHave_timer()) {
-            tiempo_restante = timechoice(receivedIntent.getStringExtra("time_value"));
+        if (havetimer) {
+            tiempo_restante = timechoice(timeString);
             Toast.makeText(getApplicationContext(), "" + tiempo_restante, Toast.LENGTH_SHORT).show();
             time = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
                     tiempo_restante = l;
-                    if (receivedData.isHave_timer()) {
+                    if (havetimer) {
                         timer.setText("Segundos restantes: " + l / 1000);
                         timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     } else {
@@ -158,7 +168,7 @@ public class Partida extends AppCompatActivity {
             timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
-        if (receivedData.isHave_timer()) {
+        if (havetimer) {
             num_casillas.setText("Casillas por descubrir: " + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         } else {
@@ -219,7 +229,7 @@ public class Partida extends AppCompatActivity {
                         list_of_flags[position] = 0;
                     }
 
-                    if (receivedData.isHave_timer()) {
+                    if (havetimer) {
                         num_casillas.setText("Casillas por descubrir: " + num_cells);
                         num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     } else {
@@ -245,7 +255,7 @@ public class Partida extends AppCompatActivity {
                             num_cells--;
                         }
 
-                        if (receivedData.isHave_timer()) {
+                        if (havetimer) {
                             num_casillas.setText("Casillas por descubrir: " + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                         } else {
@@ -351,7 +361,7 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
 
-
+        toActivityFinal.putExtra("DadesDePartida",receivedData);
         final Handler handler = new Handler();
         Timer t = new Timer();
         t.schedule(new TimerTask() {
