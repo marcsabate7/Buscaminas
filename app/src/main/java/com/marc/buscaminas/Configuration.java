@@ -83,6 +83,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 intentToService = new Intent(this, SoundTrack.class);
                 bundle.putString("start", "start");
                 intentToService.putExtras(bundle);
+                intentToGame.putExtra("Music","ON");
                 startService(intentToService);
             } else if (receivedIntent.getStringExtra("Music")!=null &&!receivedIntent.getStringExtra("Music").equals("ON"));
             else {
@@ -92,10 +93,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 receivedUser = receivedDadesDePartida.getUserName();
                 userName.setText(receivedUser);
                 receivedNumGraella = receivedDadesDePartida.getNumero_graella();
-
                 receivedHaveTimer = receivedDadesDePartida.isHave_timer();
                 checkBoxTimer.setChecked(receivedHaveTimer);
-                receivedTime = receivedDadesDePartida.getTime();
 
             }
         }
@@ -141,12 +140,13 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                     btnParrilla = (RadioButton) findViewById(idButtonParrilla);
                     btnBombs = (RadioButton) findViewById(idButtonBombs);
 
-                    String user = userName.getText().toString();
-                    int numgraella = Integer.parseInt(btnParrilla.getText().toString());
-                    float percentage = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
-                    boolean havetimer = checkBoxTimer.isChecked();
-                    String timeselected = timespinner.getSelectedItem().toString();
-                    DadesDePartida dataReady = new DadesDePartida(user, numgraella, percentage, havetimer, timeselected);
+                    currentUserName = userName.getText().toString();
+                    currentNumGraella = Integer.parseInt(btnParrilla.getText().toString());
+                    currentPercentatge = Float.parseFloat(btnBombs.getText().toString() + "f") / 100f;
+                    currentHaveTimer = checkBoxTimer.isChecked();
+                    currentTime = timespinner.getSelectedItem().toString();
+                    DadesDePartida dataReady = new DadesDePartida(currentUserName, currentNumGraella, currentPercentatge,
+                            currentHaveTimer, currentTime);
 
                     intentToGame.putExtra("DadesDePartida", dataReady);
                     boomSound.start();
@@ -162,11 +162,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
-            /*
             Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
                     Toast.LENGTH_SHORT).show();
-
-             */
 
         }
 

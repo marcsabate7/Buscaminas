@@ -89,6 +89,10 @@ public class Partida extends AppCompatActivity {
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
 
+        if(receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")){
+            toActivityFinal.putExtra("ReceivedMusic","ON");
+        }
+
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
         user_name = receivedData.getUserName();
         numberOfcolumns = receivedData.getNumero_graella();
@@ -97,10 +101,7 @@ public class Partida extends AppCompatActivity {
         if((havetimer = receivedData.isHave_timer()))
             timeString = receivedData.getTime();
 
-
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
-
-        //user_name = receivedIntent.getStringExtra("userName");
 
 
         SpannableString mitextoU = new SpannableString("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
@@ -118,8 +119,6 @@ public class Partida extends AppCompatActivity {
         gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
-
-
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
 
@@ -134,12 +133,14 @@ public class Partida extends AppCompatActivity {
 
             is_change_orientation = true;
         }
+        if(is_change_orientation==false)
+            tiempo_restante = timechoice(timeString);
 
         matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
 
         if (havetimer) {
-            tiempo_restante = timechoice(timeString);
+
             Toast.makeText(getApplicationContext(), "" + tiempo_restante, Toast.LENGTH_SHORT).show();
             time = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
@@ -368,7 +369,6 @@ public class Partida extends AppCompatActivity {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        // MIRAR DE FER STARTACTIVITY NORMAL EN COMPTES DE FOR RESULT
                         toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(toActivityFinal);
                         finish();
@@ -535,7 +535,7 @@ public class Partida extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (receivedData.isHave_timer()) {
+        if (havetimer) {
             time.cancel();
         }
         outState.putLong("tiempo_restante", tiempo_restante);
