@@ -58,6 +58,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.configuration);
 
         receivedIntent = getIntent();
+        intentToService = new Intent(this, SoundTrack.class);
         bundle = new Bundle();
 
 
@@ -81,14 +82,19 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         if (receivedIntent.getExtras() != null) {
             if (receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")) {
-                intentToService = new Intent(this, SoundTrack.class);
                 bundle.putString("start", "start");
                 intentToService.putExtras(bundle);
                 intentToGame.putExtra("Music","ON");
                 music_on = true;
-                startService(intentToService);
             } else if (receivedIntent.getStringExtra("Music")!=null &&!receivedIntent.getStringExtra("Music").equals("ON"));
             else {
+                if(receivedIntent.getExtras().getString("ReceivedMusic")!=null) {
+                    Toast.makeText(getApplicationContext(), "rebo music on a final", Toast.LENGTH_SHORT).show();
+                    intentToService.putExtra("start", "start");
+                    intentToGame.putExtra("Music","ON");
+                    music_on = true;
+                }
+
                 receivedDadesDePartida = receivedIntent.getExtras().getParcelable("DadesDePartida");
                 receivedUser = receivedDadesDePartida.getUserName();
                 userName.setText(receivedUser);
@@ -162,8 +168,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
-            Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
-                    Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
+                  //  Toast.LENGTH_SHORT).show();
 
         }
 
@@ -178,6 +184,20 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (music_on){
+            stopService(intentToService);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(music_on)
+            startService(intentToService);
+    }
 }
 
 

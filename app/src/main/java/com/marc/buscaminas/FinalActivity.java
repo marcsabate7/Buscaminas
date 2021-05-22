@@ -22,6 +22,7 @@ import java.util.Date;
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
     private Button btn_email, btn_nova_partida, btn_salir;
     private DadesDePartida dadesDePartida;
+    private Intent intent, toConfig;
     TextView status;
     TextView diayhora;
     TextView text_log;
@@ -44,8 +45,17 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         btn_email.setOnClickListener(this);
         btn_nova_partida.setOnClickListener(this);
 
+        toConfig = (new Intent(this, Configuration.class));
+        intent = getIntent();
 
-        Intent intent = getIntent();
+        if (intent.getStringExtra("ReceivedMusic") != null) {//&& intent.getStringExtra("ReceivedMusic").equals("ON")) {
+            if (intent.getStringExtra("ReceivedMusic").equals("ON")) {
+                Toast.makeText(getApplicationContext(), "rebo music on a final", Toast.LENGTH_SHORT).show();
+                toConfig.putExtra("ReceivedMusic","ON");
+            }
+        }
+
+
         dadesDePartida = intent.getExtras().getParcelable("DadesDePartida");
         String name_user = intent.getStringExtra("user_name");
         int total_casillas = intent.getIntExtra("casillas_totales", 1);
@@ -63,10 +73,10 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         Date myDate = new Date();
         status.setText(partida_status);
         String fecha = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
-        fecha = "Fecha: "+fecha;
+        fecha = "Fecha: " + fecha;
         String fecha2 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-        fecha2 = "Hora: "+fecha2;
-        diayhora.setText(fecha +" / " + fecha2);
+        fecha2 = "Hora: " + fecha2;
+        diayhora.setText(fecha + " / " + fecha2);
         text_log.setText(log);
 
     }
@@ -77,9 +87,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
             case R.id.buttonEnviarEmail:
                 if (text_email.getText().toString().trim().equalsIgnoreCase("")) {
                     text_email.setError("This field can not be blank");
-                    Toast.makeText(this,"Campo email vacio, completalo para enviar email!",Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    Toast.makeText(this, "Campo email vacio, completalo para enviar email!", Toast.LENGTH_SHORT).show();
+                } else {
                     Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
                     String correu = text_email.getText().toString();
                     String[] TO = {correu};
@@ -91,9 +100,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 }
                 break;
             case R.id.buttonNovaPartida:
-                Intent toConfig = (new Intent(this,Configuration.class));
-                toConfig.putExtra("DadesDePartida",dadesDePartida);
-                toConfig.putExtra("from final","from final");
+                toConfig.putExtra("DadesDePartida", dadesDePartida);
+                toConfig.putExtra("from final", "from final");
                 startActivity(toConfig);
                 finish();
                 break;
@@ -104,6 +112,7 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         }
 
     }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)

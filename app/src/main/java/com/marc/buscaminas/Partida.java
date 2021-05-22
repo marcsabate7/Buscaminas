@@ -260,7 +260,9 @@ public class Partida extends AppCompatActivity {
                     }
                 }
             });
-            copyofviews.put(position, cell);
+
+            if(listOfBombsIndexes.contains(position))
+                copyofviews.put(position, cell);
             return view;
         }
 
@@ -310,6 +312,9 @@ public class Partida extends AppCompatActivity {
                         for (int i = 0; i < listOfBombsIndexes.size(); i++) {
                             copyofviews.get(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
                         }
+                        //NO ESTÀ MOSTRANT LA CASELLA 1 SI ÉS BOMBA, NO ENTENC PQ, HE PROBAT QUE NO FOSSIN COSES DE MIDES PERÒ QUE VA
+                       // Toast.makeText(getApplicationContext(),listOfBombsIndexes.toString(),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),String.valueOf(copyofviews.containsKey(0)),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -320,7 +325,7 @@ public class Partida extends AppCompatActivity {
             timer.setText("GAME OVER");
             MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
             game_over_sound.start();
-            delayPopups(4000, status_partida);
+            delayPopups(5000, status_partida);
 
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
@@ -328,7 +333,7 @@ public class Partida extends AppCompatActivity {
         if (status_partida == 2) {                  // Estatus == 2 per a partides on s'ha clicat a una bomba
             MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
-            delayPopups(4000, status_partida);
+            delayPopups(5000, status_partida);
 
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
@@ -340,7 +345,7 @@ public class Partida extends AppCompatActivity {
 
             MediaPlayer victory = MediaPlayer.create(this, R.raw.victory);
             victory.start();
-            delayPopups(4000, status_partida);
+            delayPopups(5000, status_partida);
 
             toActivityFinal.putExtra("casillas_restantes", num_cells);
             if (receivedData.isHave_timer()) {
