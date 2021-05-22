@@ -8,7 +8,7 @@ import android.os.IBinder;
 public class SoundTrack extends Service {
 
     MediaPlayer sonidoDeFondo;
-
+    int lenght;
     @Override
     public void onCreate() {
         sonidoDeFondo = MediaPlayer.create(this,R.raw.backgroundmusic);
@@ -19,6 +19,7 @@ public class SoundTrack extends Service {
     public void onDestroy() {
         if(sonidoDeFondo.isPlaying())
             sonidoDeFondo.stop();
+
     }
 
     @Override
@@ -32,5 +33,15 @@ public class SoundTrack extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void onPause(){
+        sonidoDeFondo.pause();
+        lenght = sonidoDeFondo.getCurrentPosition();
+    }
+
+    public void onResume(){
+        sonidoDeFondo.seekTo(lenght);
+        sonidoDeFondo.start();
     }
 }

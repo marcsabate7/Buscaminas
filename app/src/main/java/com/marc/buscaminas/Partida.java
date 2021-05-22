@@ -8,8 +8,10 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.service.controls.actions.CommandAction;
 import android.text.SpannableString;
@@ -71,7 +74,7 @@ public class Partida extends AppCompatActivity {
     TextView timer;
     TextView titol_partida;
     private int[] list_orientation, array_caught, list_of_flags, flags_caught;
-    boolean is_change_orientation, havetimer;
+    boolean is_change_orientation, havetimer,have_music;
 
 
     @Override
@@ -89,7 +92,9 @@ public class Partida extends AppCompatActivity {
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
 
+        toActivityFinal = new Intent(this, FinalActivity.class);
         if(receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")){
+            have_music = true;
             toActivityFinal.putExtra("ReceivedMusic","ON");
         }
 
@@ -133,41 +138,24 @@ public class Partida extends AppCompatActivity {
 
             is_change_orientation = true;
         }
-        if(is_change_orientation==false)
+        if(is_change_orientation==false && havetimer)
             tiempo_restante = timechoice(timeString);
 
         matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
 
-        if (havetimer) {
+        if (savedInstanceState != null) {
+            num_cells = savedInstanceState.getInt("casillas_restantes");
+            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
+            // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
+            array_caught = savedInstanceState.getIntArray("array_orientation");
+            listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
+            flags_caught = savedInstanceState.getIntArray("flags_posades");
 
-            Toast.makeText(getApplicationContext(), "" + tiempo_restante, Toast.LENGTH_SHORT).show();
-            time = new CountDownTimer(tiempo_restante, 1000) {
-                @Override
-                public void onTick(long l) {
-                    tiempo_restante = l;
-                    if (havetimer) {
-                        timer.setText("Segundos restantes: " + l / 1000);
-                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    } else {
-                        timer.setText("Segundos restantes: " + l / 1000);
-                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-
-                    }
-                }
-
-                @Override
-                public void onFinish() {
-                    // PARTIDA PERDUDA PER TEMPS
-                    int status_partida = 1;
-                    changeActivityToFinal(status_partida, 0);
-
-                }
-            }.start();
-        } else {
-            timer.setText("No hay tiempo!");
-            timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+            is_change_orientation = true;
         }
+
+        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
         if (havetimer) {
             num_casillas.setText("Casillas por descubrir: " + num_cells);
@@ -219,7 +207,6 @@ public class Partida extends AppCompatActivity {
                 public boolean onLongClick(View view) {
 
                     if (view.getBackground().getConstantState().equals(getDrawable(R.drawable.blueflag).getConstantState())) {
-                        //Toast.makeText(getApplicationContext(), " I AM A FLAG ALREADY", Toast.LENGTH_SHORT).show();
                         if (list_orientation[position] != -1) {
                             view.setBackgroundResource(drawableOfNumbers[list_orientation[position]]);
                         } else
@@ -295,15 +282,17 @@ public class Partida extends AppCompatActivity {
 
 
     // AQUESTA FUNCIÓ S'UTILITZA PER A PASAR LES DADES DE LA PARTIDA AL INTENT I AQUEST CAP A L'ACTIVITY FINAL
+    @SuppressLint("WrongConstant")
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
+
+        //graella.setFocusable(false);
+        //graella.setFocusableInTouchMode(false);
 
         if (time != null) {
             time.cancel();
         }
 
-
-        toActivityFinal = new Intent(this, FinalActivity.class);
         toActivityFinal.putExtra("user_name", user_name);
         toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
         toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
@@ -397,19 +386,19 @@ public class Partida extends AppCompatActivity {
     }
 
     public long timechoice(String received) {
-        long result = 0L;
+        long result = 0;
         switch (received) {
             case "Fácil - 150s":
-                result = 150000L;
+                result = 150000;
                 break;
             case "Medio - 80s":
-                result = 80000L;
+                result = 80000;
                 break;
             case "Duro - 60s":
-                result = 60000L;
+                result = 60000;
                 break;
             case "Leyenda - 40s":
-                result = 40000L;
+                result = 40000;
                 break;
         }
         return result;
@@ -544,20 +533,51 @@ public class Partida extends AppCompatActivity {
         outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
         outState.putIntArray("flags_posades", list_of_flags);
     }
-/*
+
+
     @Override
     protected void onPause() {
         super.onPause();
-        // Comprovar si sonido esta activat, si ho esta apagarlo
-        stopService(toStopService);
+        if (have_music){
+            stopService(toStopService);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         // Comprovar si sonido haurie de estar activat si ho esta engeggarlo
-        startService(toStopService);
-    }
+        if (have_music){
+            toStopService.putExtra("start","start");
+            startService(toStopService);
+        }
+        if (havetimer) {
+            time = new CountDownTimer(tiempo_restante, 1000) {
+                @Override
+                public void onTick(long l) {
+                    tiempo_restante = l;
+                    if (havetimer) {
+                        timer.setText("Segundos restantes: " + l / 1000);
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    } else {
+                        timer.setText("Segundos restantes: " + l / 1000);
+                        timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
 
- */
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    // PARTIDA PERDUDA PER TEMPS
+                    int status_partida = 1;
+                    changeActivityToFinal(status_partida, 0);
+
+                }
+            }.start();
+        } else {
+            timer.setText("No hay tiempo!");
+            timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+        }
+
+    }
 }

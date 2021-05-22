@@ -49,6 +49,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private float receivedPercentatge, currentPercentatge;
     private String receivedUser, receivedTime, currentUserName, currentTime;
     private boolean receivedHaveTimer, currentHaveTimer;
+    private boolean music_on;
 
 
     @Override
@@ -84,11 +85,10 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 bundle.putString("start", "start");
                 intentToService.putExtras(bundle);
                 intentToGame.putExtra("Music","ON");
+                music_on = true;
                 startService(intentToService);
             } else if (receivedIntent.getStringExtra("Music")!=null &&!receivedIntent.getStringExtra("Music").equals("ON"));
             else {
-
-                Toast.makeText(getApplicationContext(), "TROBO UN FROM FINAL", Toast.LENGTH_SHORT).show();
                 receivedDadesDePartida = receivedIntent.getExtras().getParcelable("DadesDePartida");
                 receivedUser = receivedDadesDePartida.getUserName();
                 userName.setText(receivedUser);
