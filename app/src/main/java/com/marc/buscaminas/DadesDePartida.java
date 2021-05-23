@@ -2,20 +2,17 @@ package com.marc.buscaminas;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DadesDePartida implements Parcelable {
     /**
      * Classe alternativa per a guardar les dades de partida com a conjunt i sigui més fàcil treballar amb elles.
      */
 
-    private int numero_graella;
-    private float percentatge;
-    private boolean have_timer;
-    private String time;
-    private String userName;
+    private final int numero_graella;
+    private final float percentatge;
+    private final boolean have_timer;
+    private final String time;
+    private final String userName;
 
     public DadesDePartida(String userName,int numero_graella, float percentatge, boolean have_timer, String time){
         this.userName = userName;
@@ -31,7 +28,7 @@ public class DadesDePartida implements Parcelable {
         this.have_timer = false;
         this.time = null;
     }
-
+    /*
     public void setNumero_graella(int numero_graella){
         this.numero_graella = numero_graella;
     }
@@ -41,6 +38,8 @@ public class DadesDePartida implements Parcelable {
     public void setHave_timer(boolean have_timer){
         this.have_timer = have_timer;
     }
+
+     */
 
     public int getNumero_graella(){
         return this.numero_graella;

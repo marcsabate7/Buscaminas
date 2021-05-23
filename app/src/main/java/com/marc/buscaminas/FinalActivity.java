@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
-    private Button btn_email, btn_nova_partida, btn_salir;
     private DadesDePartida dadesDePartida;
     private Intent intent, toConfig;
     TextView status;
@@ -31,15 +30,16 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
     String partida_status;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
 
-        btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
-        btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);
-        btn_salir = (Button) findViewById(R.id.buttonSortir);
+        Button btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
+        Button btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);
+        Button btn_salir = (Button) findViewById(R.id.buttonSortir);
 
         btn_salir.setOnClickListener(this);
         btn_email.setOnClickListener(this);
@@ -70,11 +70,10 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
 
         log = "Alias: " + name_user + " / " + "Casillas: " + total_casillas + " / " + "Porcentage minas: " + porcentage_minas + " / " + "Num minas: " + num_minas;
 
-        Date myDate = new Date();
         status.setText(partida_status);
-        String fecha = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+        @SuppressLint("SimpleDateFormat") String fecha = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
         fecha = "Fecha: " + fecha;
-        String fecha2 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        @SuppressLint("SimpleDateFormat") String fecha2 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         fecha2 = "Hora: " + fecha2;
         diayhora.setText(fecha + " / " + fecha2);
         text_log.setText(log);
@@ -117,16 +116,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage(R.string.quitMessageConfirmation)
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setNegativeButton(R.string.no, (dialogInterface, i) -> {
                 })
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                }).create().show();
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> finish()).create().show();
     }
 }

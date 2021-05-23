@@ -1,28 +1,21 @@
 package com.marc.buscaminas;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -91,17 +84,18 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
 
         if (receivedIntent.getExtras() != null) {
-            if (receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")) {
+            if (receivedIntent.getStringExtra("Music") != null && receivedIntent.getStringExtra("Music").equals("ON")) {
                 bundle.putString("start", "start");
                 intentToService.putExtras(bundle);
-                intentToGame.putExtra("Music","ON");
+                intentToGame.putExtra("Music", "ON");
                 music_on = true;
-            } else if (receivedIntent.getStringExtra("Music")!=null &&!receivedIntent.getStringExtra("Music").equals("ON"));
+            } else if (receivedIntent.getStringExtra("Music") != null && !receivedIntent.getStringExtra("Music").equals("ON"))
+                ;
             else {
-                if(receivedIntent.getExtras().getString("ReceivedMusic")!=null) {
+                if (receivedIntent.getExtras().getString("ReceivedMusic") != null) {
                     Toast.makeText(getApplicationContext(), "rebo music on a final", Toast.LENGTH_SHORT).show();
                     intentToService.putExtra("start", "start");
-                    intentToGame.putExtra("Music","ON");
+                    intentToGame.putExtra("Music", "ON");
                     music_on = true;
                 }
 
@@ -178,8 +172,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
-           // Toast.makeText(getApplicationContext(),""+ spinner.getItemAtPosition(selectedIndex).toString()+" selected",
-                  //  Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "" + spinner.getItemAtPosition(selectedIndex).toString() + " selected",
+                    Toast.LENGTH_SHORT).show();
 
         }
 
@@ -197,7 +191,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         super.onPause();
-        if (music_on){
+        if (music_on) {
             stopService(intentToService);
         }
     }
@@ -205,7 +199,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        if(music_on)
+        if (music_on)
             startService(intentToService);
     }
 }

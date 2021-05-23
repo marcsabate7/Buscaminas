@@ -1,7 +1,7 @@
 package com.marc.buscaminas;
 
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,13 +26,11 @@ public class AyudaActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.backToMain:
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-                break;
+        if (view.getId() == R.id.backToMain) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -40,16 +38,8 @@ public class AyudaActivity extends AppCompatActivity implements View.OnClickList
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage(R.string.quitMessageConfirmation)
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setNegativeButton(R.string.no, (dialogInterface, i) -> {
                 })
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                }).create().show();
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> finish()).create().show();
     }
 }

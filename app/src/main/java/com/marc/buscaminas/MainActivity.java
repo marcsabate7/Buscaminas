@@ -1,6 +1,6 @@
 package com.marc.buscaminas;
 
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
