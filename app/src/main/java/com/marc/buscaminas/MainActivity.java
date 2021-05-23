@@ -16,9 +16,19 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Aquesta activity té dues maneres d'avançar, cap a Ajuda i cap a la configuració de Partida.
+     * El background de l'activitat s'ha dissenyat amb AdobeXD, un programa bàsic de disseny que podem traslladar a la layout.
+     * S'ha implementat de més un Switch per a habilitar la música de fons durant el joc.
+     * Mitjançant els flags fem espai a la memòria eliminant l'activity del BackStack.
+     *
+     * En quasi totes les activitats s'ha implementat la funció onBackPressed per a confirmar la sortida de l'aplicació
+     * per a millorar l'experiència d'usuari i no marxar de l'aplicació per un error en tocar la pantalla.
+     *
+     */
+
     private Intent toAyuda, toConfiguration;
     private Switch switchMusic;
-    public final static int CLOSE_ALL = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

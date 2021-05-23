@@ -58,6 +58,15 @@ import static android.graphics.Color.TRANSPARENT;
 
 
 public class Partida extends AppCompatActivity {
+
+    /**
+     * De més, s'ha implementat l'opció que l'usuari col·loqui banderes on cregui que hi ha una bomba. També s'ha configurat
+     * la partida de manera que quan s'acabi el joc, es mostrin les posicions de les bombes perquè l'usuari no es quedi amb l'intriga.
+     * Un cop acabada la partida, es deshabiliten els botons de la graella per evitar que es repeteixin accions que només s'han de dur
+     * a terme un cop i així evitar actuacions d'error de l'aplicació. Com a transicions s'han incorporat uns Dialogs per donar feedback
+     * a l'usuari i millorar la seva experiència.
+     *
+     */
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
     private int[] drawableOfNumbers;
@@ -267,8 +276,7 @@ public class Partida extends AppCompatActivity {
                 }
             });
 
-            if(listOfBombsIndexes.contains(position))
-                copyofviews.put(position, cell);
+            copyofviews.put(position, cell);
             return view;
         }
 
@@ -307,22 +315,30 @@ public class Partida extends AppCompatActivity {
         toActivityFinal.putExtra("total_minas", num_minas);
         toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
+
+
+
         final Handler handler2 = new Handler();
         Timer tt = new Timer();
         tt.schedule(new TimerTask() {
             public void run() {
                 handler2.post(new Runnable() {
                     public void run() {
+                        for(int i = 0; i< copyofviews.size(); i++){
+                            copyofviews.get(i).setClickable(false);
+                            copyofviews.get(i).setEnabled(false);
+                        }
                         for (int i = 0; i < listOfBombsIndexes.size(); i++) {
                             copyofviews.get(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
                         }
-                        //NO ESTÀ MOSTRANT LA CASELLA 1 SI ÉS BOMBA, NO ENTENC PQ, HE PROBAT QUE NO FOSSIN COSES DE MIDES PERÒ QUE VA
+                        //LA PRIMERA POSICIÓ DEL GRIDVIEW NO REACCIONA, NO FA CAS DE CAP DE LES CRIDES SUPERIORS
+                        //NO SABEM ON FALLA PERÒ ES DETECTA COM A BOMBA QUAN S'HA DE DETECTAR PERÒ SEMBLA QUE ACTUI INDEPENDENTMENT DE LA RESTA
                         // Toast.makeText(getApplicationContext(),listOfBombsIndexes.toString(),Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getApplicationContext(),String.valueOf(copyofviews.containsKey(0)),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        }, 1000);
+        }, 250);
 
         // Estatus == 1 per a partides on s'acabe el temps
         if (status_partida == 1) {

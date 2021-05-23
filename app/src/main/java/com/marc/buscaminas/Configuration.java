@@ -34,6 +34,16 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class Configuration extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
+
+    /**
+     * Aquesta activity consisteix en els paràmetres de la partida.
+     * De més, s'ha implementat un Spinner per seleccionar el temps que es vol escollir segons la dificultat.
+     * Depenent de l'intent que es rebi, sabem si es tractarà de la primera partida o una nova partida, on guardarem algunes de les
+     * dades per a que s'auto completin. Hem tingut alguns problemes amb guardar les dades dels RadioButtons i de la informació del Spinner
+     * Procurarem que estigui implementat en la següent entrega. El conjunt de les dades de Partida és guarden en una classe ALternativa
+     * que hem dissenyat per guardar-les com un sol conjunt i tenir més facilitat alhora de treballar amb elles entre diferents Activities.
+     */
+
     private CheckBox checkBoxTimer;
     private Button startGame;
     private EditText userName;

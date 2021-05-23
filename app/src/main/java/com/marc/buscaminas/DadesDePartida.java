@@ -7,6 +7,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DadesDePartida implements Parcelable {
+    /**
+     * Classe alternativa per a guardar les dades de partida com a conjunt i sigui més fàcil treballar amb elles.
+     */
 
     private int numero_graella;
     private float percentatge;
