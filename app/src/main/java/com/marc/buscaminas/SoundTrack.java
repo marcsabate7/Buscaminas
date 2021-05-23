@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+/*
+*   Servei creat per engegar i parar la musica depenen de si el usuari vol sonido o no
+*
+* */
+
+
 public class SoundTrack extends Service {
 
     MediaPlayer sonidoDeFondo;

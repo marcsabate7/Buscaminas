@@ -1,5 +1,8 @@
 package com.marc.buscaminas;
 
+
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -92,6 +95,7 @@ public class Partida extends AppCompatActivity {
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
 
+        // Intent que passarem cap activity final
         toActivityFinal = new Intent(this, FinalActivity.class);
         if(receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")){
             have_music = true;
@@ -108,11 +112,12 @@ public class Partida extends AppCompatActivity {
 
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
 
-
+        // Partida text en negreta
         SpannableString mitextoU = new SpannableString("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
         mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
         titol_partida.setText(mitextoU);
 
+        // Tractament de les flags
         list_orientation = new int[numberOfcolumns * numberOfcolumns];
         list_of_flags = new int[numberOfcolumns * numberOfcolumns];
         for (int i = 0; i < list_orientation.length; i++) {
@@ -120,6 +125,7 @@ public class Partida extends AppCompatActivity {
             list_of_flags[i] = -1;
         }
 
+        // Inicialització del grid view
         graella = (GridView) findViewById(R.id.gridview);
         gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
         graella.setAdapter(gridAdapter);
@@ -127,17 +133,17 @@ public class Partida extends AppCompatActivity {
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
         num_casillas.setText("Casillas por descubrir: " + num_cells);
 
-
+        // OnSavedInstanceState per si el usuari gira la pantalla recuperarem les dades de la partida pertinents
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt("casillas_restantes");
             tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-            // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
             array_caught = savedInstanceState.getIntArray("array_orientation");
             listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
             flags_caught = savedInstanceState.getIntArray("flags_posades");
 
             is_change_orientation = true;
         }
+        // Controlem l'orientació de la pantalla ja que ens es util en una funció implementada al final del codi
         if(is_change_orientation==false && havetimer)
             tiempo_restante = timechoice(timeString);
 
@@ -283,13 +289,12 @@ public class Partida extends AppCompatActivity {
     }
 
 
-    // AQUESTA FUNCIÓ S'UTILITZA PER A PASAR LES DADES DE LA PARTIDA AL INTENT I AQUEST CAP A L'ACTIVITY FINAL
+    // Aquesta funció s'utilitza per pasar les dades de la partida al intent i aquest cap al activity final amb un status que controlara si la aprtida s'ha guanyat / per
+    // Falta bloquejar el grid view quan s'ensenyen les bombes per a que el usuari no pugui clicar a cap item de la graella
     @SuppressLint("WrongConstant")
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
 
-        //graella.setFocusable(false);
-        //graella.setFocusableInTouchMode(false);
 
         if (time != null) {
             time.cancel();
@@ -300,7 +305,6 @@ public class Partida extends AppCompatActivity {
         toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
         int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
         toActivityFinal.putExtra("total_minas", num_minas);
-        // CAMBIAR TIEMPO EMPLADO QUAN FEM QUE EL USUARI INTRODUEIXI EL TEMPS
         toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
         final Handler handler2 = new Handler();
@@ -313,15 +317,15 @@ public class Partida extends AppCompatActivity {
                             copyofviews.get(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
                         }
                         //NO ESTÀ MOSTRANT LA CASELLA 1 SI ÉS BOMBA, NO ENTENC PQ, HE PROBAT QUE NO FOSSIN COSES DE MIDES PERÒ QUE VA
-                       // Toast.makeText(getApplicationContext(),listOfBombsIndexes.toString(),Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(),listOfBombsIndexes.toString(),Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getApplicationContext(),String.valueOf(copyofviews.containsKey(0)),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }, 1000);
 
-
-        if (status_partida == 1) {                      // Estatus == 1 per a partides on s'acabe el temps
+        // Estatus == 1 per a partides on s'acabe el temps
+        if (status_partida == 1) {
             timer.setText("GAME OVER");
             MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
             game_over_sound.start();
@@ -330,7 +334,8 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
-        if (status_partida == 2) {                  // Estatus == 2 per a partides on s'ha clicat a una bomba
+        // Estatus == 2 per a partides on s'ha clicat a una bomba
+        if (status_partida == 2) {
             MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
             delayPopups(5000, status_partida);
@@ -341,7 +346,8 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("casillas_restantes", num_cells);
 
         }
-        if (status_partida == 3) {                  // Estatus == 3 per a partides guanyadesç
+        // Estatus == 3 per a partides guanyades
+        if (status_partida == 3) {
 
             MediaPlayer victory = MediaPlayer.create(this, R.raw.victory);
             victory.start();
@@ -363,6 +369,7 @@ public class Partida extends AppCompatActivity {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
+                        // Afegim flags al intent per controlar les activitats obertes
                         toActivityFinal.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(toActivityFinal);
                         finish();
@@ -372,7 +379,7 @@ public class Partida extends AppCompatActivity {
         }, 6000);
     }
 
-
+    // Funció que mostra un dialog si volem tirar cap a radere
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -390,6 +397,7 @@ public class Partida extends AppCompatActivity {
                 }).create().show();
     }
 
+    // Temps elegit pel usuari
     public long timechoice(String received) {
         long result = 0;
         switch (received) {
@@ -409,6 +417,7 @@ public class Partida extends AppCompatActivity {
         return result;
     }
 
+    // Colocació de les bombes de manera aleatoria
     public ArrayList<Integer> bombs_index_list(int numColumns, float percentage) {
         Random random = new Random();
         ArrayList<Integer> listOfIndexBomb = new ArrayList<>();
@@ -423,6 +432,7 @@ public class Partida extends AppCompatActivity {
         return listOfIndexBomb;
     }
 
+    // Inicialització de la matriu si hi va una bomba ficarem un 1 del contrari un 0
     public int[][] initialize_matrix(int numberOfcolumns, List<Integer> listOfBombs) {
         int[][] matrix = new int[numberOfcolumns][numberOfcolumns];
         for (int x = 0; x < listOfBombs.size(); x++) {
@@ -440,6 +450,7 @@ public class Partida extends AppCompatActivity {
         return matrix;
     }
 
+    // Controlem el numero de bombes que envolten una casella
     public int numberSurroundingBombs(int[][] matrix, int position) {
         int counter = 0, position_i = position / numberOfcolumns, position_j = position % numberOfcolumns;
         if (isPosValid(position_i + 1, position_j, matrix.length) && matrix[position_i + 1][position_j] == 1)
@@ -467,11 +478,13 @@ public class Partida extends AppCompatActivity {
         return true;
     }
 
+    // Array que cada posició conté el drawable pertinent ho fem aixi per comoditat
     public int[] initialize_drawableOfNumbers() {
         return new int[]{R.drawable.zero, R.drawable.one, R.drawable.two, R.drawable.three, R.drawable.four,
                 R.drawable.five, R.drawable.six, R.drawable.seven, R.drawable.eight};
     }
 
+    // PopUp's que es mostren quan una partida s'acabe per X motius, mirar noms de les funcions per saber a quin pertany
     public void showpopupTimeLoss() {
         AlertDialog.Builder popupTimeLoss = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -499,9 +512,9 @@ public class Partida extends AppCompatActivity {
         popupBomb.create().show();
     }
 
+    // Funcio que realitza una espera abans de mostrar els Popup's i que despres fa la crida
+    // Opció 1 per Timeloss, opció 2 per bomba clicada, opció 3 per victory
     public void delayPopups(int milliseconds, int option) {
-        //option 1 for Timeloss,  option 2 for Bomb,   option 3 for Victory
-
         final Handler handler = new Handler();
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -526,6 +539,7 @@ public class Partida extends AppCompatActivity {
 
     }
 
+    // Guardem les dades a recuperar al OnCreate
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -540,6 +554,8 @@ public class Partida extends AppCompatActivity {
     }
 
 
+    /* Metodes per parar musica i per continuar el timer, falte fixejar el tema de la musica ja que torna a comensar quan pausem i cridem al onRestart(),
+    hem pensat utilitzar un broadcast Receiver que ens permetra pausar i reanudar falte implementar per la seguent entrega */
     @Override
     protected void onPause() {
         super.onPause();
