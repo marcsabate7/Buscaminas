@@ -93,7 +93,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 ;
             else {
                 if (receivedIntent.getExtras().getString("ReceivedMusic") != null) {
-                    Toast.makeText(getApplicationContext(), "rebo music on a final", Toast.LENGTH_SHORT).show();
                     intentToService.putExtra("start", "start");
                     intentToGame.putExtra("Music", "ON");
                     music_on = true;
@@ -172,8 +171,9 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onItemSelected(AdapterView<?> spinner, View selectedView, int selectedIndex, long id) {
-            Toast.makeText(getApplicationContext(), "" + spinner.getItemAtPosition(selectedIndex).toString() + " selected",
-                    Toast.LENGTH_SHORT).show();
+            if (checkBoxTimer.isChecked())
+                Toast.makeText(getApplicationContext(), "" + spinner.getItemAtPosition(selectedIndex).toString() + " selected",
+                        Toast.LENGTH_SHORT).show();
 
         }
 

@@ -250,6 +250,8 @@ public class Partida extends AppCompatActivity {
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
                         timer.setText("GAME OVER");
+                        view.setEnabled(false);
+                        view.setClickable(false);
                         changeActivityToFinal(2, position);
 
                     } else {

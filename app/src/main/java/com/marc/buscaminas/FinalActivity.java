@@ -48,9 +48,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         toConfig = (new Intent(this, Configuration.class));
         intent = getIntent();
 
-        if (intent.getStringExtra("ReceivedMusic") != null) {//&& intent.getStringExtra("ReceivedMusic").equals("ON")) {
+        if (intent.getStringExtra("ReceivedMusic") != null) {
             if (intent.getStringExtra("ReceivedMusic").equals("ON")) {
-                Toast.makeText(getApplicationContext(), "rebo music on a final", Toast.LENGTH_SHORT).show();
                 toConfig.putExtra("ReceivedMusic","ON");
             }
         }
