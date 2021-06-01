@@ -58,7 +58,7 @@ import java.util.TimerTask;
 import static android.graphics.Color.TRANSPARENT;
 
 
-public class Partida extends AppCompatActivity {
+public class Partida extends AppCompatActivity implements GridFrag.CellListener {
 
     /**
      * De més, s'ha implementat l'opció que l'usuari col·loqui banderes on cregui que hi ha una bomba. També s'ha configurat
@@ -186,6 +186,7 @@ public class Partida extends AppCompatActivity {
     }
 
 
+
     private class CustomAdapter extends BaseAdapter {
         private Context context;
         private ImageButton cell;
@@ -293,12 +294,21 @@ public class Partida extends AppCompatActivity {
 
         @Override
         public Object getItem(int i) {
-            return null;
+            return copyofviews.get(i);
         }
 
         @Override
         public long getItemId(int i) {
             return 0;
+        }
+    }
+    @Override
+    public void onCorreoSeleccionado(Datalog datalog) {
+        LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
+        boolean hayLog = (logFrag != null && logFrag.isInLayout());
+
+        if (hayLog) {
+            logFrag.mostrarDetalle(datalog);
         }
     }
 
@@ -635,6 +645,8 @@ public class Partida extends AppCompatActivity {
         }
 
     }
+
+
 
 
 }

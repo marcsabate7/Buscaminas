@@ -7,7 +7,7 @@
     tools:ignore="MissingDefaultResource">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -17,16 +17,28 @@
             android:text="LOG..." />
 
         <TextView
+            android:id="@+id/textviewdadeslog"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ALIAS - CASILLAS - % MINAS - Nº MINAS - SI/NO CONTROL DE TIEMPO PENEE" />
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/casillaSeleccionada"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Casillas Seleccionadas" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/casillaSeleccionada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Casillas Seleccionadas" />
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 </LinearLayout>
