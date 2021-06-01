@@ -10,7 +10,6 @@ public class Datalog implements Parcelable {
 
 
     public Datalog(DadesDePartida dadesDePartida, int coordX, int coordY){
-
         this.dadesDePartida = dadesDePartida;
         this.coordX = coordX;
         this.coordY = coordY;

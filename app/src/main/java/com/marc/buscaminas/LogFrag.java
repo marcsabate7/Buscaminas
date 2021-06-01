@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LogFrag extends Fragment {
 
@@ -32,7 +33,7 @@ public class LogFrag extends Fragment {
     public void mostrarDetalle(Datalog datalog){
         String messageDades;
         String casselles = "";
-
+        Toast.makeText(getContext(),"ESTERM AQUI",Toast.LENGTH_SHORT).show();
         messageDades = "ALIAS: "+datalog.getDadesDePartida().getUserName();
         messageDades += " NUMERO CASILLAS: "+datalog.getDadesDePartida().getNumero_graella();
         messageDades += " MINAS: "+datalog.getDadesDePartida().getPercentatge()+"%";

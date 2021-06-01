@@ -303,7 +303,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         }
     }
     @Override
-    public void onCorreoSeleccionado(Datalog datalog) {
+    public void onCasillaSeleccionada(Datalog datalog) {
         LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
         boolean hayLog = (logFrag != null && logFrag.isInLayout());
 
