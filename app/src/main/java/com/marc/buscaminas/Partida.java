@@ -1,8 +1,6 @@
 package com.marc.buscaminas;
 
 
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +12,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,8 +27,10 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.service.controls.actions.CommandAction;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,6 @@ public class Partida extends AppCompatActivity {
      * Un cop acabada la partida, es deshabiliten els botons de la graella per evitar que es repeteixin accions que només s'han de dur
      * a terme un cop i així evitar actuacions d'error de l'aplicació. Com a transicions s'han incorporat uns Dialogs per donar feedback
      * a l'usuari i millorar la seva experiència.
-     *
      */
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
@@ -82,18 +82,17 @@ public class Partida extends AppCompatActivity {
     String user_name, timeString;
     int num_cells;
     CountDownTimer time;
-    TextView num_casillas;
-    TextView timer;
-    TextView titol_partida;
+    TextView num_casillas, timer, titol_partida;
+
     private int[] list_orientation, array_caught, list_of_flags, flags_caught;
-    boolean is_change_orientation, havetimer,have_music;
+    private boolean is_change_orientation, havetimer, have_music;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.partida);
 
+        setContentView(R.layout.partida);
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
@@ -101,14 +100,15 @@ public class Partida extends AppCompatActivity {
         drawableOfNumbers = initialize_drawableOfNumbers();
 
 
+
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
 
         // Intent que passarem cap activity final
         toActivityFinal = new Intent(this, FinalActivity.class);
-        if(receivedIntent.getStringExtra("Music")!=null && receivedIntent.getStringExtra("Music").equals("ON")){
+        if (receivedIntent.getStringExtra("Music") != null && receivedIntent.getStringExtra("Music").equals("ON")) {
             have_music = true;
-            toActivityFinal.putExtra("ReceivedMusic","ON");
+            toActivityFinal.putExtra("ReceivedMusic", "ON");
         }
 
         receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
@@ -116,7 +116,7 @@ public class Partida extends AppCompatActivity {
         numberOfcolumns = receivedData.getNumero_graella();
         percentage_bombs = receivedData.getPercentatge();
         havetimer = receivedData.isHave_timer();
-        if((havetimer = receivedData.isHave_timer()))
+        if ((havetimer = receivedData.isHave_timer()))
             timeString = receivedData.getTime();
 
         listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
@@ -153,7 +153,7 @@ public class Partida extends AppCompatActivity {
             is_change_orientation = true;
         }
         // Controlem l'orientació de la pantalla ja que ens es util en una funció implementada al final del codi
-        if(is_change_orientation==false && havetimer)
+        if (is_change_orientation == false && havetimer)
             tiempo_restante = timechoice(timeString);
 
         matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
@@ -179,6 +179,8 @@ public class Partida extends AppCompatActivity {
             num_casillas.setText("Casillas por descubrir: " + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
+
+
 
     }
 
@@ -261,6 +263,7 @@ public class Partida extends AppCompatActivity {
                         }
 
                         if (havetimer) {
+
                             num_casillas.setText("Casillas por descubrir: " + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                         } else {
@@ -318,15 +321,13 @@ public class Partida extends AppCompatActivity {
         toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
 
-
-
         final Handler handler2 = new Handler();
         Timer tt = new Timer();
         tt.schedule(new TimerTask() {
             public void run() {
                 handler2.post(new Runnable() {
                     public void run() {
-                        for(int i = 0; i< copyofviews.size(); i++){
+                        for (int i = 0; i < copyofviews.size(); i++) {
                             copyofviews.get(i).setClickable(false);
                             copyofviews.get(i).setEnabled(false);
                         }
@@ -380,7 +381,7 @@ public class Partida extends AppCompatActivity {
             toActivityFinal.putExtra("casillas_restantes", num_cells);
         }
 
-        toActivityFinal.putExtra("DadesDePartida",receivedData);
+        toActivityFinal.putExtra("DadesDePartida", receivedData);
         final Handler handler = new Handler();
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -530,6 +531,19 @@ public class Partida extends AppCompatActivity {
         popupBomb.create().show();
     }
 
+    public boolean istablet() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        if (width > 1023 || height > 1023) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Funcio que realitza una espera abans de mostrar els Popup's i que despres fa la crida
     // Opció 1 per Timeloss, opció 2 per bomba clicada, opció 3 per victory
     public void delayPopups(int milliseconds, int option) {
@@ -574,10 +588,11 @@ public class Partida extends AppCompatActivity {
 
     /* Metodes per parar musica i per continuar el timer, falte fixejar el tema de la musica ja que torna a comensar quan pausem i cridem al onRestart(),
     hem pensat utilitzar un broadcast Receiver que ens permetra pausar i reanudar falte implementar per la seguent entrega */
+
     @Override
     protected void onPause() {
         super.onPause();
-        if (have_music){
+        if (have_music) {
             stopService(toStopService);
         }
     }
@@ -586,8 +601,8 @@ public class Partida extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // Comprovar si sonido haurie de estar activat si ho esta engeggarlo
-        if (have_music){
-            toStopService.putExtra("start","start");
+        if (have_music) {
+            toStopService.putExtra("start", "start");
             startService(toStopService);
         }
         if (havetimer) {
@@ -619,4 +634,6 @@ public class Partida extends AppCompatActivity {
         }
 
     }
+
+
 }
