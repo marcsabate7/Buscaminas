@@ -67,6 +67,7 @@ public class Partida extends AppCompatActivity {
      * a terme un cop i així evitar actuacions d'error de l'aplicació. Com a transicions s'han incorporat uns Dialogs per donar feedback
      * a l'usuari i millorar la seva experiència.
      */
+
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
     private int[] drawableOfNumbers;

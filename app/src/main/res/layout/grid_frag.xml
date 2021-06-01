@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/textViewPartidaMarxa"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="wrap_content"
             android:text="@string/partida_en_marxa"
             android:textStyle="bold" />/>
 

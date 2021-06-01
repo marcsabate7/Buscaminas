@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,24 +10,16 @@
     tools:ignore="MissingDefaultResource">
 
     <fragment
-        android:id="@+id/fraggrid"
+        android:id="@+id/fraglog"
         class="com.marc.buscaminas.LogFrag"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></fragment>
+        android:layout_height="400px"></fragment>
 
     <fragment
-        android:id="@+id/fraglog"
+        android:id="@+id/fraggrid"
         class="com.marc.buscaminas.GridFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></fragment>
 
 
 </LinearLayout>
-
-
-
-
-
-
-
-

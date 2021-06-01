@@ -13,18 +13,18 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="33dp"
+            android:layout_height="wrap_content"
             android:text="LOG..." />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="98dp"
-            android:text="ALIAS - CASILLAS - % MINAS - Nº MINAS - SI/NO CONTROL DE TIEMPO " />
+            android:layout_height="wrap_content"
+            android:text="ALIAS - CASILLAS - % MINAS - Nº MINAS - SI/NO CONTROL DE TIEMPO PENEE" />
 
         <TextView
             android:id="@+id/casillaSeleccionada"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Casillas Seleccionadas" />
     </LinearLayout>
