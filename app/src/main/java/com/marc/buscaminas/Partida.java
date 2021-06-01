@@ -84,6 +84,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     int num_cells;
     CountDownTimer time;
     TextView num_casillas, timer, titol_partida;
+    Datalog datalog;
 
     private int[] list_orientation, array_caught, list_of_flags, flags_caught;
     private boolean is_change_orientation, havetimer, have_music;
@@ -250,6 +251,12 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int position_x = position / numberOfcolumns;
+                    int position_y = position % numberOfcolumns;
+                    datalog = new Datalog(receivedData,position_x,position_y);
+                    onCasillaSeleccionada(datalog);
+                    /*LogFrag frag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
+                    frag.mostrarDetalle(datalog);*/
                     System.out.println("\n" + position + "\n");
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
@@ -303,16 +310,15 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         }
     }
 
+    // COMENTAR AIXOOOOOOOOOOOO ------------------------------------------
     @Override
     public void onCasillaSeleccionada(Datalog datalog) {
         LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
         boolean hayLog = (logFrag != null && logFrag.isInLayout());
-
         if (hayLog) {
             logFrag.mostrarDetalle(datalog);
         }
     }
-
 
     // Aquesta funció s'utilitza per pasar les dades de la partida al intent i aquest cap al activity final amb un status que controlara si la aprtida s'ha guanyat / per
     // Falta bloquejar el grid view quan s'ensenyen les bombes per a que el usuari no pugui clicar a cap item de la graella

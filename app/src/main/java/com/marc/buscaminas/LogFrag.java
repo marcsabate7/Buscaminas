@@ -40,9 +40,11 @@ public class LogFrag extends Fragment {
         messageDades += " HAY TIEMPO? "+datalog.getDadesDePartida().isHave_timer();
         messageDades += " TIEMPO: "+datalog.getDadesDePartida().getTime();
         data = (TextView) getView().findViewById(R.id.textviewdadeslog);
+        caselles = (TextView) getView().findViewById(R.id.casillaSeleccionada);
         data.setText(messageDades);
 
-        casselles += "\nCasilla Seleccionada = ("+datalog.getCoordX()+","+datalog.getCoordY()+")";
+        casselles += caselles.getText().toString() + "\nCasilla Seleccionada = ("+datalog.getCoordX()+","+datalog.getCoordY()+")";
+        caselles.setText(casselles);
 
     }
 }
