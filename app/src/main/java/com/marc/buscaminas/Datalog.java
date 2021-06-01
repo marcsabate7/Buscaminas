@@ -7,12 +7,14 @@ public class Datalog implements Parcelable {
 
     private final DadesDePartida dadesDePartida;
     private final int coordX, coordY;
+    private long tiempo_restante;
 
 
-    public Datalog(DadesDePartida dadesDePartida, int coordX, int coordY){
+    public Datalog(DadesDePartida dadesDePartida, int coordX, int coordY,long time){
         this.dadesDePartida = dadesDePartida;
         this.coordX = coordX;
         this.coordY = coordY;
+        this.tiempo_restante = time;
     }
 
     public DadesDePartida getDadesDePartida(){
@@ -24,14 +26,12 @@ public class Datalog implements Parcelable {
     public int getCoordY(){
         return this.coordY;
     }
+    public long getTiempo_restante(){return this.tiempo_restante;}
 
     protected Datalog(Parcel in) {
-
         dadesDePartida = in.readParcelable(getClass().getClassLoader());
         coordX = in.readInt();
         coordY = in.readInt();
-
-
     }
 
     public static final Creator<Datalog> CREATOR = new Creator<Datalog>() {

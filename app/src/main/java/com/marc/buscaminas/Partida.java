@@ -253,7 +253,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                 public void onClick(View view) {
                     int position_x = position / numberOfcolumns;
                     int position_y = position % numberOfcolumns;
-                    datalog = new Datalog(receivedData,position_x,position_y);
+                    datalog = new Datalog(receivedData,position_x,position_y,tiempo_restante);
                     onCasillaSeleccionada(datalog);
                     /*LogFrag frag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
                     frag.mostrarDetalle(datalog);*/
@@ -287,6 +287,8 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                         list_orientation[position] = counter;
                         view.setBackgroundResource(drawableOfNumbers[counter]);
                     }
+                    view.setClickable(false);
+                    view.setEnabled(false);
                 }
             });
 
@@ -346,6 +348,8 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                 handler2.post(new Runnable() {
                     public void run() {
                         for (int i = 0; i < copyofviews.size(); i++) {
+                            copyofviews.get(0).setClickable(false);
+                            copyofviews.get(0).setEnabled(false);
                             copyofviews.get(i).setClickable(false);
                             copyofviews.get(i).setEnabled(false);
                         }

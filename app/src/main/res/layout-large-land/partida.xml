@@ -21,8 +21,8 @@
         android:id="@+id/fraggrid"
         class="com.marc.buscaminas.GridFrag"
         android:layout_width="0px"
-        android:layout_weight="70"
-        android:layout_height="match_parent">
-    </fragment>
+        android:layout_height="match_parent"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_weight="70"></fragment>
 
 </LinearLayout>

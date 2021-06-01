@@ -34,7 +34,7 @@ public class GridFrag extends Fragment {
         void onCasillaSeleccionada(Datalog datalog);
     }
 
-    public void setCellListener(CellListener listener) {
+    /*public void setCellListener(CellListener listener) {
         this.listener=listener;
-    }
+    }*/
 }
