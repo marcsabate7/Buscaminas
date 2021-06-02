@@ -203,12 +203,24 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
+
             if (view == null) {
-                view = inflter.inflate(R.layout.row_data, null);
+                LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
+                if(logFrag.isInLayout())
+                    view = inflter.inflate(R.layout.row_datalarge, null);
+                else
+                    view = inflter.inflate(R.layout.row_data, null);
             }
 
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
             defaultbackgrond = cell.getBackground();
+            /*
+            LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
+            if(logFrag.isInLayout())
+                cell.setLayoutParams(new LayoutParams(80,80));
+
+             */
+
 
             if (is_change_orientation) {
                 if (array_caught[position] != -1) {
@@ -255,8 +267,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                     int position_y = position % numberOfcolumns;
                     datalog = new Datalog(receivedData,position_x,position_y,tiempo_restante);
                     onCasillaSeleccionada(datalog);
-                    /*LogFrag frag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
-                    frag.mostrarDetalle(datalog);*/
+
                     System.out.println("\n" + position + "\n");
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);

@@ -49,7 +49,6 @@ public class LogFrag extends Fragment {
         data.setText(messageDades);
     }
     public void mostrarDetalle(Datalog datalog){
-        Toast.makeText(getContext(),"ESTERM AQUI",Toast.LENGTH_SHORT).show();
         messageDades = "ALIAS: "+datalog.getDadesDePartida().getUserName();
         messageDades += " NUMERO CASILLAS: "+datalog.getDadesDePartida().getNumero_graella();
         messageDades += " MINAS: "+datalog.getDadesDePartida().getPercentatge()+"%";
