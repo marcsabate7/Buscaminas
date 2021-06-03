@@ -83,6 +83,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     String user_name, timeString;
     int num_cells;
     CountDownTimer time;
+    boolean game_finished = false;
     TextView num_casillas, timer, titol_partida;
     Datalog datalog;
 
@@ -151,7 +152,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             array_caught = savedInstanceState.getIntArray("array_orientation");
             listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
             flags_caught = savedInstanceState.getIntArray("flags_posades");
-
+            game_finished = savedInstanceState.getBoolean("finished?");
             is_change_orientation = true;
         }
         // Controlem l'orientació de la pantalla ja que ens es util en una funció implementada al final del codi
@@ -203,7 +204,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
-
             if (view == null) {
                 LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
                 if(logFrag!=null && logFrag.isInLayout())
@@ -391,7 +391,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             MediaPlayer boom = MediaPlayer.create(this, R.raw.boomsound);
             boom.start();
             delayPopups(5000, status_partida);
-
+            game_finished = true;
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
             toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
@@ -616,6 +616,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         outState.putIntArray("array_orientation", list_orientation);
         outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
         outState.putIntArray("flags_posades", list_of_flags);
+        outState.putBoolean("finished?",game_finished);
     }
 
 
@@ -638,7 +639,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             toStopService.putExtra("start", "start");
             startService(toStopService);
         }
-        if (havetimer) {
+        if (havetimer && game_finished == false) {
             time = new CountDownTimer(tiempo_restante, 1000) {
                 @Override
                 public void onTick(long l) {
