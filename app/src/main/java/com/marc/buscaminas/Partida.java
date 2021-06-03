@@ -206,7 +206,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
             if (view == null) {
                 LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
-                if(logFrag.isInLayout())
+                if(logFrag!=null && logFrag.isInLayout())
                     view = inflter.inflate(R.layout.row_datalarge, null);
                 else
                     view = inflter.inflate(R.layout.row_data, null);

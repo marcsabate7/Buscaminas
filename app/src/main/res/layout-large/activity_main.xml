@@ -61,8 +61,6 @@
         android:id="@+id/switchMusic"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
         android:shadowColor="#FFFFFF"
         android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="@string/sonido_button"
