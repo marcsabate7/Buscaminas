@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:background="@drawable/fondoland"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Game.MainActivity">
 
     <LinearLayout
         android:layout_width="77dp"
@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/bomb_image" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
@@ -41,21 +41,21 @@
 
             <Button
                 android:id="@+id/buttonAyuda"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/teal_700"
                 android:text="@string/button_ayuda" />
 
             <Button
                 android:id="@+id/buttonIniciar"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/teal_700"
                 android:text="@string/button_iniciar" />
 
             <Button
                 android:id="@+id/buttonsalir"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/red_low"
                 android:text="@string/salir_text" />
@@ -68,7 +68,7 @@
                 android:shadowColor="#FFFFFF"
                 android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="@string/sonido_button"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

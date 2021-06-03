@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/fraglog"
-        class="com.marc.buscaminas.LogFrag"
+        class="com.marc.buscaminas.Fragments.LogFrag"
         android:layout_width="0px"
         android:layout_weight="30"
         android:layout_height="match_parent">
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fraggrid"
-        class="com.marc.buscaminas.GridFrag"
+        class="com.marc.buscaminas.Fragments.GridFrag"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_gravity="center|center_horizontal"

@@ -299,8 +299,7 @@
     <Button
         android:id="@+id/EmpezarDesdeConfig"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="60dp"
         android:backgroundTint="@color/teal_700"
         android:text="EMPEZAR"
         android:textSize="24sp" />

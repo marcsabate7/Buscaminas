@@ -1,6 +1,5 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Game;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -18,6 +17,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.marc.buscaminas.Music.SoundTrack;
+import com.marc.buscaminas.R;
+import com.marc.buscaminas.Structure.DadesDePartida;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,10 +1,9 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Game;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,9 +14,12 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.marc.buscaminas.R;
+import com.marc.buscaminas.Game.Configuration;
+import com.marc.buscaminas.Structure.DadesDePartida;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
     private DadesDePartida dadesDePartida;

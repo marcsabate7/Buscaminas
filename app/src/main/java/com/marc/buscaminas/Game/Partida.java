@@ -1,52 +1,38 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Game;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.OnLifecycleEvent;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.app.Dialog;
-import android.app.Fragment;
-import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.PowerManager;
-import android.provider.ContactsContract;
-import android.service.controls.actions.CommandAction;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import org.w3c.dom.Text;
+import com.marc.buscaminas.Structure.Datalog;
+import com.marc.buscaminas.Fragments.GridFrag;
+import com.marc.buscaminas.Fragments.LogFrag;
+import com.marc.buscaminas.Music.SoundTrack;
+import com.marc.buscaminas.R;
+import com.marc.buscaminas.Structure.DadesDePartida;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +40,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.graphics.Color.TRANSPARENT;
 
 
 public class Partida extends AppCompatActivity implements GridFrag.CellListener {

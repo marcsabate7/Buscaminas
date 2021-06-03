@@ -15,33 +15,33 @@
         android:theme="@style/Theme.Buscaminas">
 
         <service
-            android:name=".SoundTrack"
+            android:name=".Music.SoundTrack"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".FinalActivity">
+        <activity android:name=".Game.FinalActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Partida">
+        <activity android:name=".Game.Partida">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Game.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AyudaActivity">
+        <activity android:name=".Game.AyudaActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Configuration">
+        <activity android:name=".Game.Configuration">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -1,9 +1,11 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Music;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+
+import com.marc.buscaminas.R;
 
 /*
 *   Servei creat per engegar i parar la musica depenen de si el usuari vol sonido o no
@@ -17,7 +19,7 @@ public class SoundTrack extends Service {
     int lenght;
     @Override
     public void onCreate() {
-        sonidoDeFondo = MediaPlayer.create(this,R.raw.backgroundmusic);
+        sonidoDeFondo = MediaPlayer.create(this, R.raw.backgroundmusic);
         sonidoDeFondo.setLooping(true);
     }
 

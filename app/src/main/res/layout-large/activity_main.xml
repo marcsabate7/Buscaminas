@@ -9,7 +9,7 @@
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
     android:padding="45dp"
-    tools:context=".MainActivity">
+    tools:context=".Game.MainActivity">
 
     <LinearLayout
         android:layout_width="416dp"

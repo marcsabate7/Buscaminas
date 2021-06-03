@@ -1,4 +1,4 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Fragments;
 
 import android.os.Bundle;
 
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.marc.buscaminas.Structure.Datalog;
+import com.marc.buscaminas.R;
 
 public class LogFrag extends Fragment {
 
@@ -52,13 +52,20 @@ public class LogFrag extends Fragment {
         messageDades = "ALIAS: "+datalog.getDadesDePartida().getUserName();
         messageDades += " NUMERO CASILLAS: "+datalog.getDadesDePartida().getNumero_graella();
         messageDades += " MINAS: "+datalog.getDadesDePartida().getPercentatge()+"%";
-        messageDades += " HAY TIEMPO? "+datalog.getDadesDePartida().isHave_timer();
-        messageDades += " TIEMPO: "+datalog.getDadesDePartida().getTime();
+        if(datalog.getDadesDePartida().isHave_timer()) {
+            messageDades += " TIEMPO: " + datalog.getDadesDePartida().getTime();
+        } else{
+            messageDades += " TIEMPO: No hay tiempo";
+        }
         data.setText(messageDades);
 
-
-        casselles = caselles.getText().toString() + "\nCasilla Seleccionada = ("+datalog.getCoordX()+","+datalog.getCoordY()+")" + " - Time: " +datalog.getTiempo_restante()/1000 + "s";
-        caselles.setText(casselles);
+        if(datalog.getDadesDePartida().isHave_timer()) {
+            casselles = caselles.getText().toString() + "\nCasilla Seleccionada = ("+datalog.getCoordX()+","+datalog.getCoordY()+")" + " - Time: " +datalog.getTiempo_restante()/1000 + "s";
+            caselles.setText(casselles);
+        } else{
+            casselles = caselles.getText().toString() + "\nCasilla Seleccionada = ("+datalog.getCoordX()+","+datalog.getCoordY()+")" + " - Time: No hay tiempo";
+            caselles.setText(casselles);
+        }
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

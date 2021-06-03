@@ -1,4 +1,4 @@
-package com.marc.buscaminas;
+package com.marc.buscaminas.Structure;
 
 import android.os.Parcel;
 import android.os.Parcelable;

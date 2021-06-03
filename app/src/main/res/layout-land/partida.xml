@@ -1,57 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:padding="2dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:padding="2dp"
+    tools:ignore="MissingDefaultResource">
 
-    <LinearLayout
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="4dp"
-        android:orientation="vertical"
-        android:padding="1dp">
 
-        <TextView
-            android:id="@+id/textViewPartidaMarxa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/partida_en_marxa"
-            android:textStyle="bold" />/>
+    <fragment
+        android:id="@+id/fraggrid"
+        class="com.marc.buscaminas.Fragments.GridFrag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></fragment>
 
-        <TextView
-            android:id="@+id/text_flag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/message_flag" />
-
-        <TextView
-            android:id="@+id/timer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/seconds" />
-
-        <TextView
-            android:id="@+id/casillasid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/casillas" />
-
-    </LinearLayout>
-
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:horizontalSpacing="2dp"
-        android:numColumns="auto_fit"
-        android:padding="10dp"
-        android:scrollbars="none"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"></GridView>
 
 </LinearLayout>
