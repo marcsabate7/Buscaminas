@@ -52,6 +52,27 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
      * a l'usuari i millorar la seva experiència.
      */
 
+    private final String DADES = getResources().getString(R.string.DadesDePartida),
+            CASILLAS_POR_DESCUBRIR = getResources().getString(R.string.CasillasPorDescubrir),
+            GAMEOVER = getResources().getString(R.string.GAMEOVER),
+            MUSIC = getResources().getString(R.string.Music),
+            ON = getResources().getString(R.string.On),
+            TIEMPO_RESTANTE = getResources().getString(R.string.TiempoRestante),
+            CASILLAS_RESTANTES = getResources().getString(R.string.CasillasRestantes),
+            ARRAY_ORIENTATION = getResources().getString(R.string.ArrayOrientation),
+            LIST_OF_BOMBS = getResources().getString(R.string.ListBombs),
+            FLAGS_POSADES = getResources().getString(R.string.FlagsPosades),
+            IS_FINISHED = getResources().getString(R.string.IsFinished),
+            PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus),
+            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
+            USER_NAME = getResources().getString(R.string.UserNameKEY),
+            TIEMPO_TOTAL = getResources().getString(R.string.UserNameKEY),
+            CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales),
+            PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines),
+            TOTAL_MINAS = getResources().getString(R.string.TotalMinas),
+            START = getResources().getString(R.string.start);
+
+
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
     private int[] drawableOfNumbers, list_orientation, array_caught, list_of_flags, flags_caught;
@@ -71,12 +92,10 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     private Datalog datalog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
-
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
@@ -88,12 +107,12 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         // Intent que passarem cap activity final
         toActivityFinal = new Intent(this, FinalActivity.class);
-        if (receivedIntent.getStringExtra("Music") != null && receivedIntent.getStringExtra("Music").equals("ON")) {
+        if (receivedIntent.getStringExtra(MUSIC) != null && receivedIntent.getStringExtra(MUSIC).equals(ON)) {
             have_music = true;
-            toActivityFinal.putExtra("ReceivedMusic", "ON");
+            toActivityFinal.putExtra(RECEIVED_MUSIC, ON);
         }
 
-        receivedData = receivedIntent.getExtras().getParcelable("DadesDePartida");
+        receivedData = receivedIntent.getExtras().getParcelable(DADES);
         user_name = receivedData.getUserName();
         numberOfcolumns = receivedData.getNumero_graella();
         percentage_bombs = receivedData.getPercentatge();
@@ -122,16 +141,16 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         graella.setAdapter(gridAdapter);
         graella.setNumColumns(numberOfcolumns);
         num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
-        num_casillas.setText("Casillas por descubrir: " + num_cells);
+        num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
 
         // OnSavedInstanceState per si el usuari gira la pantalla recuperarem les dades de la partida pertinents
         if (savedInstanceState != null) {
-            num_cells = savedInstanceState.getInt("casillas_restantes");
-            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-            array_caught = savedInstanceState.getIntArray("array_orientation");
-            listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
-            flags_caught = savedInstanceState.getIntArray("flags_posades");
-            game_finished = savedInstanceState.getBoolean("finished?");
+            num_cells = savedInstanceState.getInt(CASILLAS_RESTANTES);
+            tiempo_restante = savedInstanceState.getLong(TIEMPO_RESTANTE);
+            array_caught = savedInstanceState.getIntArray(ARRAY_ORIENTATION);
+            listOfBombsIndexes = savedInstanceState.getIntegerArrayList(LIST_OF_BOMBS);
+            flags_caught = savedInstanceState.getIntArray(FLAGS_POSADES);
+            game_finished = savedInstanceState.getBoolean(IS_FINISHED);
             is_change_orientation = true;
         }
         // Controlem l'orientació de la pantalla ja que ens es util en una funció implementada al final del codi
@@ -140,32 +159,15 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
-
-        if (savedInstanceState != null) {
-            num_cells = savedInstanceState.getInt("casillas_restantes");
-            tiempo_restante = savedInstanceState.getLong("tiempo_restante");
-            // A PARTIR D'AQUI ES EL QUE E AFEGIT ON A LES POSICIONS DEL ARRAY QUE HI HAGI UN NUMERO DIFERENT DE -1 HEM DE FERLI EL SET BACKGROUND
-            array_caught = savedInstanceState.getIntArray("array_orientation");
-            listOfBombsIndexes = savedInstanceState.getIntegerArrayList("list_bombs");
-            flags_caught = savedInstanceState.getIntArray("flags_posades");
-
-            is_change_orientation = true;
-        }
-
-        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
-
         if (havetimer) {
-            num_casillas.setText("Casillas por descubrir: " + num_cells);
+            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         } else {
-            num_casillas.setText("Casillas por descubrir: " + num_cells);
+            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
 
-
-
     }
-
 
 
     private class CustomAdapter extends BaseAdapter {
@@ -185,7 +187,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         public View getView(int position, View view, ViewGroup viewGroup) {
             if (view == null) {
                 LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
-                if(logFrag!=null && logFrag.isInLayout())
+                if (logFrag != null && logFrag.isInLayout())
                     view = inflter.inflate(R.layout.row_datalarge, null);
                 else
                     view = inflter.inflate(R.layout.row_data, null);
@@ -193,13 +195,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
             cell = (ImageButton) view.findViewById(R.id.buttoninGrid);
             defaultbackgrond = cell.getBackground();
-            /*
-            LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
-            if(logFrag.isInLayout())
-                cell.setLayoutParams(new LayoutParams(80,80));
-
-             */
-
 
             if (is_change_orientation) {
                 if (array_caught[position] != -1) {
@@ -229,10 +224,10 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                     }
 
                     if (havetimer) {
-                        num_casillas.setText("Casillas por descubrir: " + num_cells);
+                        num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
                         num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     } else {
-                        num_casillas.setText("Casillas por descubrir: " + num_cells);
+                        num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
                         num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                     }
                     return true;
@@ -244,13 +239,13 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                 public void onClick(View view) {
                     int position_x = position / numberOfcolumns;
                     int position_y = position % numberOfcolumns;
-                    datalog = new Datalog(receivedData,position_x,position_y,tiempo_restante);
+                    datalog = new Datalog(receivedData, position_x, position_y, tiempo_restante);
                     onCasillaSeleccionada(datalog);
 
                     System.out.println("\n" + position + "\n");
                     if (listOfBombsIndexes.contains(position)) {
                         view.setBackgroundResource(R.drawable.ic_bomb2);
-                        timer.setText("GAME OVER");
+                        timer.setText(GAMEOVER);
                         view.setEnabled(false);
                         view.setClickable(false);
                         changeActivityToFinal(2, position);
@@ -263,10 +258,10 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
                         if (havetimer) {
 
-                            num_casillas.setText("Casillas por descubrir: " + num_cells);
+                            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                         } else {
-                            num_casillas.setText("Casillas por descubrir: " + num_cells);
+                            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
                             num_casillas.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                         }
                         if (num_cells == 0) {
@@ -322,12 +317,12 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             time.cancel();
         }
 
-        toActivityFinal.putExtra("user_name", user_name);
-        toActivityFinal.putExtra("casillas_totales", numberOfcolumns * numberOfcolumns);
-        toActivityFinal.putExtra("porcentage_minas_escogidas", percentage_bombs);
+        toActivityFinal.putExtra(USER_NAME, user_name);
+        toActivityFinal.putExtra(CASILLAS_TOTALES, numberOfcolumns * numberOfcolumns);
+        toActivityFinal.putExtra(PORCENTAGE_MINAS_ELEGIDO, percentage_bombs);
         int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
-        toActivityFinal.putExtra("total_minas", num_minas);
-        toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
+        toActivityFinal.putExtra(TOTAL_MINAS, num_minas);
+        toActivityFinal.putExtra(TIEMPO_TOTAL, (tiempo_restante) / 1000);
 
         final Handler handler2 = new Handler();
         Timer tt = new Timer();
@@ -355,13 +350,13 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         // Estatus == 1 per a partides on s'acabe el temps
         if (status_partida == 1) {
-            timer.setText("GAME OVER");
+            timer.setText(GAMEOVER);
             MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
             game_over_sound.start();
             delayPopups(5000, status_partida);
 
-            toActivityFinal.putExtra("partida_status", "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + " casillas por descubrir");
-            toActivityFinal.putExtra("casillas_restantes", num_cells);
+            toActivityFinal.putExtra(PARTIDA_STATUS, "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + CASILLAS_POR_DESCUBRIR);
+            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
         }
         // Estatus == 2 per a partides on s'ha clicat a una bomba
         if (status_partida == 2) {
@@ -371,8 +366,8 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             game_finished = true;
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
-            toActivityFinal.putExtra("partida_status", "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " casillas por descubrir!!");
-            toActivityFinal.putExtra("casillas_restantes", num_cells);
+            toActivityFinal.putExtra(PARTIDA_STATUS, "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + CASILLAS_POR_DESCUBRIR);
+            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
 
         }
         // Estatus == 3 per a partides guanyades
@@ -382,16 +377,16 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             victory.start();
             delayPopups(5000, status_partida);
 
-            toActivityFinal.putExtra("casillas_restantes", num_cells);
+            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
             if (receivedData.isHave_timer()) {
-                toActivityFinal.putExtra("partida_status", "Has ganado!! Y te han sobrado " + (tiempo_restante) / 1000 + " segundos!");
+                toActivityFinal.putExtra(PARTIDA_STATUS, "Has ganado!! Y te han sobrado " + (tiempo_restante) / 1000 + " segundos!");
             } else {
-                toActivityFinal.putExtra("partida_status", "Has ganado!! Sin control de tiempo!!");
+                toActivityFinal.putExtra(PARTIDA_STATUS, "Has ganado!! Sin control de tiempo!!");
             }
-            toActivityFinal.putExtra("casillas_restantes", num_cells);
+            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
         }
 
-        toActivityFinal.putExtra("DadesDePartida", receivedData);
+        toActivityFinal.putExtra(DADES, receivedData);
         final Handler handler = new Handler();
         Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -575,12 +570,12 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         if (havetimer) {
             time.cancel();
         }
-        outState.putLong("tiempo_restante", tiempo_restante);
-        outState.putInt("casillas_restantes", num_cells);
-        outState.putIntArray("array_orientation", list_orientation);
-        outState.putIntegerArrayList("list_bombs", listOfBombsIndexes);
-        outState.putIntArray("flags_posades", list_of_flags);
-        outState.putBoolean("finished?",game_finished);
+        outState.putLong(TIEMPO_RESTANTE, tiempo_restante);
+        outState.putInt(CASILLAS_RESTANTES, num_cells);
+        outState.putIntArray(ARRAY_ORIENTATION, list_orientation);
+        outState.putIntegerArrayList(LIST_OF_BOMBS, listOfBombsIndexes);
+        outState.putIntArray(FLAGS_POSADES, list_of_flags);
+        outState.putBoolean(IS_FINISHED, game_finished);
     }
 
 
@@ -600,7 +595,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         super.onResume();
         // Comprovar si sonido haurie de estar activat si ho esta engeggarlo
         if (have_music) {
-            toStopService.putExtra("start", "start");
+            toStopService.putExtra(START, START);
             startService(toStopService);
         }
         if (havetimer && game_finished == false) {
@@ -632,8 +627,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         }
 
     }
-
-
 
 
 }

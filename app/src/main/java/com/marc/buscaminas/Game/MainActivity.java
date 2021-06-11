@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     private Intent toAyuda, toConfiguration;
+    private final String MUSIC = getResources().getString(R.string.Music),
+    ON = getResources().getString(R.string.On), OFF = getResources().getString(R.string.Off);
     private Switch switchMusic;
 
     @Override
@@ -68,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonIniciar:
                 if(switchMusic.isChecked())
-                    toConfiguration.putExtra("Music","ON");
+                    toConfiguration.putExtra(MUSIC,ON);
                 else
-                    toConfiguration.putExtra("Music","OFF");
+                    toConfiguration.putExtra(MUSIC,OFF);
                 toConfiguration.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(toConfiguration);
                 finish();

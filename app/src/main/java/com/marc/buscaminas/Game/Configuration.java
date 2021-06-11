@@ -39,6 +39,11 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
      * Procurarem que estigui implementat en la següent entrega. El conjunt de les dades de Partida és guarden en una classe ALternativa
      * que hem dissenyat per guardar-les com un sol conjunt i tenir més facilitat alhora de treballar amb elles entre diferents Activities.
      */
+    private final String DADES = getResources().getString(R.string.DadesDePartida),
+            MUSIC = getResources().getString(R.string.Music),
+            ON = getResources().getString(R.string.On),
+            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
+            START = getResources().getString(R.string.start);
 
     private CheckBox checkBoxTimer;
     private Button startGame;
@@ -87,21 +92,21 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
 
         if (receivedIntent.getExtras() != null) {
-            if (receivedIntent.getStringExtra("Music") != null && receivedIntent.getStringExtra("Music").equals("ON")) {
-                bundle.putString("start", "start");
+            if (receivedIntent.getStringExtra(MUSIC) != null && receivedIntent.getStringExtra(MUSIC).equals(ON)) {
+                bundle.putString(START, START);
                 intentToService.putExtras(bundle);
-                intentToGame.putExtra("Music", "ON");
+                intentToGame.putExtra(MUSIC, ON);
                 music_on = true;
-            } else if (receivedIntent.getStringExtra("Music") != null && !receivedIntent.getStringExtra("Music").equals("ON"))
+            } else if (receivedIntent.getStringExtra(MUSIC) != null && !receivedIntent.getStringExtra(MUSIC).equals(ON))
                 ;
             else {
-                if (receivedIntent.getExtras().getString("ReceivedMusic") != null) {
-                    intentToService.putExtra("start", "start");
-                    intentToGame.putExtra("Music", "ON");
+                if (receivedIntent.getExtras().getString(RECEIVED_MUSIC) != null) {
+                    intentToService.putExtra(START, START);
+                    intentToGame.putExtra(MUSIC, ON);
                     music_on = true;
                 }
 
-                receivedDadesDePartida = receivedIntent.getExtras().getParcelable("DadesDePartida");
+                receivedDadesDePartida = receivedIntent.getExtras().getParcelable(DADES);
                 receivedUser = receivedDadesDePartida.getUserName();
                 userName.setText(receivedUser);
                 receivedHaveTimer = receivedDadesDePartida.isHave_timer();
@@ -159,7 +164,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                     DadesDePartida dataReady = new DadesDePartida(currentUserName, currentNumGraella, currentPercentatge,
                             currentHaveTimer, currentTime);
 
-                    intentToGame.putExtra("DadesDePartida", dataReady);
+                    intentToGame.putExtra(DADES, dataReady);
                     boomSound.start();
                     intentToGame.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intentToGame);

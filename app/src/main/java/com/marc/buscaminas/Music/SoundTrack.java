@@ -15,8 +15,11 @@ import com.marc.buscaminas.R;
 
 public class SoundTrack extends Service {
 
-    MediaPlayer sonidoDeFondo;
-    int lenght;
+    private MediaPlayer sonidoDeFondo;
+    private int lenght;
+    private final String START = getResources().getString(R.string.start);
+
+
     @Override
     public void onCreate() {
         sonidoDeFondo = MediaPlayer.create(this, R.raw.backgroundmusic);
@@ -32,7 +35,7 @@ public class SoundTrack extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(intent.getExtras().getString("start").equals("start"))
+        if(intent.getExtras().getString(START).equals(START))
             sonidoDeFondo.start();
         return startId;
     }

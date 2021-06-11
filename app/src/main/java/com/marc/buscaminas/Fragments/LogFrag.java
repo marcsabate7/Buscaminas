@@ -14,7 +14,8 @@ import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.R;
 
 public class LogFrag extends Fragment {
-
+    private final String CASELLES_SELECCIONADES = getResources().getString(R.string.CasellesSeleccionades),
+    DATA_LOG = getResources().getString(R.string.Data_Log);
     private TextView data, caselles;
     private String messageDades, casselles = "";
     public LogFrag() {
@@ -25,8 +26,8 @@ public class LogFrag extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            casselles = savedInstanceState.getString("caselles_seleccionades");
-            messageDades = savedInstanceState.getString("data_log");
+            casselles = savedInstanceState.getString(CASELLES_SELECCIONADES);
+            messageDades = savedInstanceState.getString(DATA_LOG);
         }
     }
 
@@ -68,7 +69,7 @@ public class LogFrag extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("caselles_seleccionades",caselles.getText().toString());
-        outState.putString("data_log",data.getText().toString());
+        outState.putString(CASELLES_SELECCIONADES,caselles.getText().toString());
+        outState.putString(DATA_LOG,data.getText().toString());
     }
 }

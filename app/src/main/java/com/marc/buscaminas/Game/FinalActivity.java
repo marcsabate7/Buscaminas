@@ -25,6 +25,16 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
     private Intent intent, toConfig;
     private TextView status, diayhora, text_log, text_email;
     private String log, partida_status;
+    private final String ON = getResources().getString(R.string.On),
+            DADES = getResources().getString(R.string.DadesDePartida),
+            PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus),
+            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
+            USER_NAME = getResources().getString(R.string.UserNameKEY),
+            CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales),
+            PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines),
+            FROM_FINAL = getResources().getString(R.string.fromFinal),
+            TOTAL_MINAS = getResources().getString(R.string.TotalMinas);
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -44,19 +54,19 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         toConfig = (new Intent(this, Configuration.class));
         intent = getIntent();
 
-        if (intent.getStringExtra("ReceivedMusic") != null) {
-            if (intent.getStringExtra("ReceivedMusic").equals("ON")) {
-                toConfig.putExtra("ReceivedMusic","ON");
+        if (intent.getStringExtra(RECEIVED_MUSIC) != null) {
+            if (intent.getStringExtra(RECEIVED_MUSIC).equals(ON)) {
+                toConfig.putExtra(RECEIVED_MUSIC, ON);
             }
         }
 
 
-        dadesDePartida = intent.getExtras().getParcelable("DadesDePartida");
-        String name_user = intent.getStringExtra("user_name");
-        int total_casillas = intent.getIntExtra("casillas_totales", 1);
-        float porcentage_minas = intent.getFloatExtra("porcentage_minas_escogidas", 1);
-        int num_minas = intent.getIntExtra("total_minas", 1);
-        partida_status = intent.getStringExtra("partida_status");
+        dadesDePartida = intent.getExtras().getParcelable(DADES);
+        String name_user = intent.getStringExtra(USER_NAME);
+        int total_casillas = intent.getIntExtra(CASILLAS_TOTALES, 1);
+        float porcentage_minas = intent.getFloatExtra(PORCENTAGE_MINAS_ELEGIDO, 1);
+        int num_minas = intent.getIntExtra(TOTAL_MINAS, 1);
+        partida_status = intent.getStringExtra(PARTIDA_STATUS);
 
         status = (TextView) findViewById(R.id.textViewStatus);
         diayhora = (TextView) findViewById(R.id.editTextTextdiayhora);
@@ -94,8 +104,8 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
                 }
                 break;
             case R.id.buttonNovaPartida:
-                toConfig.putExtra("DadesDePartida", dadesDePartida);
-                toConfig.putExtra("from final", "from final");
+                toConfig.putExtra(DADES, dadesDePartida);
+                toConfig.putExtra(FROM_FINAL, FROM_FINAL);
                 startActivity(toConfig);
                 finish();
                 break;
