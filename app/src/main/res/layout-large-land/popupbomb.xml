@@ -18,7 +18,7 @@
         android:background="#220E0E"
         android:fontFamily="@font/freckle_face"
         android:gravity="center"
-        android:text="@string/message_popupbomb"
+        android:text="@string/algo_te_explot"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"

@@ -49,12 +49,12 @@ public class LogFrag extends Fragment {
     }
     public void mostrarDetalle(Datalog datalog){
         messageDades = "ALIAS: "+datalog.getDadesDePartida().getUserName();
-        messageDades += " NUMERO CASILLAS: "+datalog.getDadesDePartida().getNumero_graella();
-        messageDades += " MINAS: "+datalog.getDadesDePartida().getPercentatge()+"%";
+        messageDades += " / NUMERO CASILLAS: "+datalog.getDadesDePartida().getNumero_graella();
+        messageDades += " / MINAS: "+datalog.getDadesDePartida().getPercentatge()+"%";
         if(datalog.getDadesDePartida().isHave_timer()) {
-            messageDades += " TIEMPO: " + datalog.getDadesDePartida().getTime();
+            messageDades += " / TIEMPO: " + datalog.getDadesDePartida().getTime();
         } else{
-            messageDades += " TIEMPO: No hay tiempo";
+            messageDades += " / TIEMPO: No hay tiempo";
         }
         data.setText(messageDades);
 
