@@ -36,8 +36,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
      * De més, s'ha implementat un Spinner per seleccionar el temps que es vol escollir segons la dificultat.
      * Depenent de l'intent que es rebi, sabem si es tractarà de la primera partida o una nova partida, on guardarem algunes de les
      * dades per a que s'auto completin. Hem tingut alguns problemes amb guardar les dades dels RadioButtons i de la informació del Spinner
-     * Procurarem que estigui implementat en la següent entrega. El conjunt de les dades de Partida és guarden en una classe ALternativa
-     * que hem dissenyat per guardar-les com un sol conjunt i tenir més facilitat alhora de treballar amb elles entre diferents Activities.
+     * Procurarem que estigui implementat en la següent entrega. El conjunt  de les dades de Partida és guarden en una classe ALternativa
+     * que hem dissenyat per guardar-les com  un sol conjunt i tenir més facilitat alhora de treballar amb elles entre diferents Activities.
      */
     private final String DADES = getResources().getString(R.string.DadesDePartida),
             MUSIC = getResources().getString(R.string.Music),
