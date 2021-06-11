@@ -52,6 +52,10 @@
     <string name="CasillasTotales">casillas_totales</string>
     <string name="CasellesSeleccionades">caselles_seleccionades</string>
     <string name="Data_Log">data_log</string>
+    <string name="facil">Fácil - 150s</string>
+    <string name="medio">Medio - 80s</string>
+    <string name="duro">Duro - 60s</string>
+    <string name="legendario">Leyenda - 40s</string>
     <string name="seconds"></string>
     <string name="title_activity_pantalla_final">PantallaFinal</string>
     <!--

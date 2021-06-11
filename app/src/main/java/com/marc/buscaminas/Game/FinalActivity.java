@@ -25,15 +25,7 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
     private Intent intent, toConfig;
     private TextView status, diayhora, text_log, text_email;
     private String log, partida_status;
-    private final String ON = getResources().getString(R.string.On),
-            DADES = getResources().getString(R.string.DadesDePartida),
-            PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus),
-            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
-            USER_NAME = getResources().getString(R.string.UserNameKEY),
-            CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales),
-            PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines),
-            FROM_FINAL = getResources().getString(R.string.fromFinal),
-            TOTAL_MINAS = getResources().getString(R.string.TotalMinas);
+    public static String ON, DADES, PARTIDA_STATUS, RECEIVED_MUSIC, USER_NAME, CASILLAS_TOTALES, PORCENTAGE_MINAS_ELEGIDO, FROM_FINAL, TOTAL_MINAS;
 
 
     @SuppressLint("SetTextI18n")
@@ -42,6 +34,15 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final);
 
+        ON = getResources().getString(R.string.On);
+        DADES = getResources().getString(R.string.DadesDePartida);
+        PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus);
+        RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic);
+        USER_NAME = getResources().getString(R.string.UserNameKEY);
+        CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales);
+        PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines);
+        FROM_FINAL = getResources().getString(R.string.fromFinal);
+        TOTAL_MINAS = getResources().getString(R.string.TotalMinas);
 
         Button btn_email = (Button) findViewById(R.id.buttonEnviarEmail);
         Button btn_nova_partida = (Button) findViewById(R.id.buttonNovaPartida);

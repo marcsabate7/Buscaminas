@@ -2,6 +2,7 @@ package com.marc.buscaminas.Music;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
@@ -17,11 +18,12 @@ public class SoundTrack extends Service {
 
     private MediaPlayer sonidoDeFondo;
     private int lenght;
-    private final String START = getResources().getString(R.string.start);
+    public static String START;
 
 
     @Override
     public void onCreate() {
+        START = getResources().getString(R.string.start);
         sonidoDeFondo = MediaPlayer.create(this, R.raw.backgroundmusic);
         sonidoDeFondo.setLooping(true);
     }

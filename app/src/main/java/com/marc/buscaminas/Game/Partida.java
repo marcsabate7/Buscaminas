@@ -52,26 +52,9 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
      * a l'usuari i millorar la seva experiència.
      */
 
-    private final String DADES = getResources().getString(R.string.DadesDePartida),
-            CASILLAS_POR_DESCUBRIR = getResources().getString(R.string.CasillasPorDescubrir),
-            GAMEOVER = getResources().getString(R.string.GAMEOVER),
-            MUSIC = getResources().getString(R.string.Music),
-            ON = getResources().getString(R.string.On),
-            TIEMPO_RESTANTE = getResources().getString(R.string.TiempoRestante),
-            CASILLAS_RESTANTES = getResources().getString(R.string.CasillasRestantes),
-            ARRAY_ORIENTATION = getResources().getString(R.string.ArrayOrientation),
-            LIST_OF_BOMBS = getResources().getString(R.string.ListBombs),
-            FLAGS_POSADES = getResources().getString(R.string.FlagsPosades),
-            IS_FINISHED = getResources().getString(R.string.IsFinished),
-            PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus),
-            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
-            USER_NAME = getResources().getString(R.string.UserNameKEY),
-            TIEMPO_TOTAL = getResources().getString(R.string.UserNameKEY),
-            CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales),
-            PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines),
-            TOTAL_MINAS = getResources().getString(R.string.TotalMinas),
-            START = getResources().getString(R.string.start);
-
+    public static String DADES, CASILLAS_POR_DESCUBRIR, GAMEOVER, MUSIC, ON, TIEMPO_RESTANTE, CASILLAS_RESTANTES,
+            ARRAY_ORIENTATION, LIST_OF_BOMBS, FLAGS_POSADES, IS_FINISHED, PARTIDA_STATUS, RECEIVED_MUSIC, USER_NAME, TIEMPO_TOTAL,
+            CASILLAS_TOTALES, PORCENTAGE_MINAS_ELEGIDO, TOTAL_MINAS, START;
 
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
@@ -96,6 +79,27 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.partida);
+
+
+        DADES = getResources().getString(R.string.DadesDePartida);
+        CASILLAS_POR_DESCUBRIR = getResources().getString(R.string.CasillasPorDescubrir);
+        GAMEOVER = getResources().getString(R.string.GAMEOVER);
+        MUSIC = getResources().getString(R.string.Music);
+        ON = getResources().getString(R.string.On);
+        TIEMPO_RESTANTE = getResources().getString(R.string.TiempoRestante);
+        CASILLAS_RESTANTES = getResources().getString(R.string.CasillasRestantes);
+        ARRAY_ORIENTATION = getResources().getString(R.string.ArrayOrientation);
+        LIST_OF_BOMBS = getResources().getString(R.string.ListBombs);
+        FLAGS_POSADES = getResources().getString(R.string.FlagsPosades);
+        IS_FINISHED = getResources().getString(R.string.IsFinished);
+        PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus);
+        RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic);
+        USER_NAME = getResources().getString(R.string.UserNameKEY);
+        TIEMPO_TOTAL = getResources().getString(R.string.UserNameKEY);
+        CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales);
+        PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines);
+        TOTAL_MINAS = getResources().getString(R.string.TotalMinas);
+        START = getResources().getString(R.string.start);
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);

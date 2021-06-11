@@ -39,12 +39,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
      * Procurarem que estigui implementat en la següent entrega. El conjunt  de les dades de Partida és guarden en una classe ALternativa
      * que hem dissenyat per guardar-les com  un sol conjunt i tenir més facilitat alhora de treballar amb elles entre diferents Activities.
      */
-    private final String DADES = getResources().getString(R.string.DadesDePartida),
-            MUSIC = getResources().getString(R.string.Music),
-            ON = getResources().getString(R.string.On),
-            RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic),
-            START = getResources().getString(R.string.start);
-
+    public static String DADES, MUSIC, ON, RECEIVED_MUSIC, START;
     private CheckBox checkBoxTimer;
     private Button startGame;
     private EditText userName;
@@ -62,11 +57,16 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private boolean receivedHaveTimer, currentHaveTimer, music_on;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuration);
+
+        DADES = getResources().getString(R.string.DadesDePartida);
+        MUSIC = getResources().getString(R.string.Music);
+        ON = getResources().getString(R.string.On);
+        RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic);
+        START = getResources().getString(R.string.start);
 
         receivedIntent = getIntent();
         intentToService = new Intent(this, SoundTrack.class);
