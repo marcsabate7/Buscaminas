@@ -51,11 +51,11 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
     private Spinner timespinner;
     private ArrayAdapter<String> spinAdapter;
     private DadesDePartida receivedDadesDePartida;
-    private int receivedNumGraella, currentNumGraella;
-    private float receivedPercentatge, currentPercentatge;
-    private String receivedUser, receivedTime, currentUserName, currentTime;
-    private boolean receivedHaveTimer, currentHaveTimer;
-    private boolean music_on;
+    private int currentNumGraella;
+    private float currentPercentatge;
+    private String receivedUser, currentUserName, currentTime;
+    private boolean receivedHaveTimer, currentHaveTimer, music_on;
+
 
 
     @Override
@@ -104,7 +104,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                 receivedDadesDePartida = receivedIntent.getExtras().getParcelable("DadesDePartida");
                 receivedUser = receivedDadesDePartida.getUserName();
                 userName.setText(receivedUser);
-                receivedNumGraella = receivedDadesDePartida.getNumero_graella();
                 receivedHaveTimer = receivedDadesDePartida.isHave_timer();
                 checkBoxTimer.setChecked(receivedHaveTimer);
 

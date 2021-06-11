@@ -23,13 +23,8 @@ import java.util.Calendar;
 public class FinalActivity extends AppCompatActivity implements OnClickListener {
     private DadesDePartida dadesDePartida;
     private Intent intent, toConfig;
-    TextView status;
-    TextView diayhora;
-    TextView text_log;
-    TextView text_email;
-    String log;
-    String partida_status;
-
+    private TextView status, diayhora, text_log, text_email;
+    private String log, partida_status;
 
     @SuppressLint("SetTextI18n")
     @Override

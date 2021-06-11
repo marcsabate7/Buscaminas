@@ -15,10 +15,8 @@ import com.marc.buscaminas.R;
 
 public class LogFrag extends Fragment {
 
-    private TextView data;
-    private TextView caselles;
-    String messageDades;
-    String casselles = "";
+    private TextView data, caselles;
+    private String messageDades, casselles = "";
     public LogFrag() {
         // Required empty public constructor
     }

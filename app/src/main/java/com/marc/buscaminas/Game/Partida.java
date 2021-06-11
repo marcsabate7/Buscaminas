@@ -54,39 +54,34 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
     private Intent receivedIntent, toActivityFinal;
     private int[][] matrix;
-    private int[] drawableOfNumbers;
+    private int[] drawableOfNumbers, list_orientation, array_caught, list_of_flags, flags_caught;
     private DadesDePartida receivedData;
     private ArrayList<Integer> listOfBombsIndexes;
     private HashMap<Integer, ImageButton> copyofviews = new HashMap<>();
-    private int numberOfcolumns;
+    private int numberOfcolumns, num_cells;
     private Intent toStopService;
     private GridView graella;
     private CustomAdapter gridAdapter;
-    long tiempo_restante;
-    float percentage_bombs;
-    String user_name, timeString;
-    int num_cells;
-    CountDownTimer time;
-    boolean game_finished = false;
-    TextView num_casillas, timer, titol_partida;
-    Datalog datalog;
+    private long tiempo_restante;
+    private float percentage_bombs;
+    private String user_name, timeString;
+    private CountDownTimer time;
+    private boolean game_finished = false, is_change_orientation, havetimer, have_music;
+    private TextView num_casillas, timer, titol_partida;
+    private Datalog datalog;
 
-    private int[] list_orientation, array_caught, list_of_flags, flags_caught;
-    private boolean is_change_orientation, havetimer, have_music;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.partida);
+
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
         drawableOfNumbers = initialize_drawableOfNumbers();
-
-
 
         toStopService = new Intent(this, SoundTrack.class);
         receivedIntent = getIntent();
@@ -323,7 +318,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
 
-
         if (time != null) {
             time.cancel();
         }
@@ -546,19 +540,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         popupBomb.setView(view);
         popupBomb.setCancelable(false);
         popupBomb.create().show();
-    }
-
-    public boolean istablet() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
-
-        if (width > 1023 || height > 1023) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     // Funcio que realitza una espera abans de mostrar els Popup's i que despres fa la crida
