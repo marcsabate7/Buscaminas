@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:hint="marc-saba@hotmail.com"
+            android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:text=""
             android:textSize="18sp" />

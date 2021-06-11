@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:text="LOG SECTION:"
+            android:text="@string/log_section"
             android:textSize="24sp" />
 
         <TextView
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Casillas Seleccionadas" />
+                    android:text="@string/casillas_seleccionadas" />
             </LinearLayout>
         </ScrollView>
 

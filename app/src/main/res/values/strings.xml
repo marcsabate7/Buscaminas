@@ -39,7 +39,6 @@
     <string name="resultados_partida">RESULTADOS PARTIDA</string>
     <string name="dia_activityfinal">Día y hora</string>
     <string name="log_activityfinal">Valores del LOG</string>
-    <string name="message_popupbomb">ALGO TE EXPLOTÓ</string>
     <string name="calavera_description">es una imagen de calavera</string>
     <string name="message_time_over">SE HA ACABADO EL TIEMPO</string>
     <string name="victoria_text">VICTORIA !!</string>
@@ -61,6 +60,26 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_email">marc-saba@hotmail.com</string>
+    <string name="configuration_name">CONFIGURACIÓN</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="_5">5</string>
+    <string name="control_de_tiempo">Control de tiempo</string>
+    <string name="de_minas">% de Minas</string>
+    <string name="_15">15</string>
+    <string name="_25">25</string>
+    <string name="_35">35</string>
+    <string name="empezar">EMPEZAR</string>
+    <string name="username">UserName</string>
+    <string name="timer_image">timer image</string>
+    <string name="parrilla_iamge">parrilla_iamge</string>
+    <string name="ninot_user">ninot_user</string>
+    <string name="minas_iamge">minas_iamge</string>
+    <string name="alias_identificativo">Alias Identificativo</string>
+    <string name="log_section">LOG SECTION:</string>
+    <string name="casillas_seleccionadas">Casillas Seleccionadas</string>
+    <string name="algo_te_explot">ALGO TE EXPLOTÓ</string>
 
 
 </resources>

@@ -21,7 +21,7 @@
         android:background="#220E0E"
         android:fontFamily="@font/freckle_face"
         android:gravity="center"
-        android:text="ALGO TE EXPLOTÓ"
+        android:text="@string/algo_te_explot"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
@@ -43,6 +43,7 @@
             android:layout_width="297dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:contentDescription="@string/image_bomb"
             android:paddingBottom="10dp"
             app:srcCompat="@drawable/bomb_image" />
 
@@ -54,6 +55,7 @@
         android:layout_height="149dp"
         android:layout_gravity="center"
         android:background="#DAFFFFFF"
+        android:contentDescription="@string/calavera_description"
         android:paddingTop="20dp"
         app:srcCompat="@drawable/calavera" />
 

@@ -329,7 +329,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         toActivityFinal.putExtra("total_minas", num_minas);
         toActivityFinal.putExtra("tiempo_total", (tiempo_restante) / 1000);
 
-
         final Handler handler2 = new Handler();
         Timer tt = new Timer();
         tt.schedule(new TimerTask() {

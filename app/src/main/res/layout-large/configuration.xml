@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:paddingBottom="50dp"
                 android:shadowRadius="15"
-                android:text="CONFIGURACIÓN"
+                android:text="@string/configuration_name"
                 android:textAlignment="center"
                 android:textSize="36sp" />
         </LinearLayout>
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="Alias Identificativo"
+                android:text="@string/alias_identificativo"
                 android:textColor="@color/teal_200"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -66,6 +66,7 @@
                 android:layout_width="80dp"
                 android:layout_height="93dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/ninot_user"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:scaleType="fitStart"
@@ -88,7 +89,7 @@
                     android:drawablePadding="15dp"
                     android:focusable="auto"
                     android:focusableInTouchMode="true"
-                    android:hint="UserName"
+                    android:hint="@string/username"
                     android:inputType="text"
                     android:shadowRadius="20"
                     android:textSize="24sp" />
@@ -110,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/mida_graella"
                 app:srcCompat="@drawable/ic_gridicon" />
 
             <TextView
@@ -144,7 +146,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="7"
+                    android:text="@string/_7"
                     android:textSize="24sp" />
 
                 <RadioButton
@@ -152,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="6"
+                    android:text="@string/_6"
                     android:textSize="24sp" />
 
                 <RadioButton
@@ -160,7 +162,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="5"
+                    android:text="@string/_5"
                     android:textSize="24sp" />
             </RadioGroup>
         </LinearLayout>
@@ -174,7 +176,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Control de tiempo"
+                android:text="@string/control_de_tiempo"
                 android:textColor="@color/teal_200"
                 android:textSize="24sp" />
 
@@ -192,6 +194,7 @@
                     android:layout_width="39dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:contentDescription="@string/timer_image"
                     app:srcCompat="@drawable/ic_clockicon" />
 
                 <CheckBox
@@ -229,7 +232,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="% de Minas"
+                android:text="@string/de_minas"
                 android:textColor="@color/teal_200"
                 android:textSize="24sp" />
 
@@ -245,6 +248,7 @@
                     android:layout_width="168dp"
                     android:layout_height="95dp"
                     android:layout_weight="1"
+                    android:contentDescription="@string/image_bomb"
                     app:srcCompat="@drawable/ic_bomb" />
 
                 <RadioGroup
@@ -262,7 +266,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="15"
+                        android:text="@string/_15"
                         android:textSize="24sp" />
 
                     <RadioButton
@@ -270,7 +274,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="25"
+                        android:text="@string/_25"
                         android:textSize="24sp" />
 
                     <RadioButton
@@ -278,7 +282,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="35"
+                        android:text="@string/_35"
                         android:textSize="24sp" />
                 </RadioGroup>
             </LinearLayout>
@@ -292,7 +296,7 @@
             android:layout_gravity="center"
             android:backgroundTint="@color/teal_700"
             android:padding="15dp"
-            android:text="EMPEZAR"
+            android:text="@string/empezar"
             android:textSize="24sp" />
 
     </LinearLayout>

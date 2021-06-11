@@ -33,7 +33,7 @@
             android:layout_height="92dp"
             android:layout_gravity="center"
             android:layout_marginTop="7dp"
-            android:contentDescription="image_bomb"
+            android:contentDescription="@string/image_bomb"
             app:srcCompat="@drawable/bomb_image" />
 
         <Button
