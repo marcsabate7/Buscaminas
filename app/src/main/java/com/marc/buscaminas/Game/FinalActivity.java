@@ -15,8 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.marc.buscaminas.R;
-import com.marc.buscaminas.Game.Configuration;
-import com.marc.buscaminas.Structure.DadesDePartida;
+import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

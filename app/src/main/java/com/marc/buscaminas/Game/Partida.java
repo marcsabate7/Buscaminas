@@ -27,12 +27,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import com.marc.buscaminas.Structure.Datalog;
+import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.Fragments.GridFrag;
 import com.marc.buscaminas.Fragments.LogFrag;
 import com.marc.buscaminas.Music.SoundTrack;
 import com.marc.buscaminas.R;
-import com.marc.buscaminas.Structure.DadesDePartida;
+import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 
 import java.util.ArrayList;
 import java.util.HashMap;

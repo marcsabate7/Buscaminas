@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.marc.buscaminas.Structure.Datalog;
+import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.R;
 
 public class GridFrag extends Fragment {

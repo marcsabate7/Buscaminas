@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.marc.buscaminas.Structure.Datalog;
+import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.R;
 
 public class LogFrag extends Fragment {

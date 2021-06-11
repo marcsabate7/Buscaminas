@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.marc.buscaminas.Music.SoundTrack;
 import com.marc.buscaminas.R;
-import com.marc.buscaminas.Structure.DadesDePartida;
+import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 
 import java.util.Arrays;
 import java.util.List;
