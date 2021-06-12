@@ -1,11 +1,8 @@
 package com.marc.buscaminas.Game;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,15 +22,12 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-
 import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.Fragments.GridFrag;
 import com.marc.buscaminas.Fragments.LogFrag;
 import com.marc.buscaminas.Music.SoundTrack;
 import com.marc.buscaminas.R;
 import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,7 +167,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
     }
 
-
+    // Adapter del gridView
     private class CustomAdapter extends BaseAdapter {
         private Context context;
         private ImageButton cell;
@@ -316,7 +310,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
     @SuppressLint("WrongConstant")
     public void changeActivityToFinal(int status_partida, int position) {
         stopService(toStopService);
-
         if (time != null) {
             time.cancel();
         }
@@ -327,6 +320,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         int num_minas = (int) ((numberOfcolumns * numberOfcolumns) * percentage_bombs);
         toActivityFinal.putExtra(TOTAL_MINAS, num_minas);
         toActivityFinal.putExtra(TIEMPO_TOTAL, (tiempo_restante) / 1000);
+        toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
 
         final Handler handler2 = new Handler();
         Timer tt = new Timer();
@@ -343,10 +337,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                         for (int i = 0; i < listOfBombsIndexes.size(); i++) {
                             copyofviews.get(listOfBombsIndexes.get(i)).setBackgroundResource(R.drawable.ic_bomb2);
                         }
-                        //LA PRIMERA POSICIÓ DEL GRIDVIEW NO REACCIONA, NO FA CAS DE CAP DE LES CRIDES SUPERIORS
-                        //NO SABEM ON FALLA PERÒ ES DETECTA COM A BOMBA QUAN S'HA DE DETECTAR PERÒ SEMBLA QUE ACTUI INDEPENDENTMENT DE LA RESTA
-                        // Toast.makeText(getApplicationContext(),listOfBombsIndexes.toString(),Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(getApplicationContext(),String.valueOf(copyofviews.containsKey(0)),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -358,9 +348,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             MediaPlayer game_over_sound = MediaPlayer.create(this, R.raw.gameover);
             game_over_sound.start();
             delayPopups(5000, status_partida);
-
             toActivityFinal.putExtra(PARTIDA_STATUS, "Ha perdido la partida porque se ha agotado el tiempo...!!, Te han quedado " + num_cells + CASILLAS_POR_DESCUBRIR);
-            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
         }
         // Estatus == 2 per a partides on s'ha clicat a una bomba
         if (status_partida == 2) {
@@ -370,9 +358,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             game_finished = true;
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
-            toActivityFinal.putExtra(PARTIDA_STATUS, "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + CASILLAS_POR_DESCUBRIR);
-            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
-
+            toActivityFinal.putExtra(PARTIDA_STATUS, "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells +" " +CASILLAS_POR_DESCUBRIR);
         }
         // Estatus == 3 per a partides guanyades
         if (status_partida == 3) {
@@ -387,7 +373,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             } else {
                 toActivityFinal.putExtra(PARTIDA_STATUS, "Has ganado!! Sin control de tiempo!!");
             }
-            toActivityFinal.putExtra(CASILLAS_RESTANTES, num_cells);
         }
 
         toActivityFinal.putExtra(DADES, receivedData);
@@ -582,7 +567,6 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         outState.putBoolean(IS_FINISHED, game_finished);
     }
 
-
     /* Metodes per parar musica i per continuar el timer, falte fixejar el tema de la musica ja que torna a comensar quan pausem i cridem al onRestart(),
     hem pensat utilitzar un broadcast Receiver que ens permetra pausar i reanudar falte implementar per la seguent entrega */
 
@@ -613,10 +597,8 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
                     } else {
                         timer.setText("Segundos restantes: " + l / 1000);
                         timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
-
                     }
                 }
-
                 @Override
                 public void onFinish() {
                     // PARTIDA PERDUDA PER TEMPS
@@ -629,8 +611,5 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
             timer.setText("No hay tiempo!");
             timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
         }
-
     }
-
-
 }
