@@ -25,6 +25,9 @@ import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.Fragments.GridFrag;
 import com.marc.buscaminas.Fragments.LogFrag;
 import com.marc.buscaminas.Music.SoundTrackService;
+import com.marc.buscaminas.PopUpDialog.PopUpBomb;
+import com.marc.buscaminas.PopUpDialog.PopUpTimeOut;
+import com.marc.buscaminas.PopUpDialog.PopUpWin;
 import com.marc.buscaminas.R;
 import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 import java.util.ArrayList;
@@ -88,7 +91,7 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         PARTIDA_STATUS = getResources().getString(R.string.PartidaStatus);
         RECEIVED_MUSIC = getResources().getString(R.string.ReceivedMusic);
         USER_NAME = getResources().getString(R.string.UserNameKEY);
-        TIEMPO_TOTAL = getResources().getString(R.string.UserNameKEY);
+        TIEMPO_TOTAL = getResources().getString(R.string.TiempoTotal);
         CASILLAS_TOTALES = getResources().getString(R.string.CasillasTotales);
         PORCENTAGE_MINAS_ELEGIDO = getResources().getString(R.string.PercentatgeEscollitMines);
         TOTAL_MINAS = getResources().getString(R.string.TotalMinas);
@@ -498,30 +501,21 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
 
     // PopUp's que es mostren quan una partida s'acabe per X motius, mirar noms de les funcions per saber a quin pertany
     public void showpopupTimeLoss() {
-        AlertDialog.Builder popupTimeLoss = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.popuptimeloss, null);
-        popupTimeLoss.setView(view);
-        popupTimeLoss.setCancelable(false);
-        popupTimeLoss.create().show();
+        PopUpTimeOut popUpTimeOut = new PopUpTimeOut(this, this.getLayoutInflater());
+        popUpTimeOut.configurePopUp();
+        popUpTimeOut.show();
     }
 
     public void showpopupWin() {
-        AlertDialog.Builder popupWin = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.popupwin, null);
-        popupWin.setView(view);
-        popupWin.setCancelable(false);
-        popupWin.create().show();
+        PopUpWin popUpWin = new PopUpWin(this, this.getLayoutInflater());
+        popUpWin.configurePopUp();
+        popUpWin.show();
     }
 
     public void showpopupBomb() {
-        AlertDialog.Builder popupBomb = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.popupbomb, null);
-        popupBomb.setView(view);
-        popupBomb.setCancelable(false);
-        popupBomb.create().show();
+        PopUpBomb popUpBomb = new PopUpBomb(this, this.getLayoutInflater());
+        popUpBomb.configurePopUp();
+        popUpBomb.show();
     }
 
     // Funcio que realitza una espera abans de mostrar els Popup's i que despres fa la crida
