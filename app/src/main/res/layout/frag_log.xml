@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/title_logsection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
@@ -19,7 +20,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textviewdadeslog"
+            android:id="@+id/dades_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

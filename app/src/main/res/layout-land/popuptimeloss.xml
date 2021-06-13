@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/gameovertimeloss"
+        android:id="@+id/title_time_over"
         android:layout_width="match_parent"
         android:layout_height="117dp"
         android:fontFamily="@font/freckle_face"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/image_game_over"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_weight="1"

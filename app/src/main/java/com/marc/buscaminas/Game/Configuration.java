@@ -73,9 +73,9 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         bundle = new Bundle();
 
 
-        startGame = (Button) findViewById(R.id.EmpezarDesdeConfig);
-        userName = findViewById(R.id.EditText_username);
-        checkBoxTimer = findViewById(R.id.checkBox);
+        startGame = (Button) findViewById(R.id.button_empezar_partida);
+        userName = findViewById(R.id.username);
+        checkBoxTimer = findViewById(R.id.checkBox__time);
         intentToGame = new Intent(this, Partida.class);
         timespinner = (Spinner) findViewById(R.id.tiemposspiner);
         List<String> str = Arrays.asList(getResources().getStringArray(R.array.TimespinnerChoices));
@@ -143,13 +143,13 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         Integer idButtonBombs = radioGroupBombsPercentage.getCheckedRadioButtonId();
         Integer idButtonParrilla = radioGroupNumeroParrilla.getCheckedRadioButtonId();
         switch (view.getId()) {
-            case R.id.EmpezarDesdeConfig:
+            case R.id.button_empezar_partida:
 
                 if (userName.getText().toString().trim().equalsIgnoreCase("")) {
                     userName.setError("Completa el nombre para empezar la partida!");
                     Toast.makeText(this, "Campo nombre vacio, completalo para empezar la partida!", Toast.LENGTH_SHORT).show();
                 } else if (idButtonParrilla == -1) {
-                    RadioButton radioButton = (RadioButton) findViewById(R.id.lastRadioButton);
+                    RadioButton radioButton = (RadioButton) findViewById(R.id.RadioButton_5);
                     radioButton.setError("An option must be selected");
                 } else {
 

@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/welldone"
+        android:id="@+id/image_copa_victoria"
         android:layout_width="300dp"
         android:layout_height="236dp"
         android:layout_gravity="center"

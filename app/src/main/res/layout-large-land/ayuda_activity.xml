@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/interrogant_image"
             android:layout_width="0dp"
             android:layout_height="96dp"
             android:layout_marginTop="5dp"
@@ -23,7 +23,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/ayuda_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -32,7 +32,7 @@
         android:textSize="36sp" />
 
     <TextView
-        android:id="@+id/tuputamadre"
+        android:id="@+id/text_ayuda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="60dp"

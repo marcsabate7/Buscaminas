@@ -39,7 +39,7 @@
         android:paddingTop="20dp">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/image_bomba"
             android:layout_width="297dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/image_calavera"
         android:layout_width="281dp"
         android:layout_height="149dp"
         android:layout_gravity="center"

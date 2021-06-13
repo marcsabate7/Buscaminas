@@ -8,7 +8,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/partida_results"
+        android:id="@+id/titul_results_partida"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/resultados_partida"
@@ -16,7 +16,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textViewStatus"
+        android:id="@+id/results_partida_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -24,13 +24,13 @@
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/titul_dia_hora"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dia_activityfinal" />
 
     <EditText
-        android:id="@+id/editTextTextdiayhora"
+        android:id="@+id/text_dia_hora"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:autofillHints=""
@@ -39,13 +39,13 @@
         android:text="" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/titul_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/log_activityfinal" />
 
     <EditText
-        android:id="@+id/editTextTextlog"
+        android:id="@+id/log_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:ems="10"
@@ -54,13 +54,13 @@
         android:autofillHints="" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/titul_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/text_email" />
 
     <EditText
-        android:id="@+id/editTextTextEmail"
+        android:id="@+id/text_hint_email"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="30dp"

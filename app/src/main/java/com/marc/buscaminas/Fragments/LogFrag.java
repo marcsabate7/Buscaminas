@@ -46,7 +46,7 @@ public class LogFrag extends Fragment {
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-        data = (TextView) getView().findViewById(R.id.textviewdadeslog);
+        data = (TextView) getView().findViewById(R.id.dades_log);
         caselles = (TextView) getView().findViewById(R.id.casillaSeleccionada);
         caselles.setText(casselles);
         data.setText(messageDades);

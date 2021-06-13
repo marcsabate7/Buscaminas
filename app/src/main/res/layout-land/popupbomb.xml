@@ -37,7 +37,7 @@
         android:paddingTop="20dp">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/image_bomba"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -46,7 +46,7 @@
             app:srcCompat="@drawable/bomb_image" />
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/image_calavera"
             android:layout_width="180dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"

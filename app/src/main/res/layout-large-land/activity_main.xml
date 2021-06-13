@@ -19,7 +19,7 @@
         android:textAlignment="center">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/image_bomb"
             android:layout_width="250dp"
             android:layout_height="234dp"
             android:contentDescription="@string/image_bomb"

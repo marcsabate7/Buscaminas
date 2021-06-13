@@ -69,10 +69,10 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         int num_minas = intent.getIntExtra(TOTAL_MINAS, 1);
         partida_status = intent.getStringExtra(PARTIDA_STATUS);
 
-        status = (TextView) findViewById(R.id.textViewStatus);
-        diayhora = (TextView) findViewById(R.id.editTextTextdiayhora);
-        text_log = (TextView) findViewById(R.id.editTextTextlog);
-        text_email = (TextView) findViewById(R.id.editTextTextEmail);
+        status = (TextView) findViewById(R.id.results_partida_user);
+        diayhora = (TextView) findViewById(R.id.text_dia_hora);
+        text_log = (TextView) findViewById(R.id.log_user);
+        text_email = (TextView) findViewById(R.id.text_hint_email);
 
         log = "Alias: " + name_user + " / " + "Casillas: " + total_casillas + " / " + "Porcentage minas: " + porcentage_minas + " / " + "Num minas: " + num_minas;
 

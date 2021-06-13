@@ -14,7 +14,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +96,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
 
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
-        titol_partida = (TextView) findViewById(R.id.textViewPartidaMarxa);
+        titol_partida = (TextView) findViewById(R.id.title_partidaenmarxa);
         drawableOfNumbers = initialize_drawableOfNumbers();
 
         toStopService = new Intent(this, SoundTrack.class);

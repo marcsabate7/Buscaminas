@@ -21,12 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:textAlignment="center">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/image_bomb"
             android:layout_width="200dp"
             android:layout_height="180dp"
             android:contentDescription="@string/image_bomb"

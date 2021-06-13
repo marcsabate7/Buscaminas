@@ -20,7 +20,7 @@
         android:paddingTop="150dp">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/image_bomb"
             android:layout_width="214dp"
             android:layout_height="202dp"
             android:layout_gravity="center"
