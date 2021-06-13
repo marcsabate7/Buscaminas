@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -85,10 +88,15 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         timespinner.setOnItemSelectedListener(new InfoSpinner());
 
 
+        TextView title_configuration = (TextView) findViewById(R.id.title_configuration);
         radioGroupNumeroParrilla = findViewById(R.id.RadioGroupGraella);
         radioGroupNumeroParrilla.setOnCheckedChangeListener(this);
         radioGroupBombsPercentage = findViewById(R.id.RadioGroupBombs);
         radioGroupBombsPercentage.setOnCheckedChangeListener(this);
+
+        SpannableString mitextoU = new SpannableString("CONFIGURACIÓN");
+        mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
+        title_configuration.setText(mitextoU);
 
 
         if (receivedIntent.getExtras() != null) {
@@ -117,24 +125,6 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         boomSound = MediaPlayer.create(this, R.raw.boomsound);
         startGame.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.quitMessageConfirmation)
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                }).create().show();
     }
 
 
@@ -173,7 +163,7 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
 
         }
     }
-
+    // Spiner time
     private class InfoSpinner implements AdapterView.OnItemSelectedListener {
 
         @Override
@@ -183,18 +173,32 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
                         Toast.LENGTH_SHORT).show();
 
         }
-
         @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
+        public void onNothingSelected(AdapterView<?> adapterView) {}
     }
-
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {}
+
+    // AlertDialog if user want to exit the app
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.quitMessageConfirmation)
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).create().show();
     }
 
+    // OnPause function
     @Override
     protected void onPause() {
         super.onPause();
@@ -203,6 +207,8 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
+    // OnResume function
     @Override
     protected void onResume() {
         super.onResume();
