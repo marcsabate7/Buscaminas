@@ -1,4 +1,4 @@
-<h1 align="center">Hi 👋, Buscaminas App</h1>
+<h1 align="center">Hi 👋, Buscaminas App Version 2</h1>
 <h3 align="center">Buscaminas app to play on Android devices!</h3>
 
 
