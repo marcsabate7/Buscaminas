@@ -205,7 +205,8 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
                 if (array_caught[position] != -1) {
                     cell.setBackgroundResource(drawableOfNumbers[array_caught[position]]);
                     list_orientation[position] = array_caught[position];
-
+                    cell.setEnabled(false);
+                    cell.setClickable(false);
                 }
                 if (flags_caught[position] == 0) {
                     list_of_flags[position] = 0;
