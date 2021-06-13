@@ -6,9 +6,9 @@
 
     <ImageButton
         android:id="@+id/buttoninGrid"
-        android:layout_width="42dp"
+        android:layout_width="41dp"
         android:layout_height="34dp"
-        android:padding ="3dp"
+        android:padding ="1dp"
         android:background="@drawable/cornertobutton"
         android:scaleType="fitXY">
 
