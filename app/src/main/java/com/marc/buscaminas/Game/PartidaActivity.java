@@ -133,8 +133,6 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
             list_orientation[i] = -1;
             list_of_flags[i] = -1;
         }
-
-
         // OnSavedInstanceState per si el usuari gira la pantalla recuperarem les dades de la partida pertinents
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt(CASILLAS_RESTANTES);
