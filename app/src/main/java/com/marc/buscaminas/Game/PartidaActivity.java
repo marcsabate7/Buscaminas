@@ -1,4 +1,5 @@
 package com.marc.buscaminas.Game;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.marc.buscaminas.AuxiliarStructures.Datalog;
+import com.marc.buscaminas.AuxiliarStructures.Matriu;
 import com.marc.buscaminas.Fragments.GridFrag;
 import com.marc.buscaminas.Fragments.LogFrag;
 import com.marc.buscaminas.Music.SoundTrackService;
@@ -30,10 +32,9 @@ import com.marc.buscaminas.PopUpDialog.PopUpTimeOut;
 import com.marc.buscaminas.PopUpDialog.PopUpWin;
 import com.marc.buscaminas.R;
 import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,6 +70,7 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
     private boolean game_finished = false, is_change_orientation, havetimer, have_music;
     private TextView num_casillas, timer, titol_partida;
     private Datalog datalog;
+    private Matriu matriu;
 
 
     @Override
@@ -100,7 +102,6 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         num_casillas = (TextView) findViewById(R.id.casillasid);
         timer = (TextView) findViewById(R.id.timer);
         titol_partida = (TextView) findViewById(R.id.title_partidaenmarxa);
-        drawableOfNumbers = initialize_drawableOfNumbers();
 
         toStopService = new Intent(this, SoundTrackService.class);
         receivedIntent = getIntent();
@@ -120,8 +121,6 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         if ((havetimer = receivedData.isHave_timer()))
             timeString = receivedData.getTime();
 
-        listOfBombsIndexes = bombs_index_list(numberOfcolumns, percentage_bombs);
-
         // Partida text en negreta
         SpannableString mitextoU = new SpannableString("PARTIDA EN MARXA, " + user_name.toUpperCase() + "!!");
         mitextoU.setSpan(new UnderlineSpan(), 0, mitextoU.length(), 0);
@@ -135,29 +134,37 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
             list_of_flags[i] = -1;
         }
 
-        // Inicialització del grid view
-        graella = (GridView) findViewById(R.id.gridview);
-        gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
-        graella.setAdapter(gridAdapter);
-        graella.setNumColumns(numberOfcolumns);
-        num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
-        num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
 
         // OnSavedInstanceState per si el usuari gira la pantalla recuperarem les dades de la partida pertinents
         if (savedInstanceState != null) {
             num_cells = savedInstanceState.getInt(CASILLAS_RESTANTES);
             tiempo_restante = savedInstanceState.getLong(TIEMPO_RESTANTE);
             array_caught = savedInstanceState.getIntArray(ARRAY_ORIENTATION);
-            listOfBombsIndexes = savedInstanceState.getIntegerArrayList(LIST_OF_BOMBS);
+            matriu = savedInstanceState.getParcelable("matriu");
+            listOfBombsIndexes = (ArrayList<Integer>) matriu.getBombs_index_list();
+            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
             flags_caught = savedInstanceState.getIntArray(FLAGS_POSADES);
             game_finished = savedInstanceState.getBoolean(IS_FINISHED);
             is_change_orientation = true;
+        }else{
+            matriu = new Matriu(numberOfcolumns, percentage_bombs);
+            listOfBombsIndexes = (ArrayList<Integer>) matriu.getBombs_index_list();
+            num_cells = (numberOfcolumns * numberOfcolumns) - listOfBombsIndexes.size();
+            num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
         }
+        drawableOfNumbers = matriu.initialize_drawableOfNumbers();
+
+        // Inicialització del grid view
+        graella = (GridView) findViewById(R.id.gridview);
+        gridAdapter = new CustomAdapter(this, numberOfcolumns * numberOfcolumns);
+        graella.setAdapter(gridAdapter);
+        graella.setNumColumns(numberOfcolumns);
+
+
         // Controlem l'orientació de la pantalla ja que ens es util en una funció implementada al final del codi
         if (is_change_orientation == false && havetimer)
             tiempo_restante = timechoice(timeString);
 
-        matrix = initialize_matrix(numberOfcolumns, listOfBombsIndexes);
 
         if (havetimer) {
             num_casillas.setText(CASILLAS_POR_DESCUBRIR + num_cells);
@@ -268,7 +275,8 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
                             // PARTIDA GUANYADA
                             changeActivityToFinal(3, 0);
                         }
-                        int counter = numberSurroundingBombs(matrix, position);
+                        int counter = matriu.numberSurroundingBombs(matriu.getMatrix(), position);
+                        //int counter = numberSurroundingBombs(matrix, position);
                         list_orientation[position] = counter;
                         view.setBackgroundResource(drawableOfNumbers[counter]);
                     }
@@ -297,7 +305,7 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         }
     }
 
-    // COMENTAR AIXOOOOOOOOOOOO ------------------------------------------
+
     @Override
     public void onCasillaSeleccionada(Datalog datalog) {
         LogFrag logFrag = (LogFrag) getSupportFragmentManager().findFragmentById(R.id.fraglog);
@@ -360,7 +368,7 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
             game_finished = true;
             int position_x = position / numberOfcolumns;
             int position_y = position % numberOfcolumns;
-            toActivityFinal.putExtra(PARTIDA_STATUS, "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells +" " +CASILLAS_POR_DESCUBRIR);
+            toActivityFinal.putExtra(PARTIDA_STATUS, "Has perdido!! Bomba en casilla " + position_x + ", " + position_y + ".\n" + "Te han quedado " + num_cells + " " + CASILLAS_POR_DESCUBRIR);
         }
         // Estatus == 3 per a partides guanyades
         if (status_partida == 3) {
@@ -432,73 +440,6 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         return result;
     }
 
-    // Colocació de les bombes de manera aleatoria
-    public ArrayList<Integer> bombs_index_list(int numColumns, float percentage) {
-        Random random = new Random();
-        ArrayList<Integer> listOfIndexBomb = new ArrayList<>();
-
-        int max_length = (int) ((numColumns * numColumns) * percentage);
-
-        while (listOfIndexBomb.size() < max_length) {
-            int thisOne = (int) (Math.random() * (0 - (numColumns * numColumns)) + (numColumns * numColumns));
-            if (listOfIndexBomb.isEmpty() || !listOfIndexBomb.contains(thisOne))
-                listOfIndexBomb.add(thisOne);
-        }
-        return listOfIndexBomb;
-    }
-
-    // Inicialització de la matriu si hi va una bomba ficarem un 1 del contrari un 0
-    public int[][] initialize_matrix(int numberOfcolumns, List<Integer> listOfBombs) {
-        int[][] matrix = new int[numberOfcolumns][numberOfcolumns];
-        for (int x = 0; x < listOfBombs.size(); x++) {
-            Integer current = listOfBombs.get(x);
-            int i = current / numberOfcolumns;
-            int j = current % numberOfcolumns;
-            matrix[i][j] = 1;
-        }
-        for (int i = 0; i < numberOfcolumns; i++) {
-            for (int j = 0; j < numberOfcolumns; j++) {
-                if (matrix[i][j] != 1)
-                    matrix[i][j] = 0;
-            }
-        }
-        return matrix;
-    }
-
-    // Controlem el numero de bombes que envolten una casella
-    public int numberSurroundingBombs(int[][] matrix, int position) {
-        int counter = 0, position_i = position / numberOfcolumns, position_j = position % numberOfcolumns;
-        if (isPosValid(position_i + 1, position_j, matrix.length) && matrix[position_i + 1][position_j] == 1)
-            counter++;
-        if (isPosValid(position_i - 1, position_j, matrix.length) && matrix[position_i - 1][position_j] == 1)
-            counter++;
-        if (isPosValid(position_i, position_j + 1, matrix.length) && matrix[position_i][position_j + 1] == 1)
-            counter++;
-        if (isPosValid(position_i, position_j - 1, matrix.length) && matrix[position_i][position_j - 1] == 1)
-            counter++;
-        if (isPosValid(position_i + 1, position_j + 1, matrix.length) && matrix[position_i + 1][position_j + 1] == 1)
-            counter++;
-        if (isPosValid(position_i + 1, position_j - 1, matrix.length) && matrix[position_i + 1][position_j - 1] == 1)
-            counter++;
-        if (isPosValid(position_i - 1, position_j - 1, matrix.length) && matrix[position_i - 1][position_j - 1] == 1)
-            counter++;
-        if (isPosValid(position_i - 1, position_j + 1, matrix.length) && matrix[position_i - 1][position_j + 1] == 1)
-            counter++;
-        return counter;
-    }
-
-    public boolean isPosValid(int x, int y, int side_length) {
-        if (x < 0 || y < 0 || x >= side_length || y >= side_length)
-            return false;
-        return true;
-    }
-
-    // Array que cada posició conté el drawable pertinent ho fem aixi per comoditat
-    public int[] initialize_drawableOfNumbers() {
-        return new int[]{R.drawable.zero, R.drawable.one, R.drawable.two, R.drawable.three, R.drawable.four,
-                R.drawable.five, R.drawable.six, R.drawable.seven, R.drawable.eight};
-    }
-
     // PopUp's que es mostren quan una partida s'acabe per X motius, mirar noms de les funcions per saber a quin pertany
     public void showpopupTimeLoss() {
         PopUpTimeOut popUpTimeOut = new PopUpTimeOut(this, this.getLayoutInflater());
@@ -555,7 +496,8 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
         outState.putLong(TIEMPO_RESTANTE, tiempo_restante);
         outState.putInt(CASILLAS_RESTANTES, num_cells);
         outState.putIntArray(ARRAY_ORIENTATION, list_orientation);
-        outState.putIntegerArrayList(LIST_OF_BOMBS, listOfBombsIndexes);
+        outState.putParcelable("matriu",matriu);
+        //outState.putIntegerArrayList(LIST_OF_BOMBS, listOfBombsIndexes);
         outState.putIntArray(FLAGS_POSADES, list_of_flags);
         outState.putBoolean(IS_FINISHED, game_finished);
     }
@@ -592,12 +534,12 @@ public class PartidaActivity extends AppCompatActivity implements GridFrag.CellL
                         timer.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                     }
                 }
+
                 @Override
                 public void onFinish() {
                     // PARTIDA PERDUDA PER TEMPS
                     int status_partida = 1;
                     changeActivityToFinal(status_partida, 0);
-
                 }
             }.start();
         } else {
