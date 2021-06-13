@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Buscaminas">
 
         <service
-            android:name=".Music.SoundTrack"
+            android:name=".Music.SoundTrackService"
             android:enabled="true"
             android:exported="true" />
 
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Game.Partida">
+        <activity android:name=".Game.PartidaActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Game.Configuration">
+        <activity android:name=".Game.ConfigurationActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import com.marc.buscaminas.Game.Configuration;
 import com.marc.buscaminas.R;
-import com.marc.buscaminas.Game.AyudaActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSalir.setOnClickListener(this);
 
         toAyuda = new Intent(this, AyudaActivity.class);
-        toConfiguration = new Intent(this, Configuration.class);
+        toConfiguration = new Intent(this, ConfigurationActivity.class);
 
     }
 

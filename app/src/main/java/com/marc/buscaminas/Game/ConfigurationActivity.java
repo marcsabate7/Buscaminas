@@ -21,7 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.marc.buscaminas.Music.SoundTrack;
+import com.marc.buscaminas.Music.SoundTrackService;
 import com.marc.buscaminas.R;
 import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 
@@ -31,7 +31,7 @@ import java.util.List;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class Configuration extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class ConfigurationActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
 
     /**
@@ -72,14 +72,14 @@ public class Configuration extends AppCompatActivity implements View.OnClickList
         START = getResources().getString(R.string.start);
 
         receivedIntent = getIntent();
-        intentToService = new Intent(this, SoundTrack.class);
+        intentToService = new Intent(this, SoundTrackService.class);
         bundle = new Bundle();
 
 
         startGame = (Button) findViewById(R.id.button_empezar_partida);
         userName = findViewById(R.id.username);
         checkBoxTimer = findViewById(R.id.checkBox__time);
-        intentToGame = new Intent(this, Partida.class);
+        intentToGame = new Intent(this, PartidaActivity.class);
         timespinner = (Spinner) findViewById(R.id.tiemposspiner);
         List<String> str = Arrays.asList(getResources().getStringArray(R.array.TimespinnerChoices));
         spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, str);

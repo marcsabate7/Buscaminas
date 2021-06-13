@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.marc.buscaminas.AuxiliarStructures.Datalog;
 import com.marc.buscaminas.Fragments.GridFrag;
 import com.marc.buscaminas.Fragments.LogFrag;
-import com.marc.buscaminas.Music.SoundTrack;
+import com.marc.buscaminas.Music.SoundTrackService;
 import com.marc.buscaminas.R;
 import com.marc.buscaminas.AuxiliarStructures.DadesDePartida;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Partida extends AppCompatActivity implements GridFrag.CellListener {
+public class PartidaActivity extends AppCompatActivity implements GridFrag.CellListener {
 
     /**
      * De més, s'ha implementat l'opció que l'usuari col·loqui banderes on cregui que hi ha una bomba. També s'ha configurat
@@ -99,7 +99,7 @@ public class Partida extends AppCompatActivity implements GridFrag.CellListener 
         titol_partida = (TextView) findViewById(R.id.title_partidaenmarxa);
         drawableOfNumbers = initialize_drawableOfNumbers();
 
-        toStopService = new Intent(this, SoundTrack.class);
+        toStopService = new Intent(this, SoundTrackService.class);
         receivedIntent = getIntent();
 
         // Intent que passarem cap activity final

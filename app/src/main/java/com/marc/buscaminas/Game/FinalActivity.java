@@ -52,7 +52,7 @@ public class FinalActivity extends AppCompatActivity implements OnClickListener 
         btn_email.setOnClickListener(this);
         btn_nova_partida.setOnClickListener(this);
 
-        toConfig = (new Intent(this, Configuration.class));
+        toConfig = (new Intent(this, ConfigurationActivity.class));
         intent = getIntent();
 
         if (intent.getStringExtra(RECEIVED_MUSIC) != null) {

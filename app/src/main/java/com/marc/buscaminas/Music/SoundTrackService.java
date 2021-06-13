@@ -14,7 +14,7 @@ import com.marc.buscaminas.R;
 * */
 
 
-public class SoundTrack extends Service {
+public class SoundTrackService extends Service {
 
     private MediaPlayer sonidoDeFondo;
     private int lenght;
